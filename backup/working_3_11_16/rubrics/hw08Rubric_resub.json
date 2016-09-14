@@ -1,0 +1,72 @@
+{
+	"hw08_rubricb": [
+		{
+			"name": "ABCs_lowLevelFileIO",
+			"testcases": "[A, B, C, D] = ABCs_lowLevelFileIO('abcs_lights.txt', 'abcs_out.txt')",
+			"points": 5,
+			"bannedFunctions": [],
+			"expectRecursion": 0,
+			"expectText": 1
+		},
+		{
+			"name": "detention",
+			"testcases": [
+				"detention('My name is Adam.', 100, 10);",
+				"detention('I enjoy coding lots of MATLAB all the time!', 24, 6);",
+				"detention('Making cookies is my passion.', 39, 3)"
+			],
+			"points": [6,6,6],
+			"bannedFunctions": [],
+			"expectRecursion": 0,
+			"expectText": 1
+		},
+		{
+			"name": "hashtagMATLAB",
+			"testcases": [
+				"[sol1] = hashtagMATLAB('JamesBond.txt');",
+				"[sol2] = hashtagMATLAB('TonyStark.txt');",
+				"[sol3] = hashtagMATLAB('HiccupHaddock.txt');"
+			],
+			"points": [6,6,6],
+			"bannedFunctions": [],
+			"expectRecursion": 0,
+			"expectText": 0
+		},
+		{
+			"name": "deAdamize",
+			"testcases": [
+				"deAdamize('test4.txt', 'replace.txt');",
+				"deAdamize('test5.txt', 'replace.txt');",
+				"deAdamize('test6.txt', 'replace.txt');"
+			],
+			"points": [6,6,6],
+			"bannedFunctions": [],
+			"expectRecursion": 0,
+			"expectText": 1
+		},
+		{
+			"name": "bandName",
+			"testcases": [
+				"[name1]=bandName('list4.txt');",
+				"[name2]=bandName('list5.txt');",
+				"[name3]=bandName('list6.txt');"
+			],
+			"points": [6,7,7],
+			"bannedFunctions": [],
+			"expectRecursion": 0,
+			"expectText": 0
+		},
+		{
+			"name": "bracketCheck",
+			"testcases": [
+				"[check1] = bracketCheck('graderTest4.txt');",
+				"[check2] = bracketCheck('graderTest5.txt');",
+				"[check3] = bracketCheck('graderTest6.txt');"
+			],
+			"points": [7,7,7],
+			"bannedFunctions": [],
+			"expectRecursion": 0,
+			"expectText": 0
+		}
+	]
+}
