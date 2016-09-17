@@ -20,14 +20,14 @@ if(!empty($_POST["myData"]))
     $folder_name =      filter_var($obj["folder_name"],FILTER_SANITIZE_STRING);
     $regrade_problems = ($obj["regrade_problems"]);
     $TA_Arr =           ($obj["TAs"]);
-
-
+    
     // Determine whether to use homework folder or resub folder
     $homework_num_separated = explode(' ',$homework_num);
+    
     if(strcmp($homework_type,"Resubmission")==0){
-        $path_to_student_folder = '../../homework_files/Homework' . $homework_num_separated[0] . '_resub/' . $folder_name . '*';
+        $path_to_student_folder = '../../homework_files/homework' . str_pad($homework_num_separated[0], 2, "0", STR_PAD_LEFT) . '_resub/' . $folder_name . '*';
     }else{
-        $path_to_student_folder = '../../homework_files/Homework' . $homework_num_separated[0] . '/' . $folder_name . '*';
+        $path_to_student_folder = '../../homework_files/homework' .  str_pad($homework_num_separated[0], 2, "0", STR_PAD_LEFT) . '/' . $folder_name . '*';
     }
 
 
@@ -110,8 +110,8 @@ if(!empty($_POST["myData"]))
     // Find and attach grade.txt file 
     // Note that TSquare attaches the first file as grade.txt, then grade.txt+1, ...
     // We need to attach the most recent file, this while loop finds and attaches that file
-    $path_to_grade_file = $filelist[0].'/Feedback Attachment(s)/grade.txt';
-    $path_to_extra_grade_file = $filelist[0].'/Feedback Attachment(s)/grade.txt+1';
+    $path_to_grade_file = $filelist[0].'/Feedback Attachment(s)/feedback.html';
+    $path_to_extra_grade_file = $filelist[0].'/Feedback Attachment(s)/feedback.html+1';
     $current = 2;
     while(file_exists($path_to_extra_grade_file)){
         $path_to_grade_file = $path_to_extra_grade_file;
@@ -257,8 +257,8 @@ if(!empty($_POST["myData"]))
     }
 
     $body .= "--$boundary\n";
-    $body .="Content-Type: text/html; name=\"grade.txt\"\n";
-    $body .="Content-Disposition: attachment; filename=\"grade.txt\"\n";
+    $body .="Content-Type: text/html; name=\"feedback.html\"\n";
+    $body .="Content-Disposition: attachment; filename=\"feedback.html\"\n";
     $body .="Content-Transfer-Encoding: base64\n";
     $body .="X-Attachment-Id: ".rand(1000,99999)."\n\n"; 
     $body .= $grade_file;

@@ -301,14 +301,9 @@
                 });
 
                 var resub_respones = $.getJSON('./rubrics/hw' + hwNum + 'Rubric_resub.json',function(resp){
-                    var rubricName;
-                    for(key in resp){
-                        rubricName = key;
-                    }
-                    resubHomeworkProblems = resp[rubricName];
-                    for(resubRubricFunction in resubHomeworkProblems){
-                        var filename = resubHomeworkProblems[resubRubricFunction].name;
-                        var testCaseStr = buildTestCaseHTMLString(resubHomeworkProblems[resubRubricFunction].testcases);
+                    for(rubricFunction in resp){
+                        var filename = json[rubricFunction].funcName;
+                        var testCaseStr = buildTestCaseHTMLString(json[rubricFunction].tests);
                         resubHomeworkProblems[filename] = testCaseStr;
                     }
                 });
@@ -329,14 +324,9 @@
                 response.always(function(json){
                     rubricProcessed = true;
                     if(passed) {
-                        var rubricName;
-                        for(key in json){
-                            rubricName = key;
-                        }
-                        homeworkProblems = json[rubricName];
-                        for(rubricFunction in homeworkProblems){
-                            var filename = homeworkProblems[rubricFunction].name;
-                            var testCaseStr = buildTestCaseHTMLString(homeworkProblems[rubricFunction].testcases);
+                        for(rubricFunction in json){
+                            var filename = json[rubricFunction].funcName;
+                            var testCaseStr = buildTestCaseHTMLString(json[rubricFunction].tests);
                             homeworkProblems[filename] = testCaseStr;
                             $('#hwProblemsWrap').append('<div class="hwProblem">' + filename + '</div>');
                         }
@@ -346,6 +336,9 @@
             }
 
             function buildTestCaseHTMLString(testCases){
+                if(typeof testCases == 'undefined'){
+                    return;
+                }
                 if(!(testCases.constructor === Array)){
                     testCases = [testCases];
                 }

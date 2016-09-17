@@ -1,32 +1,32 @@
 [
 	{
 		"funcName": "ABCs_strings",
-		"matFiles": "ABCs_strings_rubrica.mat",
+		"matFiles": "ABCs_strings_rubricb.mat",
 		"banned": "",
 		"tests": "[A, B, C, D, E, F, G, H, I, J, K, L] = ABCs_strings(in1, in2, in3, in4, in5, in6, in7, in8)",
 		"points": 2.5
 	},
 	{
 		"funcName": "ABCs_vectors",
-		"matFiles": "ABCs_vectors_rubrica.mat",
+		"matFiles": "ABCs_vectors_rubricb.mat",
 		"banned": "",
 		"tests": "[A, B, C, D, E, F, G, H, I, J, K, L] = ABCs_vectors(in1, in2, in3)",
 		"points": 2.5
 	},
 	{
 		"funcName": "varInfo",
-		"matFiles": "varInfo_rubrica.mat",
+		"matFiles": "varInfo_rubricb.mat",
 		"banned": "",
 		"tests": [
 			"[info1] = varInfo(in1)",
 			"[info2] = varInfo(in2)",
 			"[info3] = varInfo(in3)"
 		],
-		"points": [5,6,6]
+		"points": [6,6,6]
 	},
 	{
 		"funcName": "word2int",
-		"matFiles": "word2int_rubrica.mat",
+		"matFiles": "word2int_rubricb.mat",
 		"banned": "",
 		"tests": [
 			"[int1] = word2int(in1)",
@@ -37,36 +37,35 @@
 	},
 	{
 		"funcName": "shortCat",
-		"matFiles": "shortCat_rubrica.mat",
+		"matFiles": "shortCat_rubricb.mat",
 		"banned": "",
 		"tests": [
 			"[str1] = shortCat(in1, in2)",
 			"[str2] = shortCat(in3, in4)",
-			"[str3] = shortCat(in5, in6)",
-			"[str4] = shortCat(in7, in8)"
-		],
-		"points": [6,6,6,6]
-	},
-	{
-		"funcName": "weave",
-		"matFiles": "weave_rubrica.mat",
-		"banned": "",
-		"tests": [
-			"[vec1a] = weave(in1, in2)",
-			"[vec2a] = weave(in3, in4)",
-			"[vec3a] = weave(in5, in6)"
+			"[str3] = shortCat(in5, in6)"
 		],
 		"points": [6,6,6]
 	},
 	{
+		"funcName": "weave",
+		"matFiles": "weave_rubricb.mat",
+		"banned": "",
+		"tests": [
+			"[vec1b] = weave(in1, in2)",
+			"[vec2b] = weave(in3, in4)",
+			"[vec3b] = weave(in5, in6)"
+		],
+		"points": [6,7,7]
+	},
+	{
 		"funcName": "checkContour",
-		"matFiles": "checkContour_rubrica.mat",
+		"matFiles": "checkContour_rubricb.mat",
 		"banned": "",
 		"tests": [
 			"[log1] = checkContour(in1, in2)",
 			"[log2] = checkContour(in3, in4)",
 			"[log3] = checkContour(in5, in6)"
 		],
-		"points": [6,6,6]
+		"points": [7,7,7]
 	}
 ]
