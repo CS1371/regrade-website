@@ -893,7 +893,7 @@
 
             $('input[name="section"]').on('input',function(e){
                 var enteredText = $(this).val();
-                var matching = /^[Aa]{1}0[1-5]{1}$|[BCbc]{1}0[1-4]{1}$|[Dd]{1}0[1-6]{1}$|HP|hp|1171/g;
+                var matching = /^[Aa]{1}0[1-5]{1}$|[BCbc]{1}0[1-6]{1}$|[Dd]{1}0[1-5]{1}$|HP|hp|1171/g;
                 if(matching.test(enteredText)){
                     displayInputStatus(this,true);
 

@@ -1,7 +1,7 @@
-function buildClassJson
+function buildClassJson(gradeFileName)
 
-[~,~,raw2] = xlsread('grades.csv');
-firstNames = raw2(4:end,4);
+[~,~,raw2] = xlsread(gradeFileName);
+firstNames = cellfun(@strtrim,raw2(4:end,4),'UniformOutput',false);
 lastNames = raw2(4:end,3);
 usernames = raw2(4:end,1);
 names = cellfun(@(x,y) [x ' ' y],firstNames,lastNames,'UniformOutput',false);

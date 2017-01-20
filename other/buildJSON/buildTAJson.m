@@ -1,6 +1,6 @@
-function buildTAJson
+function buildTAJson(nameListFileName)
 
-[~,~,raw] = xlsread('Name_List_Fall_2016.xlsx');
+[~,~,raw] = xlsread(nameListFileName);
 names = raw(2:end,1);
 sections = raw(2:end,2);
 emails = raw(2:end,10);
@@ -12,6 +12,7 @@ emails = cellfun(@(x) ['"' x '"'],emails(ndx),'UniformOutput',false);
 
 allSectionsStr = '{\n';
 uniqueSections = unique(sections);
+uniqueSections = uniqueSections(~strcmpi(uniqueSections,'NaN'));
 for i = 1:length(uniqueSections)
     section = uniqueSections{i};
     namesStr = sprintf('\t\t"names": [%s],\n',strjoin(names(strcmp(sections,section)),','));

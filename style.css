@@ -19,6 +19,7 @@ html, body {
     cursor: pointer;
     position: relative;
     top: 0;
+    overflow: hidden;
 }
 
 .hwRowNoSelect{
