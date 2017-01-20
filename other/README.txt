@@ -16,11 +16,13 @@ How to get the regrade website up and running for a new semester
 8. Copy sections.json and names.json into regrade website repo -> json
 9. Transfer files over to server (httpdocs -> regrades -> json)
 
+10. Delete all rubrics from server folder (httpdocs -> regrades -> rubrics)
+11. Do the same for httpdocs -> regrades -> solutions and httpdocs -> homework_files
+
 Also a good idea to check the json files and make sure they are formatted correctly
 Common problems:
 1. NaN sections - needs to be deleted / or code fixed
 2. Students have space at beginning of name in json 
-
 
 ================================================================
 How to keep the regrade website running week to week
