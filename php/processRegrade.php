@@ -220,7 +220,7 @@ if(!empty($_POST["myData"]))
     $headers = "MIME-Version: 1.0\n"; 
     $headers .= "From:rwilliams306@gatech.edu\n"; 
     $headers .= "Reply-To:rwilliams306@gatech.edu\n";
-    $headers .= 'Bcc: rwilliams306@gatech.edu' . "\r\n";
+    $headers .= 'Bcc: rwilliams306@gatech.edu, natasha@gatech.edu' . "\r\n";
     $headers .= "Content-Type: multipart/mixed; boundary = $boundary\n\n"; 
 
     //plain text 
@@ -284,11 +284,11 @@ if(!empty($_POST["myData"]))
     $subject = "[CS 1371] Regrade Request";
     $student_subject = "[CS 1371] Regrade Request Confirmation";
 
-    //$send_mail = mail($TAEmails, $subject, $body, $headers);
-    $send_mail = mail("rwilliams306@gatech.edu", $subject, $body, $headers);
+    $send_mail = mail($TAEmails, $subject, $body, $headers);
+    //$send_mail = mail("rwilliams306@gatech.edu", $subject, $body, $headers);
 
-    //$send_mail_student = mail($student_username."@gatech.edu", $student_subject, $student_body, $headers);
-    $send_mail_student = mail("rwilliams306@gatech.edu", $student_subject, $student_body, $headers);
+    $send_mail_student = mail($student_username."@gatech.edu", $student_subject, $student_body, $headers);
+    //$send_mail_student = mail("rwilliams306@gatech.edu", $student_subject, $student_body, $headers);
 
     if(!$send_mail && $send_mail_student)
     {
