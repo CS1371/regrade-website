@@ -139,7 +139,7 @@ if(!empty($_POST["myData"]))
 
 
     // Find and encode pdf file for attachment later
-    $path_to_pdf_file = '../solutions/Homework'.$homework_num_separated[0].'/Homework'.sprintf("%02d", $homework_num_separated[0]).'_DrillProblems.pdf';
+    $path_to_pdf_file = '../solutions/Homework'.$homework_num_separated[0].'/HW'.sprintf("%02d", $homework_num_separated[0]).'_DrillProblems.pdf';
     $pdf_file_exists = file_exists($path_to_pdf_file);
     if($pdf_file_exists){
         $pdf_file_contents = file_get_contents($path_to_pdf_file);
@@ -265,7 +265,7 @@ if(!empty($_POST["myData"]))
 
     if($supporting_files_exist){
         $body .= "--$boundary\n";
-        $body .="Content-Type: text/html; name=\"Supporting Files.zip\"\n";
+        $body .="Content-Type: application/zip, application/octet-stream; name=\"Supporting Files.zip\"\n";
         $body .="Content-Disposition: attachment; filename=\"Supporting Files.zip\"\n";
         $body .="Content-Transfer-Encoding: base64\n";
         $body .="X-Attachment-Id: ".rand(1000,99999)."\n\n"; 
@@ -274,8 +274,8 @@ if(!empty($_POST["myData"]))
 
     if($pdf_file_exists){
         $body .= "--$boundary\n";
-        $body .="Content-Type: text/html; name=\"Homework".sprintf("%02d", $homework_num_separated[0])."_DrillProblems.pdf\"\n";
-        $body .="Content-Disposition: attachment; filename=\"Homework".sprintf("%02d", $homework_num_separated[0])."_DrillProblems.pdf\"\n";
+        $body .="Content-Type: application/pdf; name=\"HW".sprintf("%02d", $homework_num_separated[0])."_DrillProblems.pdf\"\n";
+        $body .="Content-Disposition: attachment; filename=\"HW".sprintf("%02d", $homework_num_separated[0])."_DrillProblems.pdf\"\n";
         $body .="Content-Transfer-Encoding: base64\n";
         $body .="X-Attachment-Id: ".rand(1000,99999)."\n\n"; 
         $body .= $pdf_file;
