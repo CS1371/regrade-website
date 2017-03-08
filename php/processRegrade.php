@@ -17,7 +17,7 @@ if(!empty($_POST["myData"]))
     $homework_num =     filter_var($obj["homework_num"],FILTER_SANITIZE_STRING);
     $homework_type =    filter_var($obj["homework_type"],FILTER_SANITIZE_STRING);
     $student_username = filter_var($obj["student_username"],FILTER_SANITIZE_STRING);
-    $folder_name =      filter_var($obj["folder_name"],FILTER_SANITIZE_STRING);
+    $folder_name =      ($obj["folder_name"]);
     $regrade_problems = ($obj["regrade_problems"]);
     $TA_Arr =           ($obj["TAs"]);
     

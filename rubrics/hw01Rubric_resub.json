@@ -1,81 +1,64 @@
 [
-    {
-        "funcName": "ABCs_homeworkOverview",
-        "tests": "load('homeworkOverview_rubricb.mat');[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R] = ABCs_homeworkOverview(in1, in2, in3)",
-        "points": 2,
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "ABCs_functions",
-        "tests": "[A, B, C, D, E, F, G, H, I, J, K] = ABCs_functions()",
-        "points": 3,
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "distCalc",
-        "tests": [
-            "load('distCalc_rubricb.mat');[dist1] = distCalc(in1, in2, in3, in4)",
-            "load('distCalc_rubricb.mat');[dist2] = distCalc(in5, in6, in7, in8)"
-        ],
-        "points": [10,10],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "quadSolver",
-        "tests": [
-            "load('quadSolver_rubricb.mat');[pos1, neg1] = quadSolver(in1, in2, in3)",
-            "load('quadSolver_rubricb.mat');[pos2, neg2] = quadSolver(in4, in5, in6)"
-        ],
-        "points": [10,10],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "ASA",
-        "tests": [
-            "load('ASA_rubricb.mat');[b1, c1] = ASA(in1, in2, in3)",
-            "load('ASA_rubricb.mat');[b2, c2] = ASA(in4, in5, in6)",
-            "load('ASA_rubricb.mat');[b3, c3] = ASA(in7, in8, in9)"
-        ],
-        "points": [11,11,11],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "candy",
-        "tests": [
-            "load('candy_rubricb.mat');[perKid1, wasted1] = candy(in1, in2)",
-            "load('candy_rubricb.mat');[perKid2, wasted2] = candy(in3, in4)"
-        ],
-        "points": [11,11],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    }
+	{
+		"funcName": "ABCs_homeworkOverview",
+		"matFiles": "ABCs_homeworkOverview_rubricb.mat",
+		"banned": "",
+		"tests": "[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R] = ABCs_homeworkOverview(in1, in2, in3)",
+		"points": 2,
+		"supFiles": ""
+	},
+	{
+		"funcName": "ABCs_functions",
+		"matFiles": "ABCs_functions_rubricb.mat",
+		"banned": "",
+		"tests": "[A, B, C, D, E, F, G, H, I, J, K] = ABCs_functions()",
+		"points": 3,
+		"supFiles": ""
+	},
+	{
+		"funcName": "f",
+		"matFiles": "f_rubricb.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[out1] = f(in1, in2, in3)",
+			"[out1] = f(in4, in5, in6)"
+		],
+		"points": [9,9]
+	},
+	{
+		"funcName": "cartDist",
+		"matFiles": "cartDist_rubricb.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[out1] = cartDist(in1, in2, in3, in4)",
+			"[out1] = cartDist(in5, in6, in7, in8)",
+			"[out1] = cartDist(in9, in10, in11, in12)"
+		],
+		"points": [9,9,9]
+	},
+	{
+		"funcName": "freefall",
+		"matFiles": "freefall_rubricb.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[out1, out2] = freefall(in1)",
+			"[out1, out2] = freefall(in2)",
+			"[out1, out2] = freefall(in3)"
+		],
+		"points": [10,10,10]
+	},
+	{
+		"funcName": "candy",
+		"matFiles": "candy_rubricb.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[out1, out2] = candy(in1, in2)",
+			"[out1, out2] = candy(in3, in4)"
+		],
+		"points": [10,10]
+	}
 ]

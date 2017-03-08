@@ -52,7 +52,7 @@
                                     <a href='https://mail.google.com/mail/?view=cm&fs=1&to=<?php echo $student_username; ?>@gatech.edu&su=[CS 1371] Homework <?php echo $homework_num; ?> Regrade Request Accepted&body=<?php echo $accepted_email; ?>' target='_blank'>Gmail</a>
                                 </td>
                                 <td style='border:1px solid #000;'>
-                                    <a href='https://outlook.office.com/?path=/mail/action/compose&to=<?php echo $student_username; ?>@gatech.edu&subject=[CS 1371] Homework <?php echo $homework_num; ?> Regrade Request Accepted&body=<?php echo str_replace("%0A","<br>",$accepted_email); ?>' target='_blank'>Outlook 365</a>
+                                    <a target="_blank" href='https://outlook.office.com/owa/?realm=gatech.edu&path=/mail/action/compose&to=<?php echo $student_username; ?>@gatech.edu&subject=[CS 1371] Homework <?php echo $homework_num; ?> Regrade Request Accepted&body=<?php echo str_replace("%0A","<br>",$accepted_email); ?>' target='_blank'>mail.gatech.edu</a>
                                 </td>
                             </tr>
                             <tr>
@@ -64,7 +64,7 @@
                                     <a href='https://mail.google.com/mail/?view=cm&fs=1&to=<?php echo $student_username; ?>@gatech.edu&su=[CS 1371] Homework <?php echo $homework_num; ?> Regrade Request Denied&body=<?php echo $denied_email; ?>' target='_blank'>Gmail</a>
                                 </td>
                                 <td style='border:1px solid #000;'>
-                                    <a href='https://outlook.office.com/?path=/mail/action/compose&to=<?php echo $student_username; ?>@gatech.edu&subject=[CS 1371] Homework <?php echo $homework_num; ?> Regrade Request Denied&body=<?php echo str_replace("%0A","<br>",$denied_email); ?>' target='_blank'>Outlook 365</a>
+                                    <a href='https://outlook.office.com/owa/?realm=gatech.edu&path=/mail/action/compose&to=<?php echo $student_username; ?>@gatech.edu&subject=[CS 1371] Homework <?php echo $homework_num; ?> Regrade Request Denied&body=<?php echo str_replace("%0A","<br>",$denied_email); ?>' target='_blank'>mail.gatech.edu</a>
                                 </td>
                             </tr>
                         </table>

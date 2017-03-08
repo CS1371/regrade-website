@@ -1,0 +1,61 @@
+[
+	{
+		"funcName": "ABCs_conditionals",
+		"matFiles": "ABCs_conditionals_rubrica.mat",
+		"banned": "",
+		"tests": [
+			"[A, B, C, D, E, F, G] = ABCs_conditionals(in1, in2, in3, in4)",
+			"[A, B, C, D, E, F, G] = ABCs_conditionals(in5, in6, in7, in8)"
+		],
+		"points": [4,4],
+		"supFiles": ""
+	},
+	{
+		"funcName": "findDateLocation",
+		"matFiles": "findDateLocation_rubrica.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[loc1] = findDateLocation(in1, in2, in3, in4, in5)",
+			"[loc2] = findDateLocation(in6, in7, in8, in9, in10)",
+			"[loc3] = findDateLocation(in11, in12, in13, in14, in15)"
+		],
+		"points": [7,7,7]
+	},
+	{
+		"funcName": "loveMeTinder",
+		"matFiles": "loveMeTinder_rubrica.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[swipe1] = loveMeTinder(in1, in2)",
+			"[swipe2] = loveMeTinder(in3, in4)",
+			"[swipe3] = loveMeTinder(in5, in6)"
+		],
+		"points": [7,8,8]
+	},
+	{
+		"funcName": "starCrossed",
+		"matFiles": "starCrossed_rubrica.mat",
+		"supFiles": [],
+		"banned": "",
+		"tests": [
+			"[out1] = starCrossed(in1, in2, in3)",
+			"[out2] = starCrossed(in4, in5, in6)",
+			"[out3] = starCrossed(in7, in8, in9)"
+		],
+		"points": [8,8,8]
+	},
+	{
+		"funcName": "poker",
+		"matFiles": "poker_rubrica.mat",
+		"supFiles": [],
+		"banned": "",
+		"tests": [
+			"[winner1] = poker(in1)",
+			"[winner2] = poker(in2)",
+			"[winner3] = poker(in3)"
+		],
+		"points": [8,8,8]
+	}
+]

@@ -1,73 +1,58 @@
 [
-    {
-        "funcName": "ABCs_moreFunctions",
-        "tests": "load('moreFunctions_rubrica.mat');[A, B, C, D, E, F, G, H, I, J, K] = ABCs_moreFunctions(in1)",
-        "points": 5,
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "badApples",
-        "tests": [
-            "load('badApples_rubrica.mat');[red1, grn1] = badApples(in1, in2, in3, in4)",
-            "load('badApples_rubrica.mat');[red2, grn2] = badApples(in5, in6, in7, in8)",
-            "load('badApples_rubrica.mat');[red3, grn3] = badApples(in9, in10, in11, in12)"
-        ],
-        "points": [7,8,8],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "fib",
-        "tests": [
-            "load('fib_rubrica.mat');[nFib1] = fib(in1)",
-            "load('fib_rubrica.mat');[nFib2] = fib(in2)",
-            "load('fib_rubrica.mat');[nFib3] = fib(in3)"
-        ],
-        "points": [8,8,8],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "spherePacking",
-        "tests": [
-            "load('spherePacking_rubrica.mat');[num1] = spherePacking(in1, in2)",
-            "load('spherePacking_rubrica.mat');[num2] = spherePacking(in3, in4)",
-            "load('spherePacking_rubrica.mat');[num3] = spherePacking(in5, in6)"
-        ],
-        "points": [8,8,8],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    },
-    {
-        "funcName": "clockHands",
-        "tests": [
-            "load('clockHands_rubrica.mat');[hr1, min1] = clockHands(in1, in2, in3)",
-            "load('clockHands_rubrica.mat');[hr2, min2] = clockHands(in4, in5, in6)",
-            "load('clockHands_rubrica.mat');[hr3, min3] = clockHands(in7, in8, in9)"
-        ],
-        "points": [8,8,8],
-        "bannedFunctions": "",
-        "expectRecursion": 0,
-        "expectText": 0,
-        "expectImage": 0,
-        "expectPlot": 0,
-        "expectExcel": 0
-    }
+	{
+		"funcName": "ABCs_moreFunctions",
+		"matFiles": "ABCs_moreFunctions_rubrica.mat",
+		"banned": "",
+		"tests": "[A, B, C, D, E, F, G, H, I, J, K] = ABCs_moreFunctions(in1)",
+		"points": 5,
+		"supFiles": ""
+	},
+	{
+		"funcName": "applesAndOranges",
+		"matFiles": "applesAndOranges_rubrica.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[app1, ora1] = applesAndOranges(in1, in2, in3, in4)",
+			"[app2, ora1] = applesAndOranges(in5, in6, in7, in8)",
+			"[app1, ora1] = applesAndOranges(in9, in10, in11, in12)"
+		],
+		"points": [7,8,8]
+	},
+	{
+		"funcName": "lawOfCosines",
+		"matFiles": "lawOfCosines_rubrica.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[c1] = lawOfCosines(in1, in2, in3)",
+			"[c2] = lawOfCosines(in4, in5, in6)",
+			"[c3] = lawOfCosines(in7, in8, in9)"
+		],
+		"points": [8,8,8]
+	},
+	{
+		"funcName": "gravity",
+		"matFiles": "gravity_rubrica.mat",
+		"supFiles": "",
+		"banned": "",
+		"tests": [
+			"[a1] = gravity(in1, in2, in3)",
+			"[a1] = gravity(in4, in5, in6)",
+			"[a1] = gravity(in7, in8, in9)"
+		],
+		"points": [8,8,8]
+	},
+	{
+		"funcName": "clockHands",
+		"matFiles": "clockHands_rubrica.mat",
+		"banned": "",
+		"tests": [
+			"[hr1, min1] = clockHands(in1, in2, in3)",
+			"[hr2, min2] = clockHands(in4, in5, in6)",
+			"[hr3, min3] = clockHands(in7, in8, in9)"
+		],
+		"points": [8,8,8],
+		"supFiles": ""
+	}
 ]
