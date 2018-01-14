@@ -1,86 +1,90 @@
 {
 	"1171": {
-		"names": ["Kenzy Mina","WES Parson"],
-		"emails": ["kmina3@gatech.edu","WES@gatech.edu"]
+		"names": ["Chima Okechukwu","Triton Wolfe"],
+		"emails": ["Chima20097@gmail.com","triton.wolfe@gmail.com"]
 	},
 	"A01": {
-		"names": ["Ryan Williams","William Li"],
-		"emails": ["rwilliams306@gatech.edu","wli343@gatech.edu"]
+		"names": ["Addison Cornell","Seth Holland"],
+		"emails": ["acornell8@gatech.edu","seth2718@gmail.com"]
+	},
+	"A01-A07": {
+		"names": ["Kantwon Rogers"],
+		"emails": ["krogers34@gatech.edu"]
 	},
 	"A02": {
+		"names": ["Karan Shah","Meha Kumar"],
+		"emails": ["kshah88@gatech.edu","Mkumar77@gatech.edu"]
+	},
+	"A03": {
+		"names": ["Amanda Schmitt","Daniel Alayo-Matos"],
+		"emails": ["aschmitt8@gatech.edu","dvam3@gatech.edu"]
+	},
+	"A04": {
+		"names": ["Alex Rao","Baran Usluel"],
+		"emails": ["arao81@gatech.edu","baran@gatech.edu"]
+	},
+	"A05": {
 		"names": ["Alex Lobo","Zach Schlesinger"],
 		"emails": ["alex.lobo@gatech.edu","zschlesinger3@gatech.edu"]
 	},
-	"A03": {
-		"names": ["Raj Patel","Zoe TY"],
-		"emails": ["raj1995@gatech.edu","zoety@gatech.edu"]
+	"A06": {
+		"names": ["Hannah White","Paula Ruiz"],
+		"emails": ["hannahwhite234@gmail.com","paularuiz22@gmail.com"]
 	},
-	"A04": {
-		"names": ["Alex Rao","Amanda Schmitt"],
-		"emails": ["arao81@gatech.edu","aschmitt8@gatech.edu"]
-	},
-	"A05": {
-		"names": ["Tim Gregg","Justin Htay"],
-		"emails": ["timothy.mgregg@gmail.com","justinhtay@gmail.com"]
+	"A07": {
+		"names": ["Debbie Nya","Raeedah Choudhury"],
+		"emails": ["dnya3@gatech.edu","rchoudhury7@gatech.edu"]
 	},
 	"B01": {
-		"names": ["Chris Pham","Brianna Stacey"],
-		"emails": ["cpham9@gatech.edu","bstacey3@gatech.edu"]
+		"names": ["Ashok Vallamattam","William Li"],
+		"emails": ["avallamattam3@gatech.edu","wli343@gatech.edu"]
+	},
+	"B01-B05,D01-D05": {
+		"names": ["David Smith"],
+		"emails": ["david.smith@cc.gatech.edu"]
 	},
 	"B02": {
-		"names": ["Siva Manivasagam","Meha Kumar"],
-		"emails": ["smanivasagam3@gatech.edu","mkumar77@gatech.edu"]
+		"names": ["Peter Koplik","Rachel Steppe"],
+		"emails": ["pkoplik3@gatech.edu","rsteppe3@gatech.edu"]
 	},
 	"B03": {
-		"names": ["Tyler Nguyen","Raghav Bhat"],
-		"emails": ["tnguyen341@gatech.edu","rbhat@gatech.edu"]
+		"names": ["Juliana Petrillo","Virinchi Puligundla"],
+		"emails": ["petrillojuliana@gmail.com","vpuligundla3@gatech.edu"]
 	},
 	"B04": {
-		"names": ["Omar Masri","Peter Koplik"],
-		"emails": ["omasri3@gatech.edu","pkoplik3@gatech.edu"]
+		"names": ["Dolly Bhuyan","Tej Patel"],
+		"emails": ["mbhuyan7@gatech.edu","tejpatel@gatech.edu"]
 	},
-	"C01": {
-		"names": ["Jimmy Tang","Natasha de Gunten"],
-		"emails": ["jtang156@gatech.edu","natasha@gatech.edu"]
-	},
-	"C02": {
-		"names": ["Justin Gensel","Dolly Bhuyan"],
-		"emails": ["jgensel3@gatech.edu","mbhuyan7@gatech.edu"]
-	},
-	"C03": {
-		"names": ["Ashok Vallamattam","Rachel Steppe"],
-		"emails": ["avallamattam3@gatech.edu","rsteppe3@gatech.edu"]
-	},
-	"C04": {
+	"B05": {
 		"names": ["Hyder Hasnain","Tyler Wan"],
 		"emails": ["hhasnain3@gatech.edu","twan8@gatech.edu"]
 	},
-	"C05": {
-		"names": ["Faye Chu","Isaac Webb"],
-		"emails": ["fayesaidhello@gmail.com","isaac.webb@gatech.edu"]
-	},
 	"D01": {
-		"names": ["Addison Cornell","Edward Foyle"],
-		"emails": ["acornell8@gatech.edu","efoyle3@gatech.edu"]
+		"names": ["Omar Masri","Teja Huggins"],
+		"emails": ["omasri3@gatech.edu","thuggins@gatech.edu"]
 	},
 	"D02": {
-		"names": ["Nicholas Button","Terry Ma"],
-		"emails": ["nbutton22@gatech.edu","terry.ma@gatech.edu"]
+		"names": ["Ethan Wilson","Tobin Abraham"],
+		"emails": ["Ewilson72@gatech.edu","tobabraham@yahoo.com"]
 	},
 	"D03": {
-		"names": ["Raeedah Choudhury","Victoria Tuck"],
-		"emails": ["rchoudhury7@gatech.edu","vtuck3@gatech.edu"]
+		"names": ["Alex Lehman","Thomas Slattery"],
+		"emails": ["alehman@gatech.edu","Thomas.slattery@gatech.edu"]
 	},
 	"D04": {
-		"names": ["Emily Bates","Tobin Abraham"],
-		"emails": ["ebates6@gatech.edu","tabraham7@gatech.edu"]
+		"names": ["Becca Xiao","Daniel Profili"],
+		"emails": ["rxiao35@gatech.edu","dprofili3@gatech.edu"]
 	},
 	"D05": {
-		"names": ["David Mesina","Mikael Bucknavage"],
-		"emails": ["dmesina3@gatech.edu","Mikaelb@optonline.net"]
+		"names": ["Nicholas Button","Rachel Hurst"],
+		"emails": ["nbutton22@gmail.com","hurst.e.rachel@gmail.com"]
 	},
 	"LWT": {
-		"names": ["Jermaine Medley","Nishant Roy"],
-		"emails": ["jermaine.medley@gatech.edu","Nroy@gatech.edu"]
+		"names": ["Emily Bates","Megan DelGrego"],
+		"emails": ["ebates6@gatech.edu","mdelgrego@gatech.edu"]
+	},
+	"N/A": {
+		"names": ["Maggie Nugent","Omar Ahmed"],
+		"emails": ["mnugent8@gatech.edu","oahmed32@gatech.edu"]
 	}
 }
