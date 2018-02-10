@@ -18,7 +18,7 @@
     <body>
 
         <div id="header">
-            <a href="index.html" id="logoWrap">
+            <a href="." id="logoWrap">
                 <div id="siteLogo"></div>
                 <div id="siteTitle" class="">CS 1371 Regrade Requests</div>
             </a>
@@ -35,9 +35,6 @@
         <div id="mainPageTitle" class="pageTitle activeTitle">Please select a homework</div>
 
         <div id="pageWrap">
-
-
-
             <div id="firstPageWrap" class="innerPageWrap">
                 <div id="hiddenRowWrap"></div>
                 <div id="hwRowWrap">
@@ -98,17 +95,17 @@
                     </div>
                     <div class="hwRow">
                         <div class="hwNum">12</div>
-                        <div class="hwName">Images</div>
+                        <div class="hwName">Recursion</div>
                         <div class="loadingGif"></div>
                     </div>
                     <div class="hwRow">
                         <div class="hwNum">13</div>
-                        <div class="hwName">Surface Plotting</div>
+                        <div class="hwName">Images</div>
                         <div class="loadingGif"></div>
                     </div>
                     <div class="hwRow">
                         <div class="hwNum">14</div>
-                        <div class="hwName">Review</div>
+                        <div class="hwName">Project</div>
                         <div class="loadingGif"></div>
                     </div>
                 </div>
@@ -134,15 +131,15 @@
                         <input type="text" class="nameFormInput" name="fullName"/>
                         <div class="inputStatus acceptedInput"></div>
                         <div class="inputStatus rejectInput"></div>
-                        <div class="showResults" id="searchNames">
-                            <div id="resultTitle">Please select your name:</div>
-                        </div>
                     </div>
                     <div class="nameFormTitle">GT Username</div>
                     <div class="inputWrap">
                         <input type="text" class="nameFormInput" name="gtusername"/>
                         <div class="inputStatus acceptedInput"></div>
                         <div class="inputStatus rejectInput"></div>
+                        <div class="showResults" id="searchNames">
+                            <div id="resultTitle">Please select your name:</div>
+                        </div>
                     </div>
                     <div class="nameFormTitle hasHelpText">Assigned Section</div>
                     <div class="nameFormHelpText">Don't know your section? Check out the <a id="TAIndexLink" target="_blank" href="http://www.cs1371.gatech.edu/TAIndex/">TA Index</a></div>
@@ -276,8 +273,10 @@
             var resubHomeworkProblems = new Map();
             var topVal;
             var sections;
+            var sectionList;
             var nameMap;
-            var allNames;
+            //var allNames = [];
+            var usernames;
             var rubricProcessed = false;
             var selectedHomework;
             var folderName;
@@ -285,13 +284,17 @@
             function parseTAs(){
                 return $.getJSON('./json/sections.json',function(jsonResp){
                     sections = jsonResp;
+                    sectionList = Object.keys(jsonResp);
                 });
             }
 
             function parseNames(){
                 return $.getJSON('./json/names.json',function(jsonResp){
                     nameMap = jsonResp;
-                    allNames = Object.keys(nameMap);
+                    usernames = Object.keys(nameMap);
+                    /*for(var i = 0;i<usernames.length;i++){
+                        allNames.push(nameMap[usernames[i]].name);
+                    }*/
                 });
             }
 
@@ -414,7 +417,6 @@
                 hwNum = hwNum.length == 1 ? '0' + hwNum : hwNum;
                 parseRubric(hwNum);
                 selectedHomework = this;
-                //window.history.pushState('forward', null, './#selectProblems');
             });
 
             $('.hwTypeButton').on('click',function(e){
@@ -858,15 +860,22 @@
             $('#searchNames').on('click','.result',function(e){
                 $('.selectedResult').removeClass('selectedResult');
                 $(this).addClass('selectedResult');
-                displayInputStatus($('input[name="fullName"]'),true);
-                $('input[name="fullName"]').val($(this).html());
-                $('input[name="gtusername"]').val(nameMap[$(this).html()]['username']);
-                $('input[name="gtusername"]').trigger('input');
+                displayInputStatus($('input[name="gtusername"]'),true);
+                $('input[name="gtusername"]').val($(this).html());
+                //$('input[name="gtusername"]').val(nameMap[$(this).html()]['username']);
+                //$('input[name="gtusername"]').trigger('input');
                 folderName = nameMap[$(this).html()]['folder'];
             });
 
             $('input[name="fullName"]').on('input',function(e){
                 var enteredText = $(this).val();
+                if(enteredText.length > 4 && enteredText.indexOf(' ') != -1){
+                    displayInputStatus(this,true);
+                }else{
+                    displayInputStatus(this,false);
+                }
+                
+                /*var enteredText = $(this).val();
                 displayInputStatus(this,false);
                 $('.selectedResult').removeClass('selectedResult');
                 if(enteredText.length > 5 && enteredText.length < 50 && enteredText.indexOf(' ') != -1){
@@ -878,23 +887,39 @@
                     }
                 }else{
                     $('#searchNames').removeClass('showTANames');
-                }
+                }*/
             });
 
             $('input[name="gtusername"]').on('input',function(e){
                 var enteredText = $(this).val();
+                displayInputStatus(this,false);
+                $('.selectedResult').removeClass('selectedResult');
+                if(enteredText.length > 2 && enteredText.length < 50){
+                    var serachResults = didYouMean(enteredText,usernames);
+                    $('#searchNames').addClass('showTANames');
+                    $(".result").remove();
+                    for(var i = 0;i<serachResults.length;i++){
+                        $('#searchNames').append('<div class="result">' + serachResults[i] + '</div>');
+                    }
+                }else{
+                    $('#searchNames').removeClass('showTANames');
+                }
+                
+                
+                /*var enteredText = $(this).val();
                 var matching = /^[A-Za-z]+[0-9]+$/;
                 if(matching.test(enteredText) && enteredText.length >= 4){
                     displayInputStatus(this,true);
                 }else{
                     displayInputStatus(this,false);
-                }
+                }*/
             });
 
             $('input[name="section"]').on('input',function(e){
                 var enteredText = $(this).val();
-                var matching = /^[Aa]{1}0[1-5]{1}$|[BCbc]{1}0[1-6]{1}$|[Dd]{1}0[1-5]{1}$|HP|hp|1171/g;
-                if(matching.test(enteredText)){
+                //var matching = /^[Aa]{1}0[1-6]{1}$|[BCbc]{1}0[1-6]{1}$|[Dd]{1}0[1-6]{1}$|HP|hp|1171/g;
+                //if(matching.test(enteredText)){
+                if($.inArray(enteredText,sectionList) >= 0){
                     displayInputStatus(this,true);
 
                     var TADivs = $('.TAName');
@@ -1065,6 +1090,21 @@
             didYouMean.threshold = null;
 
             parseNames();
+            
+            <?php 
+            
+                if ("POST" == $_SERVER['REQUEST_METHOD'] && array_key_exists("hwNum",$_REQUEST)) {
+                    $hw_num = intval($_REQUEST["hwNum"]);
+                }else{
+                    $hw_num = -1;
+                }
+            
+            ?>
+            
+            var post_hw_num = <?php echo $hw_num;?>;
+            if(post_hw_num > 0){
+                $(".hwRow")[post_hw_num-1].click();
+            }
 
         </script>
     </body>
