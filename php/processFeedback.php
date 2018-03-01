@@ -1,7 +1,7 @@
 <?php
 if(!empty($_POST["formData"])){
-    $to_email       = "rwilliams306@gatech.edu"; //Recipient email, Replace with own email here
-    $from_email 	= "rwilliams306@gatech.edu"; //From email address (eg: no-reply@YOUR-DOMAIN.com)
+    $to_email       = "no-reply@cs1371.gatech.edu"; //Recipient email, Replace with own email here
+    $from_email 	= "no-reply@cs1371.gatech.edu"; //From email address (eg: no-reply@YOUR-DOMAIN.com)
 
     //check if its an ajax request, exit if not
     if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
@@ -33,7 +33,7 @@ if(!empty($_POST["formData"])){
     $headers = "MIME-Version: 1.0\n"; 
     $headers .= "From:".$from_email."\n"; 
     $headers .= "Reply-To: ".$from_email."" . "\n";
-    $headers .= 'Bcc: rwilliams306@gatech.edu' . "\r\n";
+    $headers .= 'Bcc: cs1371homeworkteam@gmail.com' . "\r\n";
     $headers .= "Content-Type: multipart/mixed; boundary = $boundary\n\n"; 
 
     //plain text 
@@ -46,7 +46,7 @@ if(!empty($_POST["formData"])){
     $subject = "[CS 1371] Regrade Request Website Feedback";
 
     //$send_mail = mail($TAEmails, $subject, $body, $headers);
-    $send_mail = mail("rwilliams306@gatech.edu", $subject, $body, $headers);
+    $send_mail = mail("cs1371homeworkteam@gmail.com", $subject, $body, $headers);
 
     if(!$send_mail)
     {

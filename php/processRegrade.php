@@ -17,7 +17,8 @@ if(!empty($_POST["myData"]))
     $homework_num =     filter_var($obj["homework_num"],FILTER_SANITIZE_STRING);
     $homework_type =    filter_var($obj["homework_type"],FILTER_SANITIZE_STRING);
     $student_username = filter_var($obj["student_username"],FILTER_SANITIZE_STRING);
-    $folder_name =      ($obj["folder_name"]);
+    //$folder_name =      ($obj["folder_name"]);
+    $folder_name =      $student_username;
     $regrade_problems = ($obj["regrade_problems"]);
     $TA_Arr =           ($obj["TAs"]);
     
@@ -25,9 +26,9 @@ if(!empty($_POST["myData"]))
     $homework_num_separated = explode(' ',$homework_num);
     
     if(strcmp($homework_type,"Resubmission")==0){
-        $path_to_student_folder = '../../homework_files/homework' . str_pad($homework_num_separated[0], 2, "0", STR_PAD_LEFT) . '_resub/' . $folder_name . '*';
+        $path_to_student_folder = '../../homework_files/homework' . str_pad($homework_num_separated[0], 2, "0", STR_PAD_LEFT) . '_resub/' . $folder_name;
     }else{
-        $path_to_student_folder = '../../homework_files/homework' .  str_pad($homework_num_separated[0], 2, "0", STR_PAD_LEFT) . '/' . $folder_name . '*';
+        $path_to_student_folder = '../../homework_files/homework' .  str_pad($homework_num_separated[0], 2, "0", STR_PAD_LEFT) . '/' . $folder_name;
     }
 
 
@@ -217,10 +218,11 @@ if(!empty($_POST["myData"]))
     $boundary = md5("sanwebe"); 
 
     //header
-    $headers = "MIME-Version: 1.0\n"; 
-    $headers .= "From:rwilliams306@gatech.edu\n"; 
-    $headers .= "Reply-To:rwilliams306@gatech.edu\n";
-    $headers .= 'Bcc: rwilliams306@gatech.edu, natasha@gatech.edu' . "\r\n";
+    $headers = "MIME-Version: 1.0\n";
+    // Using no-reply so email is not filtered to spam
+    $headers .= "From:no-reply@cs1371.gatech.edu\n"; 
+    $headers .= "Reply-To:no-reply@cs1371.gatech.edu\n";
+    $headers .= 'Bcc: cs1317homeworkteam@gmail.com, rwilliams306@gatech.edu' . "\r\n";
     $headers .= "Content-Type: multipart/mixed; boundary = $boundary\n\n"; 
 
     //plain text 
