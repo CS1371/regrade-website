@@ -45,3 +45,6 @@ Make sure Apache has been started from XAMPP, and then navigate to `localhost` i
 ## Deployment
 
 Deployment to production will ideally be handled via an automated system that will automatically build, test, and upload necessary files.
+
+Test builds are currently pushed to the web server manually. The current version can be visited here:
+http://cs1371.gatech.edu/test/regrades
