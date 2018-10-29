@@ -2,7 +2,13 @@
 
 ## Toolsets
 
-Quideo is build on React 16.0.1. This makes building, testing, and deployment simple. This also means `node.js` is a required tool.
+The regrade website is built on React 16.0.1. This makes building, testing, and deployment simple. This also means `node.js` is a required tool.
+
+## Installing
+
+The package must first be installed locally to generate a `node_modules` directory. This is done by typing:
+
+> `npm install`
 
 ## Building
 
