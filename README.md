@@ -1,8 +1,13 @@
 # CS 1371 Regrade Website
 
+The regrade website is used by CS 1371 students and TAs for managing regrades of homework submissions.
+
 ## Toolsets
 
-The regrade website is built on React 16.0.1. This makes building, testing, and deployment simple. This also means `node.js` is a required tool.
+The front-end of the regrade website is built on React 16.0.0. This also means `node.js` is a required tool.
+
+The back-end of the website consists of a REST API based on PHP. Running and testing this in a development
+environment requires a web server that supports PHP -- we recommend using Apache through XAMPP.
 
 ## Installing
 
@@ -10,23 +15,32 @@ The package must first be installed locally to generate a `node_modules` directo
 
 > `npm install`
 
-## Building
+## Building & Testing
 
-To build a development build, simply open up a terminal to the base folder, and type:
+### Front-End Development Build
+
+To create and view a development build of the frontend, simply open up a terminal to the base folder, and type:
 
 > `npm start`
 
-This will start a development server on port 3000 (the default), and will automatically run the webpage in your browser of choice.
+This will start a development server on `localhost:3000`, and will automatically run the webpage in your browser of choice.
 
 Making changes to the source will automatically restart the development server.
 
-## Testing
+Note that this will only work for testing the front-end by itself -- the back-end won't be running.
 
-To run a production build, simply open up a terminal at the base folder, and type:
+### Production Build
+
+To generate a production build, simply open up a terminal at the base folder, and type:
 
 > `npm run build`
 
-This will create a new folder called `build` in the base directory. To test the app, simply open `build/index.html` to see the results.
+This will create a new folder called `build` in the base directory.
+
+To test the entire app with its front-end and back-end components, copy the contents
+of the `build` directory to the `htdocs` subdirectory of your XAMPP installation.
+
+Make sure Apache has been started from XAMPP, and then navigate to `localhost` in your browser.
 
 ## Deployment
 
