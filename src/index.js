@@ -9,12 +9,7 @@ class RegradeForm extends React.Component {
 			homeworkNumber: 0,
 			homeworkName: '',
 			submissionType: '',
-			problemList: new Map([
-				['Problem 1', true],
-				['Problem 2', false],
-				['Problem 3', false],
-				['Problem 4', false],
-				['Problem 5', false]]),
+			problemList: [],
 			testCases: {},
 			descriptions: {},
 			hasSelectedHomework: false
@@ -39,7 +34,11 @@ class RegradeForm extends React.Component {
 
 	onSelectProblem(problem) {
 		let problems = this.state.problemList;
-		problems[problem] = !problems[problem];
+		if (problems.includes(problem)) {
+			problems.splice(problems.indexOf(problem), 1);
+		} else {
+			problems.push(problem);
+		}
 		this.setState({
 			problemList: problems
 		})
@@ -53,20 +52,14 @@ class RegradeForm extends React.Component {
 
 	render() {
 		if (this.state.hasSelectedHomework) {
-			console.log(this.state.problemList);
-			var list = Object.keys(this.state.problemList).map((name) => {
-				console.log(this.state.problemList[name]);
-				var isSelected = this.state.problemList[name];
-				if (isSelected) {
+			// console.log(this.state.problemList);
+			var list = this.state.problemList.map(name => {
 					return (
 						<li key={name}>
 							{name}
 						</li>
 					);
-				}
-				console.log('null');
-				return null;
-			});
+				});
 			return (
 				<div>
 					<Submission onButtonClick={this.onSelectSubmission} />
@@ -80,34 +73,6 @@ class RegradeForm extends React.Component {
 				</div>
 			);
 		} else {
-			let testVal = this.state.homeworkNumber;
-
-		// GET REQUEST
-			// fetch('http://httpbin.org/get', {
-			// 	method: 'get',
-			// 	headers: {
-			// 		'accept': 'application/json'
-			// 	},
-			// })
-			// .then((response) => {
-			// 	response.json().then(json => {
-			// 		console.log(json);
-			// 	});
-			// });
-
-		// POST REQUEST
-			// fetch('http://httpbin.org/post', {
-			// 	method: 'post',
-			// 	headers: {
-			// 		'accept': 'application/json'
-			// 	},
-			// 	body: 'test=testVal'
-			// })
-			// .then(response => {
-			// 	response.json().then(json => {
-			// 		console.log(json);
-			// 	});
-			// });
 			return (
 				<HomeworkList onButtonClick={this.onSelectHomework} />
 			);
@@ -143,6 +108,7 @@ class HomeworkList extends React.Component {
 				</li>
 			);
 		});
+		// onButtonClick >> onSelectHomework
 		return <ol>{list}</ol>;
 	}
 }
@@ -183,49 +149,39 @@ class ProblemList extends React.Component {
 				</li>
 			);
 		});
+		// onButtonClick >> onSelectProblem
 		return <ol>{list}</ol>;
 	}
 }
 
 class TestCases extends React.Component {
 
-	// constructor(props) {
-	// 	super(props);
-
-		// this.state = {
-		// 	problems: [
-		// 		'Problem 1',
-		// 		'Problem 3']
-		// };
-	// }
-
 	render() {
-		console.log(this.props.problemList);
-		var problems = [];
-		for (var [problem, selected] of this.props.problemList.entries()) {
-			console.log(problem);
-			if (selected) {
-				console.log(problem);
-				problems.push(problem);
-			}
-		}
-		console.log(problems);
+		// console.log(this.props.problemList);
+		var problems = this.props.problemList;
+		// console.log(problems);
 		var display;
 		const TESTCASES = [
 			'TestCase 1',
 			'TestCase 2',
 			'TestCase 3'];
+		console.log(problems);
 		display = problems.map(problem => {
 			return (
 				<div key={problem}>
 					<p>{problem}</p>
 					<ol>
+						<li key={problem + "all"}>
+							<ButtonObject
+								name={"All test cases"}
+								onButtonClick={this.props.onButtonClick} />
+						</li>
 						{TESTCASES.map(testcase => {
 							return (
 								<li key={problem + testcase}>
 									<ButtonObject
-									name={testcase}
-									onButtonClick={this.props.onButtonClick} />
+										name={testcase}
+										onButtonClick={this.props.onButtonClick} />
 								</li>
 							);
 						})}
