@@ -12,8 +12,14 @@ class RegradeForm extends React.Component {
             problemList: [],
             testCases: {},
             descriptions: {},
-            hasSelectedHomework: false
-        }
+            hasSelectedHomework: false,
+            problemObject: {}
+            // homeworkObject: 
+            // problemObject:
+            //      Problem1: {
+            //          testCase1: description
+            //          testCase2: description
+        };
         this.onSelectHomework = this.onSelectHomework.bind(this);
         this.onSelectSubmission = this.onSelectSubmission.bind(this);
         this.onSelectProblem = this.onSelectProblem.bind(this);
@@ -33,20 +39,37 @@ class RegradeForm extends React.Component {
     }
 
     onSelectProblem(problem) {
-        let problems = this.state.problemList;
-        if (problems.includes(problem)) {
-            problems.splice(problems.indexOf(problem), 1);
+        let problems = Object.assign({}, this.state.problemObject);
+        if (problems.hasOwnProperty(problem)) {
+            delete problems[problem];
         } else {
-            problems.push(problem);
+            problems[problem] = {};
         }
         this.setState({
-            problemList: problems
-        })
+            problemObject: problems
+        });
+        // let problems = this.state.problemList;
+        // if (problems.includes(problem)) {
+        //     problems.splice(problems.indexOf(problem), 1);
+        // } else {
+        //     problems.push(problem);
+        // }
+        // this.setState({
+        //     problemList: problems
+        // })
     }
 
-    onSelectTestCase(testcase) {
+    onSelectTestCase(problem, testCase) {
+        let problems = Object.assign({}, this.state.problemObject);
+        let testCases = Object.assign({}, problems[problem]);
+        if (testCases.hasOwnPropety(testCase)) {
+            testCases[testCase] = '';
+        } else {
+            delete testCases[testCase];
+        }
+        problems[problem] = testCases;
         this.setState({
-
+            problemObject: problems
         })
     }
 
@@ -69,7 +92,7 @@ class RegradeForm extends React.Component {
                     <ul>{list}</ul>
                     <TestCases
                         onButtonClick={this.onSelectTestCase}
-                        problemList={this.state.problemList} />
+                        problemList={Object.getOwnPropertyNames(this.state.problemObject)} />
                 </div>
             );
         } else {
@@ -172,15 +195,17 @@ class TestCases extends React.Component {
                     <p>{problem}</p>
                     <ol>
                         <li key={problem + "all"}>
-                            <ButtonObject
+                            <TestCaseButton
                                 name={"All test cases"}
+                                problem={problem}
                                 onButtonClick={this.props.onButtonClick} />
                         </li>
                         {TESTCASES.map(testcase => {
                             return (
                                 <li key={problem + testcase}>
-                                    <ButtonObject
+                                    <TestCaseButton
                                         name={testcase}
+                                        problem={problem}
                                         onButtonClick={this.props.onButtonClick} />
                                 </li>
                             );
@@ -216,6 +241,24 @@ class ButtonObject extends React.Component {
     }
 }
 
+class TestCaseButton extends React.Component {
+    constructor() {
+        super();
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onButtonClick(this.props.problem, this.props.name);
+    }
+
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+                {this.props.name}
+            </button>
+        );
+    }
+}
 
 
 // class Descriptions extends React.Component {
