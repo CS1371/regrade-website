@@ -7,7 +7,7 @@ import CardStatus from '../components/CardStatus';
 class RegradeList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: [], cards: []};
+        this.state = {username: [], cards: [], loading: true};
     }
 
     componentDidMount() {
@@ -16,7 +16,8 @@ class RegradeList extends React.Component {
             if (data.username && data.username.length > 0) {
                 this.setState({
                     username: data.username,
-                    cards: data.cards
+                    cards: data.cards,
+                    loading: false
                 });
             } else {
                 login();
@@ -24,6 +25,9 @@ class RegradeList extends React.Component {
         });
     }
     renderCards() {
+        if (this.state.loading) {
+            return ( <h5 className="card-title">Loading...</h5> );
+        }
         var cards = this.state.cards;
         var out = [];
         if (cards.length > 0) {
