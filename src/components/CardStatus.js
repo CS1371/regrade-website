@@ -16,7 +16,6 @@ class CardStatus extends React.Component {
             default:
                 textClass = "text-secondary";
         }
-        console.log(textClass);
         return (
             <h6>
                 Status:&nbsp;

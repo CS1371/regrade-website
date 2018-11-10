@@ -2,13 +2,12 @@
 // api returns json
 header("Content-Type: application/json; charset=UTF-8");
 
+require_once './login.php';
+
 // check http request type
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        if (isset($_GET['name']))
-            $output = getCards($_GET['name']);
-        else
-            $output = getCards('');
+        $output = getCards(getUsername());
         break;
     case 'POST':
         // get posted data
@@ -20,16 +19,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
 exit(json_encode($output));
 
 
-function getCards($student_name) {
+function getCards($username) {
     $output = (Object) array();
-    if (empty($student_name)) {
+    if (empty($username)) {
+        $output->username = [];
         $output->cards = [];
         return $output;
     }
     // return dummy json for now
+    $output->username = $username;
     $output->cards = array(
-        array("id" => 1, "name" => "HW 1 Original - " . $student_name, "student" => $student_name, "ta" => "Baran"),
-        array("id" => 2, "name" => "HW 3 Resubmission - " . $student_name, "student" => $student_name, "ta" => "Some TA"),
+        array("homework" => "Homework 3 - Original", "description" => "I did it correctly, I know because it worked on my computer, autograder must have messed up!", "timestamp" => "2018-10-4 6:28AM", "status" => "Pending", "comment" => []),
+        array("homework" => "Homework 2 - Resubmission", "description" => "I don't know what happened, but my code was passing the test cases...", "timestamp" => "2018-09-23 3:14PM", "status" => "Denied", "comment" => "This regrade request was denied because your code is incorrect"),
+        array("homework" => "Homework 1 - Resubmission", "description" => "I'm sure I did this right, I tested with the grading test cases too", "timestamp" => "2018-09-02 3:14PM", "status" => "Accepted", "comment" => "Sorry, that was our bad. Fixed your grade on Canvas")
     );
     return $output;
 }

@@ -1,15 +1,33 @@
 import React from 'react';
 import './RegradeList.css';
-import {getCards} from '../api';
+import {getCards, login} from '../api';
 import CardComment from '../components/CardComment';
 import CardStatus from '../components/CardStatus';
 
 class RegradeList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {username: [], cards: []};
+    }
+
+    componentDidMount() {
+        let result = getCards();
+        result.then(data => {
+            if (data.username && data.username.length > 0) {
+                this.setState({
+                    username: data.username,
+                    cards: data.cards
+                });
+            } else {
+                login();
+            }
+        });
+    }
     renderCards() {
-        var data = getCards("busluel3")
+        var cards = this.state.cards;
         var out = [];
-        if (data.cards.length > 0) {
-            for (let card of data.cards) {
+        if (cards.length > 0) {
+            for (let card of cards) {
                 out.push(
                     <div className="card text-left regrade-card">
                         <div className="card-header">
