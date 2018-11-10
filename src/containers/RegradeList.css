@@ -11,11 +11,7 @@
 }
 
 .regrade-card-title {
-    display: inline;
-}
-
-.regrade-card-status {
-    float: right;
+    margin-bottom: 0px;
 }
 
 .regrade-card-comment {

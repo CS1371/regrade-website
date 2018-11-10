@@ -13,11 +13,15 @@ class RegradeList extends React.Component {
                 out.push(
                     <div className="card text-left regrade-card">
                         <div className="card-header">
-                            <h5 className="card-title regrade-card-title">
-                                {card.homework}&nbsp;&nbsp;
-                                <small className="card-text">{card.timestamp}</small>
-                            </h5>
-                            <CardStatus value={card.status} />
+                            <div class="row">
+                                <h5 className="card-title col-md-9 regrade-card-title">
+                                    {card.homework}&nbsp;&nbsp;
+                                    <small className="card-text">{card.timestamp}</small>
+                                </h5>
+                                <div class="col-md-3 text-right">
+                                    <CardStatus value={card.status} />
+                                </div>
+                            </div>
                         </div>
                         <div className="card-body">
                             <h6>Description:</h6>

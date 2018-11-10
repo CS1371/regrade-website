@@ -18,7 +18,7 @@ class CardStatus extends React.Component {
         }
         console.log(textClass);
         return (
-            <h6 className="regrade-card-status">
+            <h6>
                 Status:&nbsp;
                 <span className={textClass}>{this.props.value}</span>
             </h6>
