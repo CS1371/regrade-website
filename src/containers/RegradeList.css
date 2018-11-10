@@ -1,0 +1,24 @@
+.RegradeList {}
+
+.regrade-card-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.regrade-card {
+    margin-bottom: 20px;
+    background-color: #FAFAFA;
+}
+
+.regrade-card-title {
+    display: inline;
+}
+
+.regrade-card-status {
+    float: right;
+}
+
+.regrade-card-comment {
+    padding: 10px;
+    color: #707070;
+}

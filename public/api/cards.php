@@ -37,8 +37,7 @@ function getCards($student_name) {
 function addCard($data) {
     // assume new card is added to Trello
     // return confirmation output
-    $output = (Object) array();
-    $output->id = 3;
+    $output = $data;
     $output->time = time();
     return $output;
 }
