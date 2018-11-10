@@ -18,3 +18,11 @@
     padding: 10px;
     color: #707070;
 }
+
+.logout-prompt {
+    float: right;
+}
+
+.logout-prompt p {
+    margin: 0px;
+}

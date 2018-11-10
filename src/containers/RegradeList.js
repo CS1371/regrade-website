@@ -24,10 +24,21 @@ class RegradeList extends React.Component {
             }
         });
     }
+
+    logoutPrompt() {
+        if (this.state.loading)
+            return [];
+        return (
+            <div className="logout-prompt text-right">
+                <p>Hello <b>{this.state.username}</b>!</p>
+                <p>Not you? <a href="./api/login.php?logout=">Logout</a></p>
+            </div>
+        );
+    }
+
     renderCards() {
-        if (this.state.loading) {
+        if (this.state.loading)
             return ( <h5 className="card-title">Loading...</h5> );
-        }
         var cards = this.state.cards;
         var out = [];
         if (cards.length > 0) {
@@ -66,7 +77,14 @@ class RegradeList extends React.Component {
     render() {
         return (
             <div className="RegradeList">
-            <h2>Regrade Requests</h2>
+            <div className="row">
+                <div className="col-md-9">
+                    <h2>Regrade Requests</h2>
+                </div>
+                <div className="col-md-3">
+                    {this.logoutPrompt()}
+                </div>
+            </div>
             <div className="card text-center regrade-card-container">
                 <div className="card-body">
                     {this.renderCards()}
