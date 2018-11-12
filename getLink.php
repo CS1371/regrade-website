@@ -1,5 +1,8 @@
 <?php
 
+// For testing purposes only
+getLink("jpetrillo3", "Homework 11 - Original");
+
 /*
  * Function to generate the url to a particular student's submission.
  *
@@ -16,7 +19,7 @@
  * https://gatech.instructure.com/courses/26266/assignments/:assignmentID/submissions/:studentID
  */
 
-function getURL($student, $assignment) {
+function getLink($student, $assignment) {
 
 // STEP 1: EXPORT INFORMATION FROM CANVAS
 
@@ -25,12 +28,12 @@ function getURL($student, $assignment) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 // Get Users
-    $url_users = "https://gatech.instructure.com/api/v1/courses/26266/users?access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
+    $url_users = "https://gatech.instructure.com/api/v1/courses/26266/users?&per_page=5000&access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
     curl_setopt($ch, CURLOPT_URL, $url_users);
     $users = json_decode(curl_exec($ch), true);
 
 // Get assignments
-    $url_assignments = "https://gatech.instructure.com/api/v1/courses/26266/assignments?access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
+    $url_assignments = "https://gatech.instructure.com/api/v1/courses/26266/assignments?&per_page=5000&access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
     curl_setopt($ch, CURLOPT_URL, $url_assignments);
     $assignments = json_decode(curl_exec($ch), true);
 
