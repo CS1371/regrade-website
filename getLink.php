@@ -40,6 +40,10 @@ function getLink($student, $assignment) {
 // Close
     curl_close($ch);
 
+// For testing purposes only
+    echo json_encode($users);
+    echo json_encode($assignments);
+
 // STEP 2: ITERATRE THROUGH STUDENTS LOOKING FOR $STUDENT
 
     // get student's first initial and last name from gt username
