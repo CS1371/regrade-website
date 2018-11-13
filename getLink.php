@@ -1,7 +1,8 @@
 <?php
 
 // For testing purposes only
-getLink("cbrown425", "Homework 1 - Resubmission");
+$url = getLink("cbrown425", "Homework 2 - Original");
+echo($url);
 
 /*
  * Function to generate the url to a particular student's submission.
@@ -69,23 +70,25 @@ function getLink($student, $assignment) {
         }
     }
 
-    $alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $assignmentNum = strtok($assignment, $alphabet);
-    $assignmentNum = strtok($assignmentNum, $alphabet);
+// STEP 3: ITERATRE THROUGH ASSIGNMENTS LOOKING FOR $ASSIGNMENT
 
-    foreach($assignments as $curAssignment) {
-        /* Match assignment number and either original or resubmission, get
-         * assignment id
+    $alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -";
+    $assignmentNum = strtok($assignment, $alphabet);
+
+    foreach($assignments as $curAssignment)
+    {
+        /* If the assignment numbers match, check to see if neither $assignment
+         * nor the current assignment contain 'Resubmission'. Otherwise, check to
+         * see if they both do.
          *
          * /api/v1/users/:user_id/profile
          */
 
         $assignmentName = $curAssignment['name'];
         $curAssignmentNum = strtok($assignmentName, $alphabet);
-        $curAssignmentNum = strtok($curAssignmentNum, $alphabet);
         if (strcasecmp((string)$assignmentNum, (string)$curAssignmentNum) == 0)
         {
-            if (strpos($assignment, 'Original') != false && strpos($assignmentName, 'Original') != false)
+            if (strpos($assignment, 'Resubmission') == false && strpos($assignmentName, 'Resubmission') == false)
             {
                 $assignmentID = $curAssignment['id'];
                 break 1;
@@ -98,11 +101,9 @@ function getLink($student, $assignment) {
 
     curl_close($ch);
 
-// STEP 3: CONSTRUCT LINK
+// STEP 4: CONSTRUCT LINK
 
     $link = "https://gatech.instructure.com/courses/26266/assignments/$assignmentID/submissions/$studentID";
-
-    echo($link);
 
     return $link;
 }
