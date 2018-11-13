@@ -81,7 +81,6 @@ function getLink($student, $assignment) {
          * nor the current assignment contain 'Resubmission'. Otherwise, check to
          * see if they both do.
          *
-         * /api/v1/users/:user_id/profile
          */
 
         $assignmentName = $curAssignment['name'];
