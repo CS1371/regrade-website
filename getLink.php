@@ -26,23 +26,23 @@ function getLink($student, $assignment) {
 
 // STEP 1: EXPORT INFORMATION FROM CANVAS
 
-//  Initiate curl
+    //  Initiate curl
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-// Get Users
+    // Get Users
     $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&per_page=5000&access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
     curl_setopt($ch, CURLOPT_URL, $url_users);
     $users = json_decode(curl_exec($ch), true);
 
-// Get assignments
+    // Get assignments
     $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=5000&access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
     curl_setopt($ch, CURLOPT_URL, $url_assignments);
     $assignments = json_decode(curl_exec($ch), true);
 
 // STEP 2: ITERATRE THROUGH STUDENTS LOOKING FOR $STUDENT
 
-    // get student's first initial and last name from gt username
+    // Get student's first initial and last name from gt username
     $name = strtok($student, "1234567890");
     $first = substr($name, 0, 1);
     $last = ucfirst(substr($name, 1));
