@@ -74,6 +74,7 @@ function getLink($student, $assignment) {
 
 // STEP 3: ITERATRE THROUGH ASSIGNMENTS LOOKING FOR $ASSIGNMENT
 
+    // Get assignment number from input
     $alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -";
     $assignmentNum = strtok($assignment, $alphabet);
 
