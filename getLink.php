@@ -1,7 +1,7 @@
 <?php
 
 // For testing purposes only
-getLink("jpetrillo3", "Homework 11 - Original");
+getLink("cbrown425", "Homework 1 - Resubmission");
 
 /*
  * Function to generate the url to a particular student's submission.
@@ -37,54 +37,74 @@ function getLink($student, $assignment) {
     curl_setopt($ch, CURLOPT_URL, $url_assignments);
     $assignments = json_decode(curl_exec($ch), true);
 
-// For testing purposes only
-    echo json_encode($users);
-    echo json_encode($assignments);
-
 // STEP 2: ITERATRE THROUGH STUDENTS LOOKING FOR $STUDENT
 
     // get student's first initial and last name from gt username
     $name = strtok($student, "1234567890");
-    echo($name);
     $first = substr($name, 0, 1);
-    $last = substr($name, 1);
-    echo($first);
-    echo($last);
-
+    $last = ucfirst(substr($name, 1));
 
     foreach($users as $user)
     {
-        /* if first initial and last name match, get student's login id and see
-         * if it matches gt username. If it matches get students id number and break.
+        /* If the name of the current student contains the last name of the
+         * the student we are searching for, get that student's profile and
+         * see if the gt usernames match
          *
          * /api/v1/users/:user_id/profile
          */
 
         $curName = $user['name'];
-        $curFirst = strtok($curName, " ");
-        $curLast = strtok($curFirst, " ");
-        if (substr($curFirst, 0, 1) == $first && $curLast == $last)
+        if (strpos($curName, $last) !== false)
         {
             $id = $user['id'];
             $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
             curl_setopt($ch, CURLOPT_URL, $profile_url);
             $profile = json_decode(curl_exec($ch), true);
-            echo(json_encode($profile));
+            $curID = $profile['login_id'];
+            if (strcasecmp($student, $curID) == 0)
+            {
+                $studentID = $profile['id'];
+                break 1;
+            }
         }
     }
 
-    foreach($assignments as $assignment) {
+    $alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $assignmentNum = strtok($assignment, $alphabet);
+    $assignmentNum = strtok($assignmentNum, $alphabet);
+
+    foreach($assignments as $curAssignment) {
         /* Match assignment number and either original or resubmission, get
          * assignment id
          *
          * /api/v1/users/:user_id/profile
          */
+
+        $assignmentName = $curAssignment['name'];
+        $curAssignmentNum = strtok($assignmentName, $alphabet);
+        $curAssignmentNum = strtok($curAssignmentNum, $alphabet);
+        if (strcasecmp((string)$assignmentNum, (string)$curAssignmentNum) == 0)
+        {
+            if (strpos($assignment, 'Original') != false && strpos($assignmentName, 'Original') != false)
+            {
+                $assignmentID = $curAssignment['id'];
+                break 1;
+            } else if (strpos($assignment, 'Resubmission') != false && strpos($assignmentName, 'Resubmission') != false) {
+                $assignmentID = $curAssignment['id'];
+                break 1;
+            }
+        }
     }
 
-    // construct link
-    // https://gatech.instructure.com/courses/26266/assignments/:assignmentID/submissions/:studentID
+    curl_close($ch);
 
-    // return link
+// STEP 3: CONSTRUCT LINK
+
+    $link = "https://gatech.instructure.com/courses/26266/assignments/$assignmentID/submissions/$studentID";
+
+    echo($link);
+
+    return $link;
 }
 
 
