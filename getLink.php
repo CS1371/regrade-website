@@ -23,6 +23,7 @@ echo($url);
 function getLink($student, $assignment) {
 
     $courseID = 26266;
+    $access_token = 'token';
 
 // STEP 1: EXPORT INFORMATION FROM CANVAS
 
@@ -31,12 +32,12 @@ function getLink($student, $assignment) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     // Get Users
-    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&per_page=5000&access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
+    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&per_page=5000&access_token=$access_token";
     curl_setopt($ch, CURLOPT_URL, $url_users);
     $users = json_decode(curl_exec($ch), true);
 
     // Get assignments
-    $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=5000&access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
+    $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=5000&access_token=$access_token";
     curl_setopt($ch, CURLOPT_URL, $url_assignments);
     $assignments = json_decode(curl_exec($ch), true);
 
@@ -60,7 +61,7 @@ function getLink($student, $assignment) {
         if (strpos($curName, $last) !== false)
         {
             $id = $user['id'];
-            $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=2096~9RXlwVUP3OIkybSXxvCMEiPAoGymux2IxRd3hifZEuREmJEa8x1MjmvNXeCLaCHB";
+            $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=$access_token";
             curl_setopt($ch, CURLOPT_URL, $profile_url);
             $profile = json_decode(curl_exec($ch), true);
             $curID = $profile['login_id'];
