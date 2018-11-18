@@ -1,8 +1,6 @@
 import React from 'react';
-import ButtonObject from '../components/ButtonObject';
-import TestCaseButton from '../components/TestCaseButton';
-import Description from '../components/Description';
-import TestCases from './TestCaseList';
+import Description from './Description';
+import TestCaseList from './TestCaseList';
 
 class Problem extends React.Component {
     // Props:
@@ -12,41 +10,47 @@ class Problem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            onButtonClick: this.props.onButtonClick,
             allTestCases: true,
             testCases: this.props.testCases
         };
         this.handleAllClicked = this.handleAllClicked.bind(this);
         this.handleSpecificClicked = this.handleSpecificClicked.bind(this);
+        this.handleClicked = this.handleClicked.bind(this);
     }
 
     handleSpecificClicked() {
+        this.state.onButtonClick(this.props.problemName, "none")
         this.setState({
             allTestCases: false
         });
     }
 
     handleAllClicked() {
+        this.props.onButtonClick(this.props.problemName, "all")
         this.setState({
             allTestCases: true
         });
+    }
+
+    handleClicked(problemName, testCase) {
+        this.props.onButtonClick(problemName, testCase);
+        this.setState({
+            allTestCases: (testCase === "all")
+        })
     }
 
     render() {
         return (
             <div>
                 <h3>{this.props.problemName}</h3>
-                <ButtonObject
-                    name="All Test Cases"
-                    onButtonClick={this.handleAllClicked} />
-                <ButtonObject
-                    name="Specific Test Cases"
-                    onButtonClick={this.handleSpecificClicked} />
-                <TestCases
+                <TestCaseList
                     showTestCases={!this.state.allTestCases}
                     problem={this.props.problemName}
-                    onButtonClick={this.props.onButtonClick} />
+                    onButtonClick={this.handleClicked} />
                 <Description
-                    onChange={this.props.textUpdate} />
+                    problem={this.props.problemName}
+                    onTextUpdate={this.props.onTextUpdate} />
             </div>
         );
     }
