@@ -19,3 +19,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Don't track changes in constants file, to keep
+# configuration-specific settings private
+constants.php
