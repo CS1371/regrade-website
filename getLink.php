@@ -1,6 +1,7 @@
 <?php
 
 // For testing purposes only
+header('Content-Type', 'text/plain');
 $url = getLink("cbrown425", "Homework 2 - Original");
 echo($url);
 
