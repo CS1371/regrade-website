@@ -31,10 +31,25 @@ function getLink($student, $assignment) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+    // Get headers for users
+    $fid = fopen('tmp.txt', 'w');
+    curl_setopt($ch, CURLOPT_WRITEHEADER, $fid);
+
     // Get Users
     $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&per_page=5000&access_token=$access_token";
     curl_setopt($ch, CURLOPT_URL, $url_users);
     $users = json_decode(curl_exec($ch), true);
+    fclose($fid);
+
+    // Find number of pages
+    $headers = fopen("tmp.txt", "r");
+    $found = false;
+    while(!feof($headers) && !$found)
+    {
+        $line = fgets($headers);
+        $found = strpos($line, "Link:") !== false;
+    }
+    echo $line . "<br>";
 
     // Get assignments
     $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=5000&access_token=$access_token";
