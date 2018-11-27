@@ -2,12 +2,13 @@
 // api returns json
 header("Content-Type: application/json; charset=UTF-8");
 
+require_once './constants.php';
 require_once './login.php';
 
 // check http request type
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $output = getCards(getUsername());
+        $output = getCards($isLocalhost ? "teststudent" : getUsername());
         break;
     case 'POST':
         // get posted data
