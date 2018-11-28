@@ -26,3 +26,7 @@
 .logout-prompt p {
     margin: 0px;
 }
+
+.regrade-button {
+    background-color: #de893d;
+}

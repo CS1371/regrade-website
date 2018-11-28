@@ -59,7 +59,7 @@ class RegradeList extends React.Component {
                         <div className="card-body">
                             <h6>Description:</h6>
                             <p className="card-text">{card.description}</p>
-                            <CardComment value={card.comment} />
+                            <CardComment comment={card.comment} commentor={card.commentor}/>
                         </div>
                     </div>
                 );
@@ -70,7 +70,7 @@ class RegradeList extends React.Component {
             out.push( <h5 className="card-title">No regrades so far!</h5> );
             out.push( <p className="card-text">Would you like to submit a homework regrade request?</p> );
         }
-        out.push( <a href="#" className="btn btn-secondary">New Regrade</a> );
+        out.push( <a href="#" className="btn regrade-button">New Regrade</a> );
         return out;
     }
 
