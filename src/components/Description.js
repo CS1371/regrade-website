@@ -29,7 +29,6 @@ class Description extends React.Component {
         		</textarea>
         	</div>
         );
-
     }
 
 }

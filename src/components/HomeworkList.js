@@ -39,7 +39,6 @@ class HomeworkList extends React.Component {
                 </li>
             );
         });
-        // onButtonClick >> onSelectHomework
         return <ol>{list}</ol>;
     }
 }

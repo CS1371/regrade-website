@@ -3,10 +3,7 @@ import Description from './Description';
 import TestCaseList from './TestCaseList';
 
 class Problem extends React.Component {
-    // Props:
-    // testCases
-    // onButtonClick
-    // textUpdate
+    
     constructor(props) {
         super(props);
         this.state = {

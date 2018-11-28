@@ -42,8 +42,6 @@ class RegradeCreate extends React.Component {
     }
 
     onSelectHomework(name) {
-        // var data = this.state.regradeData;
-        // data.homeworkName = name;
         this.setState({
             hasSelectedHomework: true,
             // regradeData: data
@@ -52,10 +50,7 @@ class RegradeCreate extends React.Component {
     }
 
     onSelectSubmission(subType) {
-        // var data = this.state.regradeData;
-        // data.submissionType = submissionType;
         this.setState({
-            // regradeData: data
             submissionType: subType
         })
     }
@@ -110,26 +105,24 @@ class RegradeCreate extends React.Component {
         var validData = true;
         if (this.state.homeworkName === "") {
             validData = false;
-            console.log("1");
+            console.log("homeworkName");
         }
         if (this.state.submissionType === "") {
             validData = false;
-            console.log("2");
+            console.log("submissionType");
         }
         if (Object.keys(data).length === 0) {
             validData = false;
-            console.log("3");
+            console.log("Problems");
         } else {
-            // console.log(Object.keys(data));
             for (let field in data) {
-                // console.log(field);
                 if (data[field].testCases.length < 1) {
                     validData = false;
-                    console.log("4");
+                    console.log("testCases");
                 }
                 if (data[field].description.length < 20) {
                     validData = false;
-                    console.log("5");
+                    console.log("description length");
                 }
             }
         }

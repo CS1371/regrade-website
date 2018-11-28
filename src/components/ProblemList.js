@@ -29,7 +29,6 @@ class ProblemList extends React.Component {
                 </li>
             );
         });
-        // onButtonClick >> onSelectProblem
         return <ol>{list}</ol>;
     }
 }

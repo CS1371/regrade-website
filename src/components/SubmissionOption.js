@@ -6,8 +6,6 @@ class SubmissionOption extends React.Component {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
-    // Props:
-    // onButtonClick
 
     handleClick(e) {
         this.props.onButtonClick(e.target.value);
