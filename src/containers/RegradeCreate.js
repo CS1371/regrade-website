@@ -4,6 +4,7 @@ import HomeworkList from '../components/HomeworkList';
 import SubmissionOption from '../components/SubmissionOption';
 import ProblemList from '../components/ProblemList';
 import {createCard} from '../api';
+import './RegradeCreate.css';
 
 class RegradeCreate extends React.Component {
     constructor(props) {
@@ -30,14 +31,6 @@ class RegradeCreate extends React.Component {
             regradeData: {},
             problemList: sampleProblems,
             testCases: sampleTestCases
-            // homeworkObject: 
-            //  regradeData:
-            //       homeworkName: "Iteration"
-            //       submissionType: "Original"
-            //       Problem 1: {
-            //           testCases: ["Test Case 1", "Test Case 2"],
-            //           description: "why they want a regrade"
-            //         }
         };
         this.onSelectHomework = this.onSelectHomework.bind(this);
         this.onSelectSubmission = this.onSelectSubmission.bind(this);
@@ -49,19 +42,21 @@ class RegradeCreate extends React.Component {
     }
 
     onSelectHomework(name) {
-        var data = this.state.regradeData;
-        data.homeworkName = name;
+        // var data = this.state.regradeData;
+        // data.homeworkName = name;
         this.setState({
             hasSelectedHomework: true,
-            regradeData: data
+            // regradeData: data
+            homeworkName: name
         });
     }
 
-    onSelectSubmission(submissionType) {
-        var data = this.state.regradeData;
-        data.submissionType = submissionType;
+    onSelectSubmission(subType) {
+        // var data = this.state.regradeData;
+        // data.submissionType = submissionType;
         this.setState({
-            regradeData: data
+            // regradeData: data
+            submissionType: subType
         })
     }
 
@@ -74,8 +69,6 @@ class RegradeCreate extends React.Component {
                 testCases: ["all"],
                 description: ""
             };
-            // console.log("new problem: ");
-            // console.log(problems);
         }
         this.setState({
             regradeData: problems
@@ -83,19 +76,9 @@ class RegradeCreate extends React.Component {
     }
 
     onSelectTestCase(problemName, testCase) {
-        // this.state.regradeData[problemName].testCases.push(testCase)
-        // console.log("current Problems: ")
-        // console.log(this.state.regradeData);
-        // let problems = {...this.state.regradeData};
-        // let problems = Object.assign({}, this.state.regradeData,
-        //     {problemName}: Object.assign);
-        // let testCases = problems.testCases;
-        // console.log(testCases);
-        // console.log(problems);
+
         var problems = this.state.regradeData;
-        // console.log(problems);
-        // console.log(problemName);
-        // console.log(problems[problemName]);
+
         if (testCase === "all") {
             problems[problemName].testCases = ["all"];
         } else if (testCase === "none") {
@@ -106,17 +89,14 @@ class RegradeCreate extends React.Component {
         this.setState({
             regradeData: problems
         })
-        // console.log(problems);
     }
 
     onTextUpdate(newValue, problemName) {
-        // console.log(problemName);
         var problems = this.state.regradeData;
         problems[problemName].description = newValue;
         this.setState({
             regradeData: problems
         })
-        // console.log(this.state.regradeData);
     }
 
     handleBackButton() {
@@ -128,33 +108,38 @@ class RegradeCreate extends React.Component {
     handleSubmit() {
         var data = this.state.regradeData;
         var validData = true;
-        if (!data.hasOwnProperty("homeworkName")) {
+        if (this.state.homeworkName === "") {
             validData = false;
             console.log("1");
-        } else if (!data.hasOwnProperty("submissionType")) {
+        }
+        if (this.state.submissionType === "") {
             validData = false;
             console.log("2");
-        } else if (Object.keys(data).length <= 2) {
+        }
+        if (Object.keys(data).length === 0) {
             validData = false;
             console.log("3");
         } else {
-            console.log(Object.keys(data));
+            // console.log(Object.keys(data));
             for (let field in data) {
-                if (field !== "homeworkName" && field !== "submissionType") {
-                    console.log(field);
-                    if (data[field].testCases.length < 1) {
-                        validData = false;
-                        console.log("4");
-                    } else if (data[field].description.length < 20) {
-                        validData = false;
-                        console.log("5");
-                    }
+                // console.log(field);
+                if (data[field].testCases.length < 1) {
+                    validData = false;
+                    console.log("4");
+                }
+                if (data[field].description.length < 20) {
+                    validData = false;
+                    console.log("5");
                 }
             }
         }
         if (validData) {
-            createCard();
-            console.log("Submitted");
+            data = this.state.regradeData;
+            data.homeworkName = this.state.homeworkName;
+            data.submissionType = this.state.submissionType;
+            createCard(data);
+            console.log("Submitted:");
+            console.log(this.state.regradeData);
         } else {
             console.log("Failed to submit");
         }
@@ -162,32 +147,22 @@ class RegradeCreate extends React.Component {
 
     render() {
         if (this.state.hasSelectedHomework) {
-            // console.log(this.state.problemList);
-            // var list = this.state.problemList.map(name => {
-            //         return (
-            //             <li key={name}>
-            //                 {name}
-            //             </li>
-            //         );
-            //     });
             var problems = Object.getOwnPropertyNames(this.state.regradeData).map(problem => {
-                if (problem !== "homeworkName" && problem !== "submissionType") {
-                    return (
-                        <li key={problem} >
-                            <Problem
-                                problemName={problem}
-                                testCases={this.state.testCases[problem]}
-                                onButtonClick={this.onSelectTestCase}
-                                onTextUpdate={this.onTextUpdate} />
-                        </li>
-                    );
-                }
+                return (
+                    <li key={problem} >
+                        <Problem
+                            problemName={problem}
+                            testCases={this.state.testCases[problem]}
+                            onButtonClick={this.onSelectTestCase}
+                            onTextUpdate={this.onTextUpdate} />
+                    </li>
+                );
             })
             return (
                 <div>
                     <button onClick={this.handleBackButton}>Back</button>
-                    <h1>{this.state.regradeData.homeworkName}</h1>
-                    <h2>{this.state.regradeData.submissionType}</h2>
+                    <h1>{this.state.homeworkName}</h1>
+                    <h2>{this.state.submissionType}</h2>
                     <SubmissionOption
                         onButtonClick={this.onSelectSubmission} />
                     <ProblemList
@@ -195,20 +170,10 @@ class RegradeCreate extends React.Component {
                     <ul>{problems}</ul>
                     <button onClick={this.handleSubmit}>Submit</button>
                 </div>
-                // <div>
-                //     <Submission onButtonClick={this.onSelectSubmission} />
-                //     <ProblemList onButtonClick={this.onSelectProblem} />
-                //     <p>{this.state.homeworkName}</p>
-                //     <p>{this.state.submissionType}</p>
-                //     <ul>{list}</ul>
-                //     <TestCases
-                //         onButtonClick={this.onSelectTestCase}
-                //         problemList={Object.getOwnPropertyNames(this.state.regradeData)} />
-                // </div>
             );
         } else {
             return (
-                <div>
+                <div className="regrade-card">
                     <h1>Choose a Homework</h1>
                     <HomeworkList onButtonClick={this.onSelectHomework} />
                 </div>
