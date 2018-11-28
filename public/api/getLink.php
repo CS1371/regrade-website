@@ -1,5 +1,7 @@
 <?php
 
+require_once 'constants.php';
+
 /*
  * Function to generate the url to a particular student's submission.
  *
@@ -18,8 +20,7 @@
 
 function getLink($student, $assignment) {
 
-    $courseID = 26266;
-    $access_token = 'token';
+    $access_token = $canvasToken;
 
 // STEP 1: EXPORT INFORMATION FROM CANVAS
 
