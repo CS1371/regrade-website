@@ -22,4 +22,6 @@ $canvasToken = <TOKEN HERE>;
 
 $trelloToken = <TOKEN HERE>;
 
+$courseID = 26266;
+
 ?>
