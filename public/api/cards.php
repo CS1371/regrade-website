@@ -65,7 +65,7 @@ function addCard($data) {
 	$taName1 = "Prithvi Rathaur";
 	$taName2 = "Baran Usluel";
 	$regradeReason = "See if it works";
-	/*foreach ($data as $field) {
+	foreach ($data as $field) {
 		if (isset($field)) {
 			if ($field == "Homework Submission") {
 				$cardName = $field[0];
@@ -76,7 +76,7 @@ function addCard($data) {
 				$regradeReason = $field[0];
 			}
 		}
-	}*/
+	}
 	//if (!isset($cardName) || !isset($regradeReason) || (!isset(taName1) && !isset(taName2))) {
 
 	//} else {
