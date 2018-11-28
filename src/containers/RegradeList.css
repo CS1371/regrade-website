@@ -1,4 +1,4 @@
-.RegradeCreate {}
+.RegradeList {}
 
 .regrade-card-container {
     margin-top: 20px;
@@ -25,4 +25,8 @@
 
 .logout-prompt p {
     margin: 0px;
+}
+
+.regrade-button {
+    background-color: #de893d;
 }
