@@ -1,8 +1,8 @@
 <?php
 
 // For testing purposes only
-header('Content-Type', 'text/plain');
-$url = getLink("cbrown425", "Homework 2 - Original");
+header('Content-Type: text/plain');
+$url = getLink("ainman3", "Homework 2 - Original");
 echo($url);
 
 /*
@@ -36,8 +36,9 @@ function getLink($student, $assignment) {
     $fid = fopen('tmp.txt', 'w');
     curl_setopt($ch, CURLOPT_WRITEHEADER, $fid);
 
-    // Get Users
-    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&per_page=5000&access_token=$access_token";
+    // Get first page of users
+    $page = 1;
+    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$access_token";
     curl_setopt($ch, CURLOPT_URL, $url_users);
     $users = json_decode(curl_exec($ch), true);
     fclose($fid);
@@ -50,10 +51,23 @@ function getLink($student, $assignment) {
         $line = fgets($headers);
         $found = strpos($line, "Link:") !== false;
     }
-    echo $line . "<br>";
+    $foundLast = false;
+    $current = strtok($line, ',');
+    while (!$foundLast)
+    {
+        $pos = strpos($current, 'last');
+        if ($pos !== false)
+        {
+            $foundLast = true;
+            $pos = strpos($current, 'page=');
+            $lastPage = substr($current, $pos + 5, 1);
+        }
+        $current = strtok(',');
+    }
+    fclose($headers);
 
     // Get assignments
-    $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=5000&access_token=$access_token";
+    $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=100&access_token=$access_token";
     curl_setopt($ch, CURLOPT_URL, $url_assignments);
     $assignments = json_decode(curl_exec($ch), true);
 
@@ -64,8 +78,11 @@ function getLink($student, $assignment) {
     $first = substr($name, 0, 1);
     $last = ucfirst(substr($name, 1));
 
-    foreach($users as $user)
+    $found = false;
+    while (!$found && $page <= $lastPage)
     {
+        foreach($users as $user)
+        {
         /* If the name of the current student contains the last name of the
          * the student we are searching for, get that student's profile and
          * see if the gt usernames match
@@ -73,19 +90,30 @@ function getLink($student, $assignment) {
          * /api/v1/users/:user_id/profile
          */
 
-        $curName = $user['name'];
-        if (strpos($curName, $last) !== false)
-        {
-            $id = $user['id'];
-            $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=$access_token";
-            curl_setopt($ch, CURLOPT_URL, $profile_url);
-            $profile = json_decode(curl_exec($ch), true);
-            $curID = $profile['login_id'];
-            if (strcasecmp($student, $curID) == 0)
+            $curName = $user['name'];
+            if (strpos($curName, $last) !== false)
             {
-                $studentID = $profile['id'];
-                break 1;
+                $id = $user['id'];
+                $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=$access_token";
+                curl_setopt($ch, CURLOPT_URL, $profile_url);
+                $profile = json_decode(curl_exec($ch), true);
+                $curID = $profile['login_id'];
+                if (strcasecmp($student, $curID) == 0)
+                {
+                    $studentID = $profile['id'];
+                    $found = true;
+                    break 1;
+                }
             }
+        }
+
+        //Get next page
+        if (!$found)
+        {
+            $page = $page + 1;
+            $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$access_token";
+            curl_setopt($ch, CURLOPT_URL, $url_users);
+            $users = json_decode(curl_exec($ch), true);
         }
     }
 
