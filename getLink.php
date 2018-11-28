@@ -1,10 +1,5 @@
 <?php
 
-// For testing purposes only
-header('Content-Type: text/plain');
-$url = getLink("ainman3", "Homework 2 - Original");
-echo($url);
-
 /*
  * Function to generate the url to a particular student's submission.
  *
