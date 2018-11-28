@@ -30,7 +30,7 @@ function getCards($username) {
 	}
 
 	// creates URL for TrelloAPI card
-	$url = 'https://api.trello.com/1/boards/5bcfba81f88b4e87e676a435/cards/?limit=100&fields=name&customFieldItems=true&key=a55cc0fef6b52b8a4bf527e2ee767fc8&token=8512780449d6db950dafb4fe0ff856f6220e1c29063b82fc767c41e249328699';
+	$url = 'https://api.trello.com/1/boards/5bcfba81f88b4e87e676a435/cards/?limit=100&fields=name&customFieldItems=true&key=a55cc0fef6b52b8a4bf527e2ee767fc8&token='.rawurlencode($trelloToken);
     //$output = (Object) array();
 
     // calls API
@@ -80,7 +80,7 @@ function addCard($data) {
 	//if (!isset($cardName) || !isset($regradeReason) || (!isset(taName1) && !isset(taName2))) {
 
 	//} else {
-		$urlGetMembers = 'https://api.trello.com/1/boards/5bcfba81f88b4e87e676a435/members?key=a55cc0fef6b52b8a4bf527e2ee767fc8&token=8512780449d6db950dafb4fe0ff856f6220e1c29063b82fc767c41e249328699';
+		$urlGetMembers = 'https://api.trello.com/1/boards/5bcfba81f88b4e87e676a435/members?key=a55cc0fef6b52b8a4bf527e2ee767fc8&token='.rawurlencode($trelloToken);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $urlGetMembers);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -98,7 +98,7 @@ function addCard($data) {
 			}
 		}
 		$memberIDs = $taID1.','.$taID2;
-		$urlMakeCard = "https://api.trello.com/1/cards?name=".rawurlencode($cardName)."&desc=".rawurlencode($regradeReason)."&idList=5beb72c2c45e3520c8c3a7ca&idMembers=".rawurlencode($memberIDs)."&keepFromSource=all&key=a55cc0fef6b52b8a4bf527e2ee767fc8&token=8512780449d6db950dafb4fe0ff856f6220e1c29063b82fc767c41e249328699";
+		$urlMakeCard = "https://api.trello.com/1/cards?name=".rawurlencode($cardName)."&desc=".rawurlencode($regradeReason)."&idList=5beb72c2c45e3520c8c3a7ca&idMembers=".rawurlencode($memberIDs)."&keepFromSource=all&key=a55cc0fef6b52b8a4bf527e2ee767fc8&token=".rawurlencode($trelloToken);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $urlMakeCard);
 		curl_setopt($curl, CURLOPT_POST, 1);
