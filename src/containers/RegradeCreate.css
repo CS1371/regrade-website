@@ -1,1 +1,28 @@
 .RegradeCreate {}
+
+.regrade-card-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.regrade-card {
+    margin-bottom: 20px;
+    background-color: #FAFAFA;
+}
+
+.regrade-card-title {
+    margin-bottom: 0px;
+}
+
+.regrade-card-comment {
+    padding: 10px;
+    color: #707070;
+}
+
+.logout-prompt {
+    float: right;
+}
+
+.logout-prompt p {
+    margin: 0px;
+}
