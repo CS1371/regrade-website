@@ -13,14 +13,16 @@ class RegradeList extends React.Component {
     componentDidMount() {
         let result = getCards();
         result.then(data => {
-            if (data.username && data.username.length > 0) {
+            if (!data || !("username" in data) || data.username.length == 0) {
+                login();
+            } else if (!("cards" in data)) {
+                console.error("Invalid json from getCards(): Missing cards field");
+            } else {
                 this.setState({
                     username: data.username,
                     cards: data.cards,
                     loading: false
                 });
-            } else {
-                login();
             }
         });
     }

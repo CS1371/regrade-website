@@ -1,5 +1,7 @@
 <?php
 
+require_once './constants.php';
+
 // Load the CAS lib
 require_once './phpCAS-1.3.5/CAS.php';
 // Enable debugging
@@ -18,24 +20,27 @@ if (isset($_GET['logout'])) {
 // Handle login GET request by forcing user authentication, by redirecting
 // to GT login if necessary, and then redirect back to |returnTo|
 if (isset($_GET['returnTo'])) {
-    // For production use set the CA certificate that is the issuer of the cert
-    // on the CAS server and uncomment the line below
-    //phpCAS::setCasServerCACert($cas_server_ca_cert_path);
-    // For quick testing you can disable SSL validation of the CAS server.
-    // THIS SETTING IS NOT RECOMMENDED FOR PRODUCTION.
-    // VALIDATING THE CAS SERVER IS CRUCIAL TO THE SECURITY OF THE CAS PROTOCOL!
-    phpCAS::setNoCasServerValidation();
-    // force CAS authentication
-    phpCAS::forceAuthentication();
+    if (!$isLocalhost) {
+        // For production use set the CA certificate that is the issuer of the cert
+        // on the CAS server and uncomment the line below
+        //phpCAS::setCasServerCACert($cas_server_ca_cert_path);
+        // For quick testing you can disable SSL validation of the CAS server.
+        // THIS SETTING IS NOT RECOMMENDED FOR PRODUCTION.
+        // VALIDATING THE CAS SERVER IS CRUCIAL TO THE SECURITY OF THE CAS PROTOCOL!
+        phpCAS::setNoCasServerValidation();
+        // force CAS authentication
+        phpCAS::forceAuthentication();
+    }
 
     header("Location: " . $_GET["returnTo"]);
     die();
 }
 
 // Function to check if user is authenticated and get username if so
-function getUsername() {
-    // Get whether authenticated
-    if (phpCAS::isAuthenticated())
+function getUsername($isLocalhost) {
+    if ($isLocalhost)
+        return "teststudent3";
+    else if (phpCAS::isAuthenticated())
         return phpCAS::getUser();
     else
         return [];

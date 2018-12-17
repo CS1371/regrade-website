@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-// import RegradeList from './containers/RegradeList';
+import RegradeList from './containers/RegradeList';
 import RegradeCreate from './containers/RegradeCreate';
 import logo from './images/courseBrand.png';
 
@@ -21,6 +21,7 @@ ReactDOM.render(
     </nav>
     <div className="container">
         <div className="subpage">
+            <RegradeList />
             <RegradeCreate />
         </div>
     </div>

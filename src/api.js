@@ -1,5 +1,5 @@
 export function createCard(data) {
-    fetch('http://localhost/fetchTest.php', {
+    fetch('./api/cards.php', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
