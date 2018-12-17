@@ -4,7 +4,8 @@ class CardStatus extends React.Component {
     render() {
         var textClass;
         switch (this.props.value) {
-            case "Pending":
+            case "New":
+            case "Under Review":
                 textClass = "text-info";
                 break;
             case "Accepted":

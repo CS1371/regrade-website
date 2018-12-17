@@ -81,6 +81,10 @@ function getCards($username, $trelloToken) {
 			}
 		}
     }
+    // Sort cards (regrades) by date created -- default sorting depends on lists
+    usort($cardsOutput, function($a, $b) {
+        return strtotime($b['dateCreated']) - strtotime($a['dateCreated']);
+    });
     $output["cards"] = $cardsOutput;
 	return $output;
 }

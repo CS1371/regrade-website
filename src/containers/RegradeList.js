@@ -48,10 +48,10 @@ class RegradeList extends React.Component {
                 out.push(
                     <div className="card text-left regrade-card">
                         <div className="card-header">
-                            <div class="row">
+                            <div className="row">
                                 <h5 className="card-title col-md-9 regrade-card-title">
-                                    {card.homework}&nbsp;&nbsp;
-                                    <small className="card-text">{card.timestamp}</small>
+                                    {card.name}&nbsp;&nbsp;
+                                    <small className="card-text">{card.dateCreated}</small>
                                 </h5>
                                 <div class="col-md-3 text-right">
                                     <CardStatus value={card.status} />
@@ -60,8 +60,8 @@ class RegradeList extends React.Component {
                         </div>
                         <div className="card-body">
                             <h6>Description:</h6>
-                            <p className="card-text">{card.description}</p>
-                            <CardComment comment={card.comment} commentor={card.commentor}/>
+                            <p className="card-text">{card.desc}</p>
+                            <CardComment comments={card.comments}/>
                         </div>
                     </div>
                 );
