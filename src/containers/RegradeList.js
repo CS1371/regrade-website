@@ -1,8 +1,10 @@
 import React from 'react';
 import './RegradeList.css';
 import {getCards, login} from '../api';
+import {formatDate} from '../utils';
 import CardComment from '../components/CardComment';
 import CardStatus from '../components/CardStatus';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class RegradeList extends React.Component {
     constructor(props) {
@@ -51,7 +53,7 @@ class RegradeList extends React.Component {
                             <div className="row">
                                 <h5 className="card-title col-md-9 regrade-card-title">
                                     {card.name}&nbsp;&nbsp;
-                                    <small className="card-text">{card.dateCreated}</small>
+                                    <small className="card-text">{formatDate(card.dateCreated)}</small>
                                 </h5>
                                 <div class="col-md-3 text-right">
                                     <CardStatus value={card.status} />
@@ -72,7 +74,7 @@ class RegradeList extends React.Component {
             out.push( <h5 className="card-title">No regrades so far!</h5> );
             out.push( <p className="card-text">Would you like to submit a homework regrade request?</p> );
         }
-        out.push( <a href="#" className="btn regrade-button">New Regrade</a> );
+        out.push( <Link to="/new" className="btn regrade-button">New Regrade</Link> );
         return out;
     }
 

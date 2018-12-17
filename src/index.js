@@ -5,9 +5,10 @@ import './index.css';
 import RegradeList from './containers/RegradeList';
 import RegradeCreate from './containers/RegradeCreate';
 import logo from './images/courseBrand.png';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 ReactDOM.render(
-    <React.Fragment>
+    <Router><div>
     <nav className="navbar navbar-dark bg-dark">
         <div className="container">
             <a className="navbar-brand" href="/">
@@ -21,9 +22,9 @@ ReactDOM.render(
     </nav>
     <div className="container">
         <div className="subpage">
-            <RegradeList />
-            <RegradeCreate />
+            <Route exact path="/" component={RegradeList} />
+            <Route path="/new" component={RegradeCreate} />
         </div>
     </div>
-    </React.Fragment>
+    </div></Router>
 , document.getElementById('root'));
