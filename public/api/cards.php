@@ -56,11 +56,16 @@ function getCards($username, $trelloToken) {
 		if (isset($cardData['customFieldItems'][0]['value']['text'])) {
 			// Checks to see if correct Username
 			if ($cardData['customFieldItems'][0]['value']['text'] === $username) {
+                // Get all the actions (activity feed) for that card
                 curl_setopt($curl, CURLOPT_URL, sprintf($actionsUrl, $cardData['id']));
                 $allActions = curl_exec($curl);
                 $allActionsData = json_decode($allActions, true);
                 $commentsOutput = [];
-                foreach ($allActionsData as $actionsData) {
+                // Iterating over actions in reverse order (most recent
+                // becomes last) so that we get the last list/status value
+                $actionIndex = count($allActionsData);
+                while ($actionIndex) {
+                    $actionsData = $allActionsData[--$actionIndex];
                     if ($actionsData['type'] === 'commentCard') {
                         array_push($commentsOutput, $actionsData);
                     } else if ($actionsData['type'] === 'updateCard'
@@ -72,7 +77,6 @@ function getCards($username, $trelloToken) {
                     }
                 }
                 $cardData['comments'] = $commentsOutput;
-                //$cardData['comments'] = $allActionsData;
 				array_push($cardsOutput, $cardData);
 			}
 		}
