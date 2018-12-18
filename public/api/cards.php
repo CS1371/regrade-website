@@ -64,6 +64,7 @@ function getCards($username, $trelloToken) {
                 // Iterating over actions in reverse order (most recent
                 // becomes last) so that we get the last list/status value
                 $actionIndex = count($allActionsData);
+                $cardData['status'] = 'New';
                 while ($actionIndex) {
                     $actionsData = $allActionsData[--$actionIndex];
                     if ($actionsData['type'] === 'commentCard') {
