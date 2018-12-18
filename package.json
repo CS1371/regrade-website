@@ -2,7 +2,7 @@
   "name": "regrade-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "/test/regrades",
   "dependencies": {
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
