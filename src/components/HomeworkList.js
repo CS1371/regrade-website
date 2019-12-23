@@ -7,8 +7,8 @@ class HomeworkList extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(e) {
-        this.props.onButtonClick(e.target.value);
+    handleClick(name, i) {
+        this.props.onButtonClick(name, i);
     }
 
     render() {
@@ -28,12 +28,12 @@ class HomeworkList extends React.Component {
             "Recursion",
             "Images",
             "Project"];
-        list = HOMEWORKS.map((homeworkName) => {
+        list = HOMEWORKS.map((homeworkName, i) => {
             return (
                 <li key={homeworkName}>
                     <button
                         value={homeworkName}
-                        onClick={this.handleClick}>
+                        onClick={() => this.handleClick(homeworkName, i + 1)}>
                         {homeworkName}
                     </button>
                 </li>

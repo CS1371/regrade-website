@@ -31,6 +31,7 @@ class Problem extends React.Component {
     }
 
     handleClicked(problemName, testCase) {
+        console.log(testCase);
         this.props.onButtonClick(problemName, testCase);
         this.setState({
             allTestCases: (testCase === "all")

@@ -7,8 +7,12 @@ class TestCaseList extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(e) {
-        this.props.onButtonClick(e.target.name, e.target.value);
+    handleClick(e, i) {
+        if (e.target.value === 'all') {
+            this.props.onButtonClick(e.target.name, 'all');
+        } else {
+            this.props.onButtonClick(e.target.name, i);
+        }
     }
 
     render() {
@@ -36,13 +40,13 @@ class TestCaseList extends React.Component {
                 <div>
                     {allOrSpecific}
                     <ul>
-                        {TESTCASES.map(testCase => {
+                        {TESTCASES.map((testCase, i) => {
                             return (
                                 <li key={this.props.problem + testCase}>
                                     <button
                                         value={testCase}
                                         name={this.props.problem}
-                                        onClick={this.handleClick}>
+                                        onClick={e => this.handleClick(e, i)}>
                                         {testCase}
                                     </button>
                                 </li>

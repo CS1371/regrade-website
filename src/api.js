@@ -14,7 +14,7 @@ export function createCard(data) {
 export function getCards() {
     // Make GET request to get regrade request cards
     return fetch('./api/cards.php')
-        .then(response => { return response.json(); })
+        .then(response => response.json())
         .catch(err => console.log(err));
 }
 
