@@ -1,5 +1,8 @@
-export function createCard(data) {
-    fetch('./api/cards.php', {
+import CardPayload from "./types/CardPayload";
+import RegradePayload from './types/RegradePayload';
+
+export async function createCard(data: RegradePayload): Promise<void> {
+    return fetch('./api/cards.php', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
@@ -11,14 +14,17 @@ export function createCard(data) {
     .catch(err => console.log(err));
 }
 
-export function getCards() {
+export async function getCards(): Promise<CardPayload> {
     // Make GET request to get regrade request cards
     return fetch('./api/cards.php')
-        .then(response => response.json())
-        .catch(err => console.log(err));
+        .then(response => response.json() as Promise<CardPayload>)
+        .catch(err => {
+            console.error(err);
+            return {};
+        });
 }
 
-export function login() {
+export function login(): void {
     // Redirect user to login API, with GET query to get redirected back
     window.location.href = './api/login.php?returnTo=' + window.location.href;
 }

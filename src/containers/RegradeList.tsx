@@ -1,23 +1,38 @@
 import React from 'react';
 import './RegradeList.css';
-import {getCards, login} from '../api';
+import { getCards, login } from '../api';
 import {formatDate} from '../utils';
 import CardComment from '../components/CardComment';
 import CardStatus from '../components/CardStatus';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Card from '../types/Card';
 
-class RegradeList extends React.Component {
-    constructor(props) {
+interface RegradeListProps {
+
+};
+
+interface RegradeListState {
+    username: string;
+    cards: Card[];
+    loading: boolean;
+}
+
+class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
+    constructor(props: RegradeListProps) {
         super(props);
-        this.state = {username: [], cards: [], loading: true};
+        this.state = {
+            username: '',
+            cards: [],
+            loading: true
+        };
     }
 
     componentDidMount() {
         let result = getCards();
         result.then(data => {
-            if (!data || !("username" in data) || data.username.length == 0) {
+            if (data === undefined || data.username === undefined || data.username.length === 0) {
                 login();
-            } else if (!("cards" in data)) {
+            } else if (data.cards === undefined) {
                 console.error("Invalid json from getCards(): Missing cards field");
             } else {
                 this.setState({
@@ -41,10 +56,11 @@ class RegradeList extends React.Component {
     }
 
     renderCards() {
-        if (this.state.loading)
+        const { cards, loading } = this.state;
+        if (loading) {
             return ( <h5 className="card-title">Loading...</h5> );
-        var cards = this.state.cards;
-        var out = [];
+        }
+        const out: JSX.Element[] = [];
         if (cards.length > 0) {
             for (let card of cards) {
                 out.push(
@@ -55,7 +71,7 @@ class RegradeList extends React.Component {
                                     {card.name}&nbsp;&nbsp;
                                     <small className="card-text">{formatDate(card.dateCreated)}</small>
                                 </h5>
-                                <div class="col-md-3 text-right">
+                                <div className="col-md-3 text-right">
                                     <CardStatus value={card.status} />
                                 </div>
                             </div>

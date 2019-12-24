@@ -5,7 +5,7 @@ import './index.css';
 import RegradeList from './containers/RegradeList';
 import RegradeCreate from './containers/RegradeCreate';
 import logo from './images/courseBrand.png';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 ReactDOM.render(
     <Router basename={`${process.env.PUBLIC_URL}/`}><div>
