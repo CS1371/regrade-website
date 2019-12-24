@@ -15,7 +15,7 @@ ReactDOM.render(
                 <img src={logo} width="50" height="50" className="d-inline-block align-middle logo" alt="CS 1371 Logo"/>
                 <h2 className="d-inline-block align-middle">CS 1371</h2>
             </a>
-            <a className="navbar-text" href="#">
+            <a className="navbar-text" href=".">
                 Feedback
             </a>
         </div>

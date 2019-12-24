@@ -4,7 +4,7 @@ import { getCards, login } from '../api';
 import {formatDate} from '../utils';
 import CardComment from '../components/CardComment';
 import CardStatus from '../components/CardStatus';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Card from '../types/Card';
 
 interface RegradeListProps {

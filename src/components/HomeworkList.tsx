@@ -6,21 +6,6 @@ interface HomeworkListProps {
 };
 
 const HomeworkList: React.FunctionComponent<HomeworkListProps> = ({ onButtonClick, homeworks }) => {
-    const HOMEWORKS = [
-        "Basics",
-        "Functions",
-        "Vectors / Strings",
-        "Logicals",
-        "Arrays / Masks",
-        "Conditionals",
-        "Iteration",
-        "Low Level File I/O",
-        "High Level File I/O",
-        "Structures",
-        "Numerical Methods",
-        "Recursion",
-        "Images",
-        "Project"];
     const list = homeworks.map((homeworkName, i) => {
         return (
             <li key={homeworkName}>
