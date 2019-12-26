@@ -325,6 +325,9 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     <h1 className={shouldFlag && homework === undefined ? 'bad-choice' : ''}>
                         Choose a Homework
                     </h1>
+                    {
+                        shouldFlag && homework === undefined ? <p className="bad-choice"><em>Please choose a homework</em></p> : null
+                    }
                     <HomeworkList
                         onButtonClick={this.onSelectHomework}
                         selected={homework === undefined ? -1 : homework.number}
