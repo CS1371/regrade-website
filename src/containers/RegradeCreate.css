@@ -24,3 +24,85 @@
 .logout-prompt p {
     margin: 0px;
 }
+
+.ta-selectors {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ta-selectors > p:first-child {
+    margin-bottom: 0;
+}
+
+.bad-choice {
+    color: darkred;
+    margin-bottom: 0;
+}
+
+.ta-selectors select {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.next-btn {
+    border: 1px solid black;
+    background-color: lightgreen;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-right: 0;
+    margin-left: auto;
+    display: block;
+}
+
+.problem-selector {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.back-btn {
+    width: fit-content;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.submit-btn {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: lightblue;
+    color: black;
+    cursor: pointer;
+}
+
+.submit-btn:disabled {
+    cursor: wait;
+    background-color: lightgray;
+    color: rgb(92, 92, 92);
+}
+
+.submit-btn.no-submit:disabled {
+    cursor: not-allowed;
+    background-color: rgb(255, 196, 196);
+    color: rgb(92, 92, 92);
+}
+
+.submit-btn.submit-finished {
+    background-color: lightgreen;
+    cursor: wait;
+}
+
+.problem-separator {
+    background-color: black;
+}

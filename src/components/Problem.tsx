@@ -3,11 +3,15 @@ import Description from './Description';
 import TestCaseList from './TestCaseList';
 import ProblemType from '../types/Problem';
 
+import './Problem.css';
 
 interface ProblemProps {
-    onButtonClick: (problemName: string, testCase: string|number) => void;
+    onButtonClick: (problemName: string, testCase: string|number, enable: boolean) => void;
     onTextUpdate: (desc: string, problemName: string) => void;
     problem: ProblemType;
+    shouldFlag: boolean;
+    testCases: (string|number)[];
+    description: string;
 }
 
 interface ProblemState {
@@ -23,23 +27,29 @@ class Problem extends React.Component<ProblemProps, ProblemState> {
     }
 
     render() {
-        const { problem, onButtonClick, onTextUpdate } = this.props;
+        const { problem, onButtonClick, onTextUpdate, shouldFlag, testCases, description } = this.props;
         const { allTestCases } = this.state;
 
         return (
-            <div>
-                <h3>{problem.name}</h3>
+            <div className="justify-problem">
+                <h3 className={`problem-name ${shouldFlag ? 'bad-choice' : ''}`}>
+                    {problem.name}
+                </h3>
                 <TestCaseList
                     showTestCases={!allTestCases}
                     problem={problem}
-                    onButtonClick={(p: string, t: string|number) => {
-                        onButtonClick(p, t);
+                    onButtonClick={(p: string, t: string|number, e: boolean) => {
+                        onButtonClick(p, t, e);
                         this.setState({ allTestCases: t === "all" });
                     }}
+                    selected={testCases}
+                    shouldFlag={shouldFlag && testCases.length === 0}
                 />
                 <Description
                     problem={problem}
                     onTextUpdate={onTextUpdate}
+                    text={description}
+                    shouldFlag={shouldFlag && description.length < 20}
                 />
             </div>
         );

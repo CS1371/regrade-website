@@ -1,23 +1,30 @@
 import React from 'react';
+import './HomeworkList.css';
+import { ShallowHomework } from '../types/Homework';
 
 interface HomeworkListProps {
-    onButtonClick: (hwName: string, ind: number) => unknown;
-    homeworks: string[];
+    shouldFlag: boolean;
+    onButtonClick: (ind: number) => unknown;
+    homeworks: ShallowHomework[];
+    selected?: number;
 };
 
-const HomeworkList: React.FunctionComponent<HomeworkListProps> = ({ onButtonClick, homeworks }) => {
-    const list = homeworks.map((homeworkName, i) => {
+const HomeworkList: React.FunctionComponent<HomeworkListProps> = ({ onButtonClick, homeworks, selected }) => {
+    const list = homeworks.map((hw, i) => {
         return (
-            <li key={homeworkName}>
                 <button
-                    value={homeworkName}
-                    onClick={() => onButtonClick(homeworkName, i + 1)}>
-                    {homeworkName}
+                    key={hw.name}
+                    className={(selected === i + 1) ? 'homework-selected' : ''}
+                    onClick={() => onButtonClick(i + 1)}>
+                    {hw.name}
                 </button>
-            </li>
         );
     });
-    return <ol>{list}</ol>;
+    return (
+        <div className="homework-list">
+            {list}
+        </div>
+    );
 }
 
 export default HomeworkList;

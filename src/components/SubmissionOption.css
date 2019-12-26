@@ -1,0 +1,45 @@
+.submission-option {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.submission-option.bad-submission p {
+    padding: 0;
+    margin: 0;
+    color: darkred;
+}
+
+.submission-option button {
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: lightblue;
+    color: black;
+    margin: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.submission-option button:first-of-type {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right-width: 1px;
+}
+
+.submission-option button:last-of-type {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 1px;
+    margin-right: 5px;
+}
+
+.submission-option.bad-submission button {
+    background-color: darkred;
+    color: white;
+}
+
+.submission-option button.sub-selected {
+    background-color: lightgreen;
+}

@@ -4,76 +4,48 @@ import HomeworkList from '../components/HomeworkList';
 import SubmissionOption from '../components/SubmissionOption';
 import TASelect from '../components/TASelect';
 import ProblemList from '../components/ProblemList';
-import {createCard} from '../api';
-import ProblemType from '../types/Problem';
+import { createCard, getHomeworks, getHomework, getTAs } from '../api';
 import './RegradeCreate.css';
 import RegradeData from '../types/Regrade';
 import Payload from '../types/RegradePayload';
+import { ShallowHomework, Homework } from '../types/Homework';
+import TA from '../types/TA';
 
-const HOMEWORKS = [
-    "Basics",
-    "Functions",
-    "Vectors / Strings",
-    "Logicals",
-    "Arrays / Masks",
-    "Conditionals",
-    "Iteration",
-    "Low Level File I/O",
-    "High Level File I/O",
-    "Structures",
-    "Numerical Methods",
-    "Recursion",
-    "Images",
-    "Project",
-];
-
-const sampleTAs = [
-    '--Select your TA',
-    'Mason Murphy',
-    'Baran Usluel',
-    'Prithvi Rathaur',
-    'Julie Petrillo',
-];
+enum SubmissionState {
+    READY,
+    INFLIGHT,
+    FINISHED,
+    FAILED,
+};
 
 interface RegradeCreateState {
-    homeworkNumber: number;
-    homeworkName: string;
+    homeworks?: ShallowHomework[],
+    homework?: Homework,
+    tas?: TA[],
     submissionType: "Original"|"Resubmission"|undefined;
-    hasSelectedHomework: boolean;
     regradeData: RegradeData[];
-    problemList: ProblemType[],
-    TA1: string;
-    TA2: string;
+    TA1?: TA;
+    TA2?: TA;
+    shouldFlag: boolean;
+    hasLoaded: {
+        initial: boolean;
+        homework: boolean;
+    },
+    submissionState: SubmissionState;
 };
 
 class RegradeCreate extends React.Component<{}, RegradeCreateState> {
     constructor(props: {}) {
         super(props);
-        let sampleProblems = [
-            "Problem 1",
-            "Problem 2",
-            "Problem 3",
-            "Problem 4",
-            "Problem 5"];
-        let tests = [
-            'Test Case 1',
-            'Test Case 2',
-            'Test Case 3'];
-        const probs: ProblemType[] = sampleProblems.map(p => {
-            return {
-                name: p,
-                testCases: tests.map(t => {return { name: t }}),
-            };
-        })
         this.state = {
-            homeworkNumber: 0,
-            homeworkName: "",
             submissionType: undefined,
-            hasSelectedHomework: false,
             regradeData: [],
-            problemList: probs,
-            TA1: "--Select your TA",
-            TA2: "--Select your TA",
+            shouldFlag: false,
+            hasLoaded: {
+                initial: false,
+                homework: false,
+            },
+            submissionState: SubmissionState.READY,
         };
 
         this.onSelectHomework = this.onSelectHomework.bind(this);
@@ -86,7 +58,22 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         this.onSelectTA1 = this.onSelectTA1.bind(this);
         this.onSelectTA2 = this.onSelectTA2.bind(this);
         this.handleNextButton = this.handleNextButton.bind(this);
-    }
+
+        Promise.all([
+            getTAs(),
+            getHomeworks(),
+        ])
+        .then(resp => {
+            this.setState({
+                tas: resp[0],
+                homeworks: resp[1],
+                hasLoaded: {
+                    initial: true,
+                    homework: false,
+                },
+            });
+        });
+    };
 
     onSelectSubmission(subType?: "Original"|"Resubmission") {
         this.setState({
@@ -94,51 +81,63 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         })
     }
 
-    onSelectTA1(name: string) {
-        this.setState({
-            TA1: name
-        });
+    onSelectTA1(ind: number) {
+        const { hasLoaded, tas } = this.state;
+        if (hasLoaded.initial && ind >= 0) {
+            this.setState({
+                TA1: tas![ind],
+            });
+        } else {
+            this.setState({ TA1: undefined });
+        }
     }
 
-    onSelectTA2(name: string) {
-        this.setState({
-            TA2: name
-        });
+    onSelectTA2(ind: number) {
+        const { hasLoaded, tas } = this.state;
+        if (hasLoaded.initial && ind >= 0) {
+            this.setState({
+                TA2: tas![ind],
+            });
+        } else {
+            this.setState({ TA2: undefined });
+        }
     }
 
-    onSelectHomework(name: string, i: number) {
-        this.setState({
-            homeworkName: name,
-            homeworkNumber: i,
-        });
+    onSelectHomework(i: number) {
+        const { homeworks } = this.state;
+        if (homeworks !== undefined) {
+            // Get the homework and then update
+            getHomework(i)
+            .then(hw => this.setState({ homework: hw }))
+            .then();
+        }
     }
 
     handleNextButton() {
-        const { submissionType, TA1, TA2, homeworkName } = this.state;
+        const { TA1, TA2, homework } = this.state;
         let validData = true;
-        if (submissionType === undefined) {
+        if (TA1 === undefined || TA2 === undefined || TA1.name === TA2.name) {
             validData = false;
-            console.log("submission type");
-        }
-        if (TA1 === "--Select your TA" || TA2 === "--Select your TA" || TA1 === TA2) {
+        } else if (homework === undefined) {
             validData = false;
-            console.log("TAs");
-        }
-        if (homeworkName === "") {
-            validData = false;
-            console.log("homeworkName");
         }
         if (validData) {
             this.setState({
-                hasSelectedHomework: true
+                hasLoaded: {
+                    initial: true,
+                    homework: true,
+                },
+                shouldFlag: false,
             });
+        } else {
+            this.setState({ shouldFlag: true });
         }
     }
 
     onSelectProblem(problemName: string) {
         // if we already have it, remove it; otherwise, add it and default to all
-        console.log(`onSelect: ${problemName}`);
         let { regradeData } = this.state;
+        const { homework } = this.state;
         if (regradeData.findIndex(p => p.problemName === problemName) !== -1) {
             // it's here! filter out and engage
             regradeData = regradeData.filter(p => p.problemName !== problemName);
@@ -149,22 +148,30 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                 description: '',
                 testCases: [ 'all' ],
             });
+            const probs = homework!.problems;
+            regradeData.sort((a, b) => (
+                probs.findIndex(p => p.name === a.problemName) - probs.findIndex(p => p.name === b.problemName)
+            ));
         }
         this.setState({ regradeData });
     }
 
-    onSelectTestCase(problemName: string, testCase: string|number) {
+    onSelectTestCase(problemName: string, testCase: string|number, enable: boolean) {
         const { regradeData } = this.state;
         const ind = regradeData.findIndex(p => p.problemName === problemName);
         if (testCase === "all") {
             regradeData[ind].testCases = ['all'];
         } else if (testCase === "none") {
             regradeData[ind].testCases = [];
-        } else if (!regradeData[ind].testCases.includes(testCase)) {
+        } else {
             if (regradeData[ind].testCases.length === 1 && regradeData[ind].testCases[0] === 'all') {
                 regradeData[ind].testCases = [];
             }
-            regradeData[ind].testCases.push(testCase);
+            if (enable) {
+                regradeData[ind].testCases.push(testCase);   
+            } else {
+                regradeData[ind].testCases = regradeData[ind].testCases.filter(i => i !== testCase)
+            }
         }
         this.setState({ regradeData });
     }
@@ -177,85 +184,183 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
 
     handleBackButton() {
         this.setState({
-            hasSelectedHomework: false
+            hasLoaded: {
+                initial: true,
+                homework: false,
+            }
         });
+    }
+
+    isValidSubmission(): boolean {
+        const { regradeData, submissionType } = this.state;
+        if (submissionType === undefined) {
+            return false;
+        } else if (regradeData.length === 0) {
+            return false;
+        } else if (regradeData.findIndex(p => p.testCases.length === 0) !== -1) {
+            return false;
+        } else if (regradeData.findIndex(p => p.description.length < 20) !== -1) {
+            return false;
+        }
+        return true;
     }
 
     handleSubmit() {
         const { regradeData } = this.state;
-        let validData = true;
-        if (regradeData.length === 0) {
-            validData = false;
-            console.log("Problems");
-        } else if (regradeData.findIndex(p => p.testCases.length === 0) !== -1) {
-            validData = false;
-            console.log("testCases");
-        } else if (regradeData.findIndex(p => p.description.length < 20)) {
-            validData = false;
-            console.log("description length");
-        }
-        if (validData) {
-            const { TA1, TA2, homeworkName, homeworkNumber, submissionType } = this.state;
+        if (this.isValidSubmission()) {
+            const { TA1, TA2, homework, submissionType } = this.state;
             const toSubmit: Payload = {
                 problems: regradeData,
-                TA1,
-                TA2,
-                homeworkName,
-                homeworkNumber,
+                TA1: TA1!.gtUsername,
+                TA2: TA2!.gtUsername,
+                homeworkName: homework!.name,
+                homeworkNumber: homework!.number,
                 submissionType: submissionType!,
             };
-            createCard(toSubmit);
-            console.log("Submitted:");
+            this.setState({ submissionState: SubmissionState.INFLIGHT });
+            createCard(toSubmit)
+                .then(r => {
+                    if (r.status === 200) {
+
+                    }
+                    this.setState({ submissionState: SubmissionState.FINISHED });
+                    window.setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                })
         } else {
+            this.setState({ shouldFlag: true });
             console.log("Failed to submit");
         }
     }
 
     render() {
-        if (this.state.hasSelectedHomework) {
-            const { problemList, homeworkName, submissionType, regradeData } = this.state;
-            const problems = regradeData.map(problem => {
+        const { hasLoaded } = this.state;
+        if (hasLoaded.homework) {
+            const { homework, submissionType, regradeData, shouldFlag, submissionState } = this.state;
+            const problems = regradeData.map((problem, i) => {
+                const pFlag = problem.description.length < 20 || problem.testCases.length === 0;
                 return (
-                    <li key={problem.problemName} >
+                    <React.Fragment key={problem.problemName}>
+                        <hr key={problem.problemName + 'hr'} className="problem-separator" />
                         <Problem
-                            problem={problemList.find(p => p.name === problem.problemName)!}
+                            key={problem.problemName + 'prob'}
+                            shouldFlag={shouldFlag && pFlag}
+                            problem={homework!.problems.find(p => p.name === problem.problemName)!}
                             onButtonClick={this.onSelectTestCase}
                             onTextUpdate={this.onTextUpdate}
+                            testCases={problem.testCases}
+                            description={problem.description}
                         />
-                    </li>
+                    </React.Fragment>
                 );
-            })
+            });
+            let subText: JSX.Element = <React.Fragment>Submit</React.Fragment>;
+            const canSubmit = !shouldFlag 
+                || (this.isValidSubmission()
+                && (
+                    (submissionState !== SubmissionState.INFLIGHT)
+                    && (submissionState !== SubmissionState.FINISHED)
+                ));
+            if (shouldFlag && !this.isValidSubmission()) {
+                subText = <React.Fragment>Fix all errors before submitting</React.Fragment>
+            } else {
+                switch (submissionState) {
+                    case SubmissionState.READY:
+                        subText = <React.Fragment>Submit</React.Fragment>;
+                        break;
+                    case SubmissionState.INFLIGHT:
+                        subText = <React.Fragment>Submitting...</React.Fragment>;
+                        break;
+                    case SubmissionState.FINISHED:
+                        subText = <React.Fragment>Submission Complete!</React.Fragment>;
+                        break;
+                    case SubmissionState.FAILED:
+                        subText = <React.Fragment>Submission Failed</React.Fragment>;
+                        break;
+                }
+            }
             return (
                 <div>
-                    <button onClick={this.handleBackButton}>Back</button>
-                    <h1>{homeworkName}</h1>
-                    <h2>{submissionType}</h2>
-                    <ProblemList problems={problemList} onButtonClick={this.onSelectProblem}/>
-                    <ul>{problems}</ul>
-                    <button onClick={this.handleSubmit}>Submit</button>
+                    <button
+                        type="button"
+                        className="back-btn"
+                        onClick={this.handleBackButton}
+                    >
+                        Back
+                    </button>
+                    <h1>Regrade for {homework!.name} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
+                    <div className="problem-selector">
+                        <div className="problem-config">
+                            <SubmissionOption
+                                value={submissionType}
+                                shouldFlag={shouldFlag && submissionType === undefined}
+                                onButtonClick={this.onSelectSubmission}
+                            />
+                            {
+                                shouldFlag && regradeData.length === 0 ? <p className="bad-choice"><em>Select at least one problem to contest</em></p> : null
+                            }
+                            <ProblemList
+                                problems={homework!.problems}
+                                onButtonClick={this.onSelectProblem}
+                                selectedNames={regradeData.map(r => r.problemName)}
+                            />
+                        </div>
+                        <div>{problems}</div>
+                    </div>
+                    <button
+                        type="button"
+                        className={`submit-btn ${!this.isValidSubmission() ? 'no-submit' : ''} ${submissionState === SubmissionState.FINISHED ? 'submit-finished' : ''}`}
+                        onClick={this.handleSubmit}
+                        disabled={!canSubmit}
+                    >
+                        {subText}
+                    </button>
+                </div>
+            );
+        } else if (hasLoaded.initial) {
+            const { TA1, TA2, shouldFlag, homeworks, homework, tas } = this.state;
+            return (
+                <div className="regrade-card">
+                    <h1 className={shouldFlag && homework === undefined ? 'bad-choice' : ''}>
+                        Choose a Homework
+                    </h1>
+                    <HomeworkList
+                        onButtonClick={this.onSelectHomework}
+                        selected={homework === undefined ? -1 : homework.number}
+                        shouldFlag={shouldFlag && homework === undefined}
+                        homeworks={homeworks!}    
+                    />
+                    <div className="ta-selectors">
+                        <p className={shouldFlag && (TA1 === undefined || TA2 === undefined || TA1.gtUsername === TA2.gtUsername) ? 'bad-choice' : ''}>
+                            Select your TAs:
+                        </p>
+                        <TASelect
+                            shouldFlag={shouldFlag && (TA1 === undefined || TA1.gtUsername === TA2?.gtUsername)}
+                            TAs={tas!}
+                            onChoose={this.onSelectTA1}
+                            selected={TA1}
+                        />
+                        <TASelect
+                            shouldFlag={shouldFlag && (TA2 === undefined || TA1?.gtUsername === TA2.gtUsername)}
+                            TAs={tas!}
+                            onChoose={this.onSelectTA2}
+                            selected={TA2}
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        className="next-btn"
+                        onClick={this.handleNextButton}
+                    >
+                        Next
+                    </button>
                 </div>
             );
         } else {
-            const { TA1, TA2 } = this.state;
             return (
-                <div className="regrade-card">
-                    <h1>Choose a Homework</h1>
-                    <SubmissionOption
-                        onButtonClick={this.onSelectSubmission} />
-                    <p>Select your TAs</p>
-                    <TASelect
-                        TAs={sampleTAs}
-                        onChoose={this.onSelectTA1}
-                        selected={TA1} />
-                    <TASelect
-                        TAs={sampleTAs}
-                        onChoose={this.onSelectTA2}
-                        selected={TA2} />
-                    <HomeworkList
-                        onButtonClick={this.onSelectHomework}
-                        homeworks={HOMEWORKS}    
-                    />
-                    <button onClick={this.handleNextButton}>Next</button>
+                <div className="homework-loader">
+                    <p>Loading...</p>
                 </div>
             );
         }
