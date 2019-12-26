@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons'
 import Problem from '../components/Problem';
 import HomeworkList from '../components/HomeworkList';
 import SubmissionOption from '../components/SubmissionOption';
@@ -264,20 +266,20 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     && (submissionState !== SubmissionState.FINISHED)
                 ));
             if (shouldFlag && !this.isValidSubmission()) {
-                subText = <React.Fragment>Fix all errors before submitting</React.Fragment>
+                subText = <React.Fragment><FontAwesomeIcon icon={faTimes}/> &nbsp;Fix all errors before submitting</React.Fragment>
             } else {
                 switch (submissionState) {
                     case SubmissionState.READY:
                         subText = <React.Fragment>Submit</React.Fragment>;
                         break;
                     case SubmissionState.INFLIGHT:
-                        subText = <React.Fragment>Submitting...</React.Fragment>;
+                        subText = <React.Fragment><FontAwesomeIcon icon={faSpinner} spin/></React.Fragment>;
                         break;
                     case SubmissionState.FINISHED:
-                        subText = <React.Fragment>Submission Complete!</React.Fragment>;
+                        subText = <React.Fragment><FontAwesomeIcon icon={faCheck}/> &nbsp;Submission Complete!</React.Fragment>;
                         break;
                     case SubmissionState.FAILED:
-                        subText = <React.Fragment>Submission Failed</React.Fragment>;
+                        subText = <React.Fragment><FontAwesomeIcon icon={faTimes}/> &nbsp;Submission Failed. Please check your internet connection and try again</React.Fragment>;
                         break;
                 }
             }
@@ -311,7 +313,10 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     </div>
                     <button
                         type="button"
-                        className={`submit-btn ${!this.isValidSubmission() ? 'no-submit' : ''} ${submissionState === SubmissionState.FINISHED ? 'submit-finished' : ''}`}
+                        className={`submit-btn 
+                            ${submissionState === SubmissionState.FAILED ? 'failed-submission' : ''} 
+                            ${!this.isValidSubmission() ? 'no-submit' : ''} 
+                            ${submissionState === SubmissionState.FINISHED ? 'submit-finished' : ''}`}
                         onClick={this.handleSubmit}
                         disabled={!canSubmit}
                     >

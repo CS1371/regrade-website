@@ -92,15 +92,25 @@
     color: rgb(92, 92, 92);
 }
 
-.submit-btn.no-submit:disabled {
+.submit-btn.no-submit:disabled,
+.submit-btn.failed-submission {
     cursor: not-allowed;
     background-color: rgb(255, 196, 196);
     color: rgb(92, 92, 92);
 }
 
+.submit-btn.submit-btn.no-submit:disabled svg,
+.submit-btn.failed-submission svg {
+    color: darkred;
+}
+
 .submit-btn.submit-finished {
     background-color: lightgreen;
     cursor: wait;
+}
+
+.submit-btn.submit-finished svg {
+    color: darkgreen;
 }
 
 .problem-separator {
