@@ -221,12 +221,13 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
             createCard(toSubmit)
                 .then(r => {
                     if (r.status === 200) {
-
+                        this.setState({ submissionState: SubmissionState.FINISHED });
+                        window.setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        this.setState({ submissionState: SubmissionState.FAILED });
                     }
-                    this.setState({ submissionState: SubmissionState.FINISHED });
-                    window.setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
                 })
         } else {
             this.setState({ shouldFlag: true });
