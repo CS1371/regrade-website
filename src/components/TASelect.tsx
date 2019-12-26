@@ -9,7 +9,11 @@ interface TASelectProps {
 }
 
 const TASelect: React.FunctionComponent<TASelectProps> = ({ onChoose, TAs, selected, shouldFlag }) => {
-	const options = TAs.map((t, i) => <option value={i} key={t.name}>{t.name}</option>);
+	const options = TAs.map((t, i) => (
+		<option value={i} key={t.name}>
+			{t.name} - {t.section}
+		</option>
+	));
 	return (
 		<select
 			className={`ta-selector ${shouldFlag ? 'no-selection' : ''}`}

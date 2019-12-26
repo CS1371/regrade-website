@@ -211,8 +211,8 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
             const { TA1, TA2, homework, submissionType } = this.state;
             const toSubmit: Payload = {
                 problems: regradeData,
-                TA1: TA1!.gtUsername,
-                TA2: TA2!.gtUsername,
+                TA1: TA1!,
+                TA2: TA2!,
                 homeworkName: homework!.name,
                 homeworkNumber: homework!.number,
                 submissionType: submissionType!,
