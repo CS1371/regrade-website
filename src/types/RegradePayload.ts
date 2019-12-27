@@ -1,5 +1,4 @@
 import RegradeData from './Regrade';
-import TA from './TA';
 import Section from './Section';
 
 export default interface Payload {
