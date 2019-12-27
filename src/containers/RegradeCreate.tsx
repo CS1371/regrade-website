@@ -4,7 +4,7 @@ import { faTimes, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons'
 import Problem from '../components/Problem';
 import HomeworkList from '../components/HomeworkList';
 import SubmissionOption from '../components/SubmissionOption';
-import TASelect from '../components/TASelect';
+import SectionSelect from '../components/SectionSelect';
 import ProblemList from '../components/ProblemList';
 import { createCard, getHomeworks, getHomework, getTAs } from '../api';
 import './RegradeCreate.css';
@@ -12,6 +12,7 @@ import RegradeData from '../types/Regrade';
 import Payload from '../types/RegradePayload';
 import { ShallowHomework, Homework } from '../types/Homework';
 import TA from '../types/TA';
+import Section from '../types/Section';
 
 enum SubmissionState {
     READY,
@@ -21,18 +22,18 @@ enum SubmissionState {
 };
 
 interface RegradeCreateState {
-    homeworks?: ShallowHomework[],
-    homework?: Homework,
-    tas?: TA[],
+    homeworks?: ShallowHomework[];
+    homework?: Homework;
+    tas?: TA[];
+    sections?: Section[];
     submissionType: "Original"|"Resubmission"|undefined;
     regradeData: RegradeData[];
-    TA1?: TA;
-    TA2?: TA;
+    section?: Section;
     shouldFlag: boolean;
     hasLoaded: {
         initial: boolean;
         homework: boolean;
-    },
+    };
     submissionState: SubmissionState;
 };
 
@@ -57,8 +58,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onTextUpdate = this.onTextUpdate.bind(this);
         this.handleBackButton = this.handleBackButton.bind(this);
-        this.onSelectTA1 = this.onSelectTA1.bind(this);
-        this.onSelectTA2 = this.onSelectTA2.bind(this);
+        this.onSelectSection = this.onSelectSection.bind(this);
         this.handleNextButton = this.handleNextButton.bind(this);
 
         Promise.all([
@@ -66,8 +66,17 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
             getHomeworks(),
         ])
         .then(resp => {
+            // get all section names
+            const secs = [...new Set(resp[0].map(t => t.section))];
+            const sections: Section[] = secs.map(s => {
+                return {
+                    name: s,
+                    tas: resp[0].filter(t => t.section === s),
+                };
+            });
             this.setState({
                 tas: resp[0],
+                sections,
                 homeworks: resp[1],
                 hasLoaded: {
                     initial: true,
@@ -83,25 +92,14 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         })
     }
 
-    onSelectTA1(ind: number) {
-        const { hasLoaded, tas } = this.state;
+    onSelectSection(ind: number) {
+        const { hasLoaded, sections } = this.state;
         if (hasLoaded.initial && ind >= 0) {
             this.setState({
-                TA1: tas![ind],
+                section: sections![ind],
             });
         } else {
-            this.setState({ TA1: undefined });
-        }
-    }
-
-    onSelectTA2(ind: number) {
-        const { hasLoaded, tas } = this.state;
-        if (hasLoaded.initial && ind >= 0) {
-            this.setState({
-                TA2: tas![ind],
-            });
-        } else {
-            this.setState({ TA2: undefined });
+            this.setState({ section: undefined});
         }
     }
 
@@ -116,9 +114,9 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
     }
 
     handleNextButton() {
-        const { TA1, TA2, homework } = this.state;
+        const { section, homework } = this.state;
         let validData = true;
-        if (TA1 === undefined || TA2 === undefined || TA1.name === TA2.name) {
+        if (section === undefined) {
             validData = false;
         } else if (homework === undefined) {
             validData = false;
@@ -210,11 +208,10 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
     handleSubmit() {
         const { regradeData } = this.state;
         if (this.isValidSubmission()) {
-            const { TA1, TA2, homework, submissionType } = this.state;
+            const { section, homework, submissionType } = this.state;
             const toSubmit: Payload = {
                 problems: regradeData,
-                TA1: TA1!,
-                TA2: TA2!,
+                section: section!,
                 homeworkName: homework!.name,
                 homeworkNumber: homework!.number,
                 submissionType: submissionType!,
@@ -325,7 +322,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                 </div>
             );
         } else if (hasLoaded.initial) {
-            const { TA1, TA2, shouldFlag, homeworks, homework, tas } = this.state;
+            const { section, shouldFlag, homeworks, homework, sections } = this.state;
             return (
                 <div className="regrade-card">
                     <h1 className={shouldFlag && homework === undefined ? 'bad-choice' : ''}>
@@ -341,20 +338,14 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                         homeworks={homeworks!}    
                     />
                     <div className="ta-selectors">
-                        <p className={shouldFlag && (TA1 === undefined || TA2 === undefined || TA1.gtUsername === TA2.gtUsername) ? 'bad-choice' : ''}>
-                            Select your TAs:
+                        <p className={shouldFlag && section === undefined ? 'bad-choice' : ''}>
+                            Select your Section:
                         </p>
-                        <TASelect
-                            shouldFlag={shouldFlag && (TA1 === undefined || TA1.gtUsername === TA2?.gtUsername)}
-                            TAs={tas!}
-                            onChoose={this.onSelectTA1}
-                            selected={TA1}
-                        />
-                        <TASelect
-                            shouldFlag={shouldFlag && (TA2 === undefined || TA1?.gtUsername === TA2.gtUsername)}
-                            TAs={tas!}
-                            onChoose={this.onSelectTA2}
-                            selected={TA2}
+                        <SectionSelect
+                            shouldFlag={shouldFlag && section === undefined}
+                            sections={sections!}
+                            onChoose={this.onSelectSection}
+                            selected={section}
                         />
                     </div>
                     <button
