@@ -17,7 +17,7 @@ const SectionSelect: React.FunctionComponent<SectionSelectProps> = ({ onChoose, 
 	return (
 		<select
 			className={`section-selector ${shouldFlag ? 'no-selection' : ''}`}
-			defaultValue={(selected === undefined) ? -1 : sections.findIndex(s => selected !== undefined && s.name === selected.name)}
+			defaultValue={(selected === undefined) ? -1 : sections.findIndex(s => s.name === selected.name)}
 			onChange={e => onChoose(parseInt(e.target.value))}
 		>
 			<option value={-1} key="default">-- Choose a Section</option>
