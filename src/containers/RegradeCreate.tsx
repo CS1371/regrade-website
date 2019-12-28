@@ -212,7 +212,6 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
             const toSubmit: Payload = {
                 problems: regradeData,
                 section: section!,
-                homeworkName: homework!.name,
                 homeworkNumber: homework!.number,
                 submissionType: submissionType!,
             };
@@ -289,7 +288,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     >
                         Back
                     </button>
-                    <h1>Regrade for {homework!.name} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
+                    <h1>Regrade for {homework!.number} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
                     <div className="problem-selector">
                         <div className="problem-config">
                             <SubmissionOption
