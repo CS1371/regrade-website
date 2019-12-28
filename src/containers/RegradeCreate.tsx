@@ -14,7 +14,7 @@ import { ShallowHomework, Homework } from '../types/Homework';
 import TA from '../types/TA';
 import Section from '../types/Section';
 
-enum SubmissionState {
+const enum SubmissionState {
     READY,
     INFLIGHT,
     FINISHED,
