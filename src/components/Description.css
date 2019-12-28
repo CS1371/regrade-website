@@ -1,0 +1,9 @@
+.justification-description {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.justification-description.bad-choice {
+    border-color: darkred;
+}

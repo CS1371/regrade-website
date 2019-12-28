@@ -1,0 +1,19 @@
+.problem-button {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10x;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5em;
+}
+
+.problem-button.selected-btn {
+    background-color: lightgreen;
+}
+
+.problem-list {
+    display: flex;
+    flex-direction: column;
+}

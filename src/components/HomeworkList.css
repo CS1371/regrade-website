@@ -1,0 +1,17 @@
+.homework-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.homework-list button {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 49%;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.homework-list button.homework-selected {
+    background-color: lightgreen;
+}
