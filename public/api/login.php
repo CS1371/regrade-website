@@ -3,7 +3,7 @@
 require_once './constants.php';
 
 // Load the CAS lib
-require_once './phpCAS-1.3.5/CAS.php';
+require_once './CAS-1.3.8/CAS.php';
 // Enable debugging
 phpCAS::setDebug();
 // Enable verbose error messages. Disable in production!
