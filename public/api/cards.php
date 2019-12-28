@@ -103,28 +103,22 @@ function addCard($data, $trelloToken, $trelloKey) {
 		homeworkName: string,
 		homeworkNumber: number,
 		submissionType: "Original"|"Resubmission",
-		TA1: {
+		section: {
 			name: string,
-			gtUsername: string,
-			canvasId: string,
-			trelloId: string,
-			section: string,
+			tas: {
+				name: string,
+				gtUsername: string,
+				canvasId: string,
+				trelloId: string,
+				section: string,
+			}[],
 		},
-		TA2: {
-			name: string,
-			gtUsername: string,
-			canvasId: string,
-			trelloId: string,
-			section: string,
-		}
 	}
 	*/
 	file_put_contents('data.txt', $data);
 
 	$data = (array) json_decode($data, true);
 	$cardName = 'Homework ' . $data['homeworkNumber'] . ': ' . $data['homeworkName'] . ' Regrade';
-	$ta1 = $data['TA1'];
-	$ta2 = $data['TA2'];
 	$regradeReason = '';
 	$regradeReasons = array();
 	foreach	($data['problems'] as $problem) {
@@ -150,8 +144,11 @@ function addCard($data, $trelloToken, $trelloKey) {
 		}
 	}
 	*/
-
-	$memberIDs = $ta1['trelloId'].','.$ta2['trelloId'];
+	$taIds = [];
+	foreach ($data['section']['tas'] as $ta) {
+		$taIds[] = $ta['trelloId'];
+	}
+	$memberIDs = implode(',', $taIds);
 	$urlMakeCard = "https://api.trello.com/1/cards?name=".rawurlencode($cardName)."&desc=".rawurlencode($regradeReason)."&idList=5beb72c2c45e3520c8c3a7ca&idMembers=".rawurlencode($memberIDs)."&keepFromSource=all&key=".rawurlencode($trelloKey)."&token=".rawurlencode($trelloToken);
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $urlMakeCard);
