@@ -128,6 +128,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     homework: true,
                 },
                 shouldFlag: false,
+                submissionType: homework!.hasResubmission ? undefined : 'Original',
             });
         } else {
             this.setState({ shouldFlag: true });
@@ -292,11 +293,15 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     <h1>Regrade for {homework!.name} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
                     <div className="problem-selector">
                         <div className="problem-config">
-                            <SubmissionOption
-                                value={submissionType}
-                                shouldFlag={shouldFlag && submissionType === undefined}
-                                onButtonClick={this.onSelectSubmission}
-                            />
+                            {
+                                homework!.hasResubmission ? (
+                                <SubmissionOption
+                                    value={submissionType}
+                                    shouldFlag={shouldFlag && submissionType === undefined}
+                                    onButtonClick={this.onSelectSubmission}
+                                />
+                                ) : null
+                            }
                             {
                                 shouldFlag && regradeData.length === 0 ? <p className="bad-choice"><em>Select at least one problem to contest</em></p> : null
                             }
