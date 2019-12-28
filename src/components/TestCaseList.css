@@ -1,0 +1,54 @@
+.test-case-selector {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.test-case-selector > button {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.test-case-selector > button:first-of-type {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-left: 5px;
+}
+
+.test-case-selector > button:last-of-type {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-right: 5px;
+}
+
+.test-case-selector > button.selected-btn {
+    background-color: lightgreen;
+}
+
+.specific-cases {
+    list-style: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.specific-cases button {
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.specific-cases button.selected-btn {
+    background-color: lightgreen;
+}
+
+.specific-case-list .bad-choice {
+    margin: 0;
+}

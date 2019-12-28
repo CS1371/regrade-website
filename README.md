@@ -13,7 +13,7 @@ environment requires a web server that supports PHP -- we recommend using Apache
 
 The package must first be installed locally to generate a `node_modules` directory. This is done by typing:
 
-> `npm install`
+> `yarn install`
 
 ## Building & Testing
 
@@ -21,7 +21,7 @@ The package must first be installed locally to generate a `node_modules` directo
 
 To create and view a development build of the frontend, simply open up a terminal to the base folder, and type:
 
-> `npm start`
+> `yarn start`
 
 This will start a development server on `localhost:3000`, and will automatically run the webpage in your browser of choice.
 
@@ -33,7 +33,7 @@ Note that this will only work for testing the front-end by itself -- the back-en
 
 To generate a production build, simply open up a terminal at the base folder, and type:
 
-> `npm run build`
+> `yarn build`
 
 This will create a new folder called `build` in the base directory.
 
