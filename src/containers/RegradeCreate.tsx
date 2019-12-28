@@ -288,7 +288,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     >
                         Back
                     </button>
-                    <h1>Regrade for {homework!.number} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
+                    <h1>Regrade for {homework!.name === undefined ? homework!.number : homework!.name!} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
                     <div className="problem-selector">
                         <div className="problem-config">
                             <SubmissionOption

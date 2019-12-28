@@ -17,7 +17,7 @@ const HomeworkList: React.FunctionComponent<HomeworkListProps> = ({ onButtonClic
                     className={(selected === i + 1) ? 'homework-selected' : ''}
                     onClick={() => onButtonClick(i + 1)}
                 >
-                    Homework #{hw.number}
+                    {hw.name === undefined ? `Homework #${hw.number}` : hw.name!}
                 </button>
         );
     });
