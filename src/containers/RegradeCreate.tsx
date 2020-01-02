@@ -222,7 +222,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     if (r.status === 200) {
                         this.setState({ submissionState: SubmissionState.FINISHED });
                         window.setTimeout(() => {
-                            window.location.reload();
+                            window.location.href = 'https://cs1371.gatech.edu/regrades';
                         }, 1000);
                     } else {
                         this.setState({ submissionState: SubmissionState.FAILED });
