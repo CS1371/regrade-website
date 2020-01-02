@@ -59,7 +59,7 @@ export async function getHomeworks(): Promise<ShallowHomework[]> {
         },
         {
             number: 2,
-            hasResubmission: true,
+            hasResubmission: false,
         },
         {
             number: 3,
@@ -105,7 +105,7 @@ export async function getHomework(num: number): Promise<Homework> {
         },
         {
             number: 2,
-            hasResubmission: true,
+            hasResubmission: false,
             problems: [
                 {
                     name: 'funs',
