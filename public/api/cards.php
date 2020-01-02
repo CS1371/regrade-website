@@ -122,7 +122,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	$regradeReason = '';
 	$regradeReasons = array();
 	foreach	($data['problems'] as $problem) {
-		$regradeReasons[] = $problem['name']."\n\n**Test Cases**: ".implode(", ", $problem['testCases'])."\n\n**Justification**: ".$problem['description'];
+		$regradeReasons[] = $problem['name']."\n\nTest Cases: ".implode(", ", $problem['testCases'])."\n\nJustification: ".$problem['description'];
 	}
 	$regradeReason = implode("\n", $regradeReasons);
 	/* Should not need this, now that we have Trello ID
