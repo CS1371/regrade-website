@@ -1,7 +1,7 @@
 import Problem from './Problem';
 
 export interface ShallowHomework {
-    name: string;
+    name?: string;
     number: number;
     hasResubmission: boolean;
 };

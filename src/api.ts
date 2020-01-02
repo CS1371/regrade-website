@@ -54,22 +54,18 @@ export async function getTAs(): Promise<TA[]> {
 export async function getHomeworks(): Promise<ShallowHomework[]> {
     const exampleResp: ShallowHomework[] = [
         {
-            name: 'Basics',
             number: 1,
             hasResubmission: true,
         },
         {
-            name: 'Functions',
             number: 2,
             hasResubmission: true,
         },
         {
-            name: 'Logicals',
             number: 3,
             hasResubmission: true,
         },
         {
-            name: 'Strings',
             number: 4,
             hasResubmission: true,
         },
@@ -94,7 +90,6 @@ export async function getHomework(num: number): Promise<Homework> {
     ];
     const exampleResp: Homework[] = [
         {
-            name: 'Basics',
             number: 1,
             hasResubmission: true,
             problems: [
@@ -109,7 +104,6 @@ export async function getHomework(num: number): Promise<Homework> {
             ],
         },
         {
-            name: 'Functions',
             number: 2,
             hasResubmission: true,
             problems: [
@@ -120,7 +114,6 @@ export async function getHomework(num: number): Promise<Homework> {
             ],
         },
         {
-            name: 'Logicals',
             number: 3,
             hasResubmission: true,
             problems: [
@@ -131,7 +124,6 @@ export async function getHomework(num: number): Promise<Homework> {
             ],
         },
         {
-            name: 'Strings',
             number: 4,
             hasResubmission: true,
             problems: [

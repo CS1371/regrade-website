@@ -95,7 +95,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	file_put_contents('data.txt', $data);
 
 	$data = (array) json_decode($data, true);
-	$cardName = 'Homework ' . $data['homeworkNumber'] . ': ' . $data['homeworkName'] . ' Regrade';
+	$cardName = 'Homework ' . $data['homeworkNumber'] . ' Regrade';
 	$taName1 = $data['TA1'];
 	$taName2 = $data['TA2'];
 	$regradeReason = '';
