@@ -31,7 +31,7 @@ function getHomeworks() {
         // look for resub
         $hasResub = count(glob(sprintf('rubrics/hw%02dRubric_resub.json', $num))) === 1;
         $out[] = array(
-            "num" => $num,
+            "number" => $num,
             "hasResubmission" => $hasResub,
         );
     }
