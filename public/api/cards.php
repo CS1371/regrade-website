@@ -159,7 +159,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	// add gt Username
 	$urlAddUsername = "https://api.trello.com/1/card/".rawurlencode($newCard['id']).'/customField/5beb7358a3bc5f3324a0561d/item?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
 	$payload = json_encode(array(
-		'value' => array('text' => getUsername(true)),
+		'value' => array('text' => getUsername($isLocalhost)),
 	));
 
 	$curl = curl_init();
