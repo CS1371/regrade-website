@@ -9,6 +9,11 @@ Format:
     name: string,
     gtUsername: string,
     trelloUsername: string,
+    section: {
+        name: string,
+        location: string,
+        time: string,
+    },
 */
 // We ha've their trello usernames and GT usernames. Ask Trello for board members, and match up
 $init = json_decode(file_get_contents('tas.json'), true);
@@ -32,7 +37,7 @@ foreach ($init as $i) {
         $ta['trelloId'] = $tmp[0]['id'];
     }
     $tmp = array_values(array_filter($canvas, function ($c) use ($i) {
-        return $c['login_id'] === $i['gtUsername'];
+        return isset($c['login_id']) && $c['login_id'] === $i['gtUsername'];
     }));
     if (count($tmp) === 0) {
         $ta['canvasId'] = '';
