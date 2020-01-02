@@ -117,7 +117,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	*/
 	file_put_contents('data.txt', $data);
 
-	$data = (array) json_decode($data, true);
+	$data = json_decode($data, true);
 	$cardName = 'Homework ' . $data['homeworkNumber'] . ': ' . $data['homeworkName'] . ' Regrade';
 	$regradeReason = '';
 	$regradeReasons = array();
@@ -152,9 +152,9 @@ function addCard($data, $trelloToken, $trelloKey) {
 	$urlMakeCard = "https://api.trello.com/1/cards?name=".rawurlencode($cardName)."&desc=".rawurlencode($regradeReason)."&idList=5beb72c2c45e3520c8c3a7ca&idMembers=".rawurlencode($memberIDs)."&keepFromSource=all&key=".rawurlencode($trelloKey)."&token=".rawurlencode($trelloToken);
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $urlMakeCard);
-	curl_setopt($curl, CURLOPT_POST, 1);
+	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	$newCard = (array) json_decode(curl_exec($curl));
+	$newCard = json_decode(curl_exec($curl), true);
 
 	// add gt Username
 	$urlAddUsername = "https://api.trello.com/1/card/".rawurlencode($newCard['id']).'/customField/5beb7358a3bc5f3324a0561d/item?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
