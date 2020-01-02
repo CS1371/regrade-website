@@ -1,4 +1,5 @@
 deploy:
+	@rm -rf build
 	@yarn build
 	@ssh -t cs1371ftp@cs1371.gatech.edu 'rm -rf regrades && mkdir regrades'
 	@# for macOS
