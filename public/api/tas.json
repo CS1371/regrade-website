@@ -38,5 +38,16 @@
             "time": "W 4:30 - 5:45"
         },
         "trelloUsername": "prathaur3"
+    },
+    {
+        "name": "Cedric Stallworth",
+        "gtUsername": "cstallworth",
+        "title": "Instructor",
+        "section": {
+            "name": "A",
+            "location": "Cherry Emerson 320",
+            "time": "W 4:30 - 5:45"
+        },
+        "trelloUsername": "alexhrao"
     }
 ]

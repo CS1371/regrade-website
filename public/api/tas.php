@@ -45,7 +45,9 @@ foreach ($init as $i) {
     } else {
         $ta['canvasId'] = $tmp[0]['id'];
     }
-    $tas[] = $ta;
+    if (!isset($i['title']) || $i['title'] !== 'Instructor') {
+        $tas[] = $ta;
+    }
 }
 
 exit(json_encode($tas));
