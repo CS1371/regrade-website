@@ -27,6 +27,7 @@ foreach ($init as $i) {
     $ta = array();
     $ta['name'] = $i['name'];
     $ta['gtUsername'] = $i['gtUsername'];
+    $ta['section'] = $i['section']['name'];
 
     $tmp = array_values(array_filter($trello, function ($t) use ($i) {
         return $t['username'] === $i['trelloUsername'];
