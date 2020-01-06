@@ -19,9 +19,11 @@ $isLocalhost = true;
 //$isLocalhost = false;
 
 $canvasToken = <TOKEN HERE>;
-
 $trelloToken = <TOKEN HERE>;
+$trelloKey = <KEY HERE>;
+$trelloBoard = <BOARD ID>;
+$courseID = <COURSE ID AS NUMBER>;
+$teacherPath = "/httpdocs/TAIndex/teachers.json";
 
-$courseID = 26266;
 
 ?>
