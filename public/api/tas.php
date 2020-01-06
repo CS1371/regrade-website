@@ -16,7 +16,7 @@ Format:
     },
 */
 // We ha've their trello usernames and GT usernames. Ask Trello for board members, and match up
-$init = json_decode(file_get_contents('tas.json'), true);
+$init = json_decode(file_get_contents($teacherPath), true);
 // Ask trello
 $trello = getTrelloMembers();
 // Ask Canvas
@@ -30,7 +30,7 @@ foreach ($init as $i) {
     $ta['section'] = $i['section']['name'];
 
     $tmp = array_values(array_filter($trello, function ($t) use ($i) {
-        return $t['username'] === $i['trelloUsername'];
+        return isset($i['trelloUsername']) && ($t['username'] === $i['trelloUsername']);
     }));
     if (count($tmp) === 0) {
         $ta['trelloId'] = '';
