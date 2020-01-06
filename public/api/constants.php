@@ -19,9 +19,9 @@ $isLocalhost = true;
 //$isLocalhost = false;
 
 $canvasToken = <TOKEN HERE>;
-
 $trelloToken = <TOKEN HERE>;
-
-$courseID = 26266;
+$trelloKey = <KEY HERE>;
+$trelloBoard = <BOARD ID>;
+$courseID = <COURSE ID AS NUMBER>;
 
 ?>
