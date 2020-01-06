@@ -63,6 +63,8 @@ class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
         const out: JSX.Element[] = [];
         if (cards.length > 0) {
             for (let card of cards) {
+                // Add new lines
+                const desc = card.desc.split('\n').map((s, i) => <p className="card-text" key={i}>{s}</p>);
                 out.push(
                     <div className="card text-left regrade-card">
                         <div className="card-header">
@@ -77,8 +79,7 @@ class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
                             </div>
                         </div>
                         <div className="card-body">
-                            <h6>Description:</h6>
-                            <p className="card-text">{card.desc}</p>
+                            {desc}
                             <CardComment comments={card.comments}/>
                         </div>
                     </div>

@@ -29,3 +29,7 @@
     background-color: #de893d;
     color: white;
 }
+
+.regrade-button:hover {
+    color: black;
+}

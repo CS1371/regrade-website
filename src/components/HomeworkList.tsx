@@ -13,10 +13,11 @@ const HomeworkList: React.FunctionComponent<HomeworkListProps> = ({ onButtonClic
     const list = homeworks.map((hw, i) => {
         return (
                 <button
-                    key={hw.name}
+                    key={hw.number}
                     className={(selected === i + 1) ? 'homework-selected' : ''}
-                    onClick={() => onButtonClick(i + 1)}>
-                    {hw.name}
+                    onClick={() => onButtonClick(i + 1)}
+                >
+                    {hw.name === undefined ? `Homework #${hw.number}` : hw.name!}
                 </button>
         );
     });

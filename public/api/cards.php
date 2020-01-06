@@ -92,18 +92,40 @@ function getCards($username, $trelloToken, $trelloKey) {
 }
 
 function addCard($data, $trelloToken, $trelloKey) {
+	/*
+	Payload Format:
+	{
+		problems: {
+			name: string,
+			testCases: (string|number)[],
+			description: string,
+		}[],
+		homeworkName: string,
+		homeworkNumber: number,
+		submissionType: "Original"|"Resubmission",
+		section: {
+			name: string,
+			tas: {
+				name: string,
+				gtUsername: string,
+				canvasId: string,
+				trelloId: string,
+				section: string,
+			}[],
+		},
+	}
+	*/
 	file_put_contents('data.txt', $data);
 
-	$data = (array) json_decode($data, true);
-	$cardName = 'Homework ' . $data['homeworkNumber'] . ': ' . $data['homeworkName'] . ' Regrade';
-	$taName1 = $data['TA1'];
-	$taName2 = $data['TA2'];
+	$data = json_decode($data, true);
+	$cardName = 'Homework ' . $data['homeworkNumber'] . ' Regrade';
 	$regradeReason = '';
 	$regradeReasons = array();
 	foreach	($data['problems'] as $problem) {
-		$regradeReasons[] = '# '.$problem['name']."\n\n**Test Cases**: ".implode(", ", $problem['testCases'])."\n**Justification**: ".$problem['description'];
+		$regradeReasons[] = $problem['name']."\n\nTest Cases: ".implode(", ", $problem['testCases'])."\n\nJustification: ".$problem['description'];
 	}
 	$regradeReason = implode("\n", $regradeReasons);
+	/* Should not need this, now that we have Trello ID
 	$urlGetMembers = 'https://api.trello.com/1/boards/5bcfba81f88b4e87e676a435/members?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $urlGetMembers);
@@ -121,18 +143,23 @@ function addCard($data, $trelloToken, $trelloKey) {
 			}
 		}
 	}
-	$memberIDs = $taID1.','.$taID2;
+	*/
+	$taIds = [];
+	foreach ($data['section']['tas'] as $ta) {
+		$taIds[] = $ta['trelloId'];
+	}
+	$memberIDs = implode(',', $taIds);
 	$urlMakeCard = "https://api.trello.com/1/cards?name=".rawurlencode($cardName)."&desc=".rawurlencode($regradeReason)."&idList=5beb72c2c45e3520c8c3a7ca&idMembers=".rawurlencode($memberIDs)."&keepFromSource=all&key=".rawurlencode($trelloKey)."&token=".rawurlencode($trelloToken);
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $urlMakeCard);
-	curl_setopt($curl, CURLOPT_POST, 1);
+	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	$newCard = (array) json_decode(curl_exec($curl));
+	$newCard = json_decode(curl_exec($curl), true);
 
 	// add gt Username
 	$urlAddUsername = "https://api.trello.com/1/card/".rawurlencode($newCard['id']).'/customField/5beb7358a3bc5f3324a0561d/item?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
 	$payload = json_encode(array(
-		'value' => array('text' => getUsername(true)),
+		'value' => array('text' => getUsername($isLocalhost)),
 	));
 
 	$curl = curl_init();
