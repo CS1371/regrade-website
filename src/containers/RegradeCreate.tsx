@@ -68,12 +68,15 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         .then(resp => {
             // get all section names
             const secs = [...new Set(resp[0].map(t => t.section))];
-            const sections: Section[] = secs.map(s => {
-                return {
-                    name: s,
-                    tas: resp[0].filter(t => t.section === s),
-                };
-            });
+            const sections: Section[] = secs
+                .filter(s => s.trim().length > 0)
+                .map(s => {
+                    return {
+                        name: s,
+                        tas: resp[0].filter(t => t.section === s),
+                    };
+                });
+            sections.sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
             this.setState({
                 tas: resp[0],
                 sections,

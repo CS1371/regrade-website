@@ -4,6 +4,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 require_once './constants.php';
 require_once './login.php';
+require_once './getLink.php';
 
 // check http request type
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -155,6 +156,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$newCard = json_decode(curl_exec($curl), true);
+	curl_close($curl);
 
 	// add gt Username
 	$urlAddUsername = "https://api.trello.com/1/card/".rawurlencode($newCard['id']).'/customField/5beb7358a3bc5f3324a0561d/item?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
@@ -170,6 +172,16 @@ function addCard($data, $trelloToken, $trelloKey) {
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
 	curl_exec($curl);
+	curl_close($curl);
+
+	$urlAddAttachment = 'https://api.trello.com/1/cards/'.rawurlencode($newCard['id']).'/attachments';
+	$payload = 'url='.getLink($data['homeworkNumber'].' - '.$data['submissionType']).'&key='.$trelloKey.'&token='.$trelloToken;
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+	curl_setopt($curl, CURLOPT_URL, $urlAddAttachment);
+	curl_exec($curl);
+	curl_close($curl);
 	return $newCard; 
 }
 ?>
