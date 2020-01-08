@@ -15,7 +15,8 @@ Format:
         time: string,
     },
 */
-// We ha've their trello usernames and GT usernames. Ask Trello for board members, and match up
+// We have their trello usernames and GT usernames. Ask Trello for board members, and match up
+global $teacherPath;
 $init = json_decode(file_get_contents($teacherPath), true);
 // Ask trello
 $trello = getTrelloMembers();
