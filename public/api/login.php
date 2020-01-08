@@ -5,12 +5,11 @@ require_once './constants.php';
 // Load the CAS lib
 require_once './CAS-1.3.8/CAS.php';
 // Enable debugging
-phpCAS::setDebug();
+//phpCAS::setDebug();
 // Enable verbose error messages. Disable in production!
-phpCAS::setVerbose(true);
+//phpCAS::setVerbose(true);
 // Initialize phpCAS
 phpCAS::client(CAS_VERSION_2_0, 'login.gatech.edu', 443, '/cas');
-
 
 // Handle logout GET request
 if (isset($_GET['logout'])) {
@@ -21,6 +20,7 @@ if (isset($_GET['logout'])) {
 // to GT login if necessary, and then redirect back to |returnTo|
 if (isset($_GET['returnTo'])) {
     if (!$isLocalhost) {
+        // **NOTE**: We currently do not have access to the certificate authority
         // For production use set the CA certificate that is the issuer of the cert
         // on the CAS server and uncomment the line below
         //phpCAS::setCasServerCACert($cas_server_ca_cert_path);
