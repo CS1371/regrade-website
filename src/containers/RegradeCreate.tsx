@@ -330,6 +330,17 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
             );
         } else if (hasLoaded.initial) {
             const { section, shouldFlag, homeworks, homework, sections } = this.state;
+            if (homeworks!.length === 0) {
+                // No homeworks; say so
+                return (
+                    <div className="regrade-card">
+                        <h1>No homework has been found</h1>
+                        <p className="bad-choice">
+                            <em>This is probably because no homework has been graded yet! If you think this is a mistake, reach out to your TA!</em>
+                        </p>
+                    </div>
+                )
+            }
             return (
                 <div className="regrade-card">
                     <h1 className={shouldFlag && homework === undefined ? 'bad-choice' : ''}>
