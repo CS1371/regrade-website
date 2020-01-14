@@ -6,14 +6,12 @@ interface CardCommentProps {
 }
 
 const renderComments = (comments: Comment[]) => {
-    const out = comments.map(c => [
+    return comments.map(c => [
             <p>{c.data.text}</p>,
             <i>&emsp;{c.memberCreator.fullName}</i>,
             <hr/>,
         ]
     );
-    out.length--;
-    return out;
 };
 
 const CardComment: React.FunctionComponent<CardCommentProps> = ({ comments }) => {
@@ -27,7 +25,7 @@ const CardComment: React.FunctionComponent<CardCommentProps> = ({ comments }) =>
                 {renderComments(comments)}
             </div>
         </React.Fragment>
-    )
+    );
 }
 
 export default CardComment;
