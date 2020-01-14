@@ -137,8 +137,7 @@ function getCanvasMembers() {
 function getTrelloMembers() {
     global $trelloKey;
     global $trelloToken;
-    global $trelloBoard;
-    $urlGetMembers = 'https://api.trello.com/1/boards/'.rawurlencode($trelloBoard).'/members?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
+    $urlGetMembers = 'https://api.trello.com/1/boards/5bcfba81f88b4e87e676a435/members?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $urlGetMembers);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

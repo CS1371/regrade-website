@@ -16,7 +16,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 		//file_put_contents('tmp3.txt', file_get_contents("php://input"));
 		$data = file_get_contents("php://input");
         $output = addCard($data, $trelloToken, $trelloKey);
-        break;
+		break;
+	default:
+		$output = array();
+		break;
 }
 
 exit(json_encode($output));
@@ -147,7 +150,9 @@ function addCard($data, $trelloToken, $trelloKey) {
 	*/
 	$taIds = [];
 	foreach ($data['section']['tas'] as $ta) {
-		$taIds[] = $ta['trelloId'];
+		if (isset($ta['trelloId']) && strlen($ta['trelloId']) > 0) {
+			$taIds[] = $ta['trelloId'];
+		}
 	}
 	$memberIDs = implode(',', $taIds);
 	$urlMakeCard = "https://api.trello.com/1/cards?name=".rawurlencode($cardName)."&desc=".rawurlencode($regradeReason)."&idList=5beb72c2c45e3520c8c3a7ca&idMembers=".rawurlencode($memberIDs)."&keepFromSource=all&key=".rawurlencode($trelloKey)."&token=".rawurlencode($trelloToken);
@@ -175,7 +180,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	curl_close($curl);
 
 	$urlAddAttachment = 'https://api.trello.com/1/cards/'.rawurlencode($newCard['id']).'/attachments';
-	$payload = 'url='.getLink($data['homeworkNumber'].' - '.$data['submissionType']).'&key='.$trelloKey.'&token='.$trelloToken;
+	$payload = 'url='.getLink(getUsername($isLocalhost), $data['homeworkNumber'].' - '.$data['submissionType']).'&key='.$trelloKey.'&token='.$trelloToken;
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);

@@ -19,8 +19,8 @@ require_once 'constants.php';
  */
 
 function getLink($student, $assignment) {
-
-    $access_token = $canvasToken;
+    global $canvasToken;
+    global $courseID;
 
 // STEP 1: EXPORT INFORMATION FROM CANVAS
 
@@ -28,44 +28,38 @@ function getLink($student, $assignment) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+    $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=100&access_token=$canvasToken";
+    curl_setopt($ch, CURLOPT_URL, $url_assignments);
+    $assignments = json_decode(curl_exec($ch), true);
+
     // Get headers for users
-    $fid = fopen('tmp.txt', 'w');
-    curl_setopt($ch, CURLOPT_WRITEHEADER, $fid);
+    $lastPage = '';
+    $headerHandler = function ($ch2, $header) use ($lastPage) {
+        $found = strpos($header, "Link:") !== false || strpos($header, "link:") !== false;
+        if ($found) {
+            $current = strtok($header, ',');
+            while (true)
+            {
+                $pos = strpos($current, 'last');
+                if ($pos !== false)
+                {
+                    $pos = strpos($current, 'page=');
+                    $lastPage = substr($current, $pos + 5, 1);
+                    return;
+                }
+                $current = strtok(',');
+            }
+        }
+    };
+    curl_setopt($ch, CURLOPT_HEADERFUNCTION, $headerHandler);
 
     // Get first page of users
     $page = 1;
-    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$access_token";
+    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$canvasToken";
     curl_setopt($ch, CURLOPT_URL, $url_users);
     $users = json_decode(curl_exec($ch), true);
-    fclose($fid);
-
-    // Find number of pages
-    $headers = fopen("tmp.txt", "r");
-    $found = false;
-    while(!feof($headers) && !$found)
-    {
-        $line = fgets($headers);
-        $found = strpos($line, "Link:") !== false;
-    }
-    $foundLast = false;
-    $current = strtok($line, ',');
-    while (!$foundLast)
-    {
-        $pos = strpos($current, 'last');
-        if ($pos !== false)
-        {
-            $foundLast = true;
-            $pos = strpos($current, 'page=');
-            $lastPage = substr($current, $pos + 5, 1);
-        }
-        $current = strtok(',');
-    }
-    fclose($headers);
 
     // Get assignments
-    $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=100&access_token=$access_token";
-    curl_setopt($ch, CURLOPT_URL, $url_assignments);
-    $assignments = json_decode(curl_exec($ch), true);
 
 // STEP 2: ITERATRE THROUGH STUDENTS LOOKING FOR $STUDENT
 
@@ -75,6 +69,7 @@ function getLink($student, $assignment) {
     $last = ucfirst(substr($name, 1));
 
     $found = false;
+    $studentID = '';
     while (!$found && $page <= $lastPage)
     {
         foreach($users as $user)
@@ -90,7 +85,7 @@ function getLink($student, $assignment) {
             if (strpos($curName, $last) !== false)
             {
                 $id = $user['id'];
-                $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=$access_token";
+                $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=$canvasToken";
                 curl_setopt($ch, CURLOPT_URL, $profile_url);
                 $profile = json_decode(curl_exec($ch), true);
                 $curID = $profile['login_id'];
@@ -107,7 +102,7 @@ function getLink($student, $assignment) {
         if (!$found)
         {
             $page = $page + 1;
-            $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$access_token";
+            $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$canvasToken";
             curl_setopt($ch, CURLOPT_URL, $url_users);
             $users = json_decode(curl_exec($ch), true);
         }
@@ -118,7 +113,7 @@ function getLink($student, $assignment) {
     // Get assignment number from input
     $alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -";
     $assignmentNum = strtok($assignment, $alphabet);
-
+    $assignmentID = '';
     foreach($assignments as $curAssignment)
     {
         /* If the assignment numbers match, check to see if neither $assignment
@@ -129,7 +124,7 @@ function getLink($student, $assignment) {
 
         $assignmentName = $curAssignment['name'];
         $curAssignmentNum = strtok($assignmentName, $alphabet);
-        if (strcasecmp((string)$assignmentNum, (string)$curAssignmentNum) == 0)
+        if ((int)$curAssignmentNum === (int)$assignmentNum)
         {
             if (strpos($assignment, 'Resubmission') == false && strpos($assignmentName, 'Resubmission') == false)
             {
