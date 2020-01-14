@@ -51,11 +51,11 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
             submissionState: SubmissionState.READY,
         };
         window.onbeforeunload = (e: Event) => {
-            const { submissionState } = this.state;
-            if (submissionState !== SubmissionState.FINISHED) {
+            const { submissionState, homework } = this.state;
+            if (homework !== undefined && submissionState !== SubmissionState.FINISHED) {
                 e.preventDefault();
+                e.returnValue = false;
             }
-            e.returnValue = false;
         }
 
         this.onSelectHomework = this.onSelectHomework.bind(this);
