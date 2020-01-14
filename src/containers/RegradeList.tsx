@@ -4,11 +4,10 @@ import { getCards, login } from '../api';
 import {formatDate} from '../utils';
 import CardComment from '../components/CardComment';
 import CardStatus from '../components/CardStatus';
-import { Link } from "react-router-dom";
 import Card from '../types/Card';
 
 interface RegradeListProps {
-
+    createHandler: () => unknown;
 };
 
 interface RegradeListState {
@@ -60,6 +59,7 @@ class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
         if (loading) {
             return ( <h5 className="card-title">Loading...</h5> );
         }
+        const { createHandler } = this.props;
         const out: JSX.Element[] = [];
         if (cards.length > 0) {
             for (let card of cards) {
@@ -91,7 +91,15 @@ class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
             out.push( <h5 className="card-title">No regrades so far!</h5> );
             out.push( <p className="card-text">Would you like to submit a homework regrade request?</p> );
         }
-        out.push( <Link to="/new" className="btn regrade-button">New Regrade</Link> );
+        out.push(
+            <button
+                type="button"
+                className="btn regrade-button"
+                onClick={createHandler}
+            >
+                New Regrade
+            </button>
+        );
         return out;
     }
 

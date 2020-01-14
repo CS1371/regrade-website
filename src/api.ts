@@ -2,7 +2,6 @@ import CardPayload from "./types/CardPayload";
 import RegradePayload from './types/RegradePayload';
 import TA from './types/TA';
 import { ShallowHomework, Homework } from "./types/Homework";
-import TestCase from './types/TestCase';
 
 export async function createCard(data: RegradePayload): Promise<Response> {
     return fetch('./api/cards.php', {
