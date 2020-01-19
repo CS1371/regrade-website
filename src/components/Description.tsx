@@ -1,6 +1,9 @@
 import React from 'react';
 import Problem from '../types/Problem';
 import './Description.css';
+
+const MIN_TEXT_LEN = 20;
+
 interface DescriptionProps {
 	onTextUpdate: (desc: string, problemName: string) => void;
 	problem: Problem;
@@ -19,8 +22,10 @@ const Description: React.FunctionComponent<DescriptionProps> = ({ onTextUpdate, 
 					Justification
 				</h3>
 				{
-					shouldFlag ? <p className="bad-choice"><em>Please type more for your justification</em></p> : null
-				}	
+					shouldFlag
+					? <p className="bad-choice"><em>{`Please type more for your justification (${MIN_TEXT_LEN - text.length}) more character(s) to go!`}</em></p>
+					: null
+				}
         		<textarea
 					className={`justification-description ${shouldFlag ? 'bad-choice' : ''}`}
         			rows={4}
