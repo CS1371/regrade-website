@@ -11,10 +11,6 @@ interface DescriptionProps {
 	shouldFlag: boolean;
 };
 
-interface DescriptionState {
-	textValue: string;
-};
-
 const Description: React.FunctionComponent<DescriptionProps> = ({ onTextUpdate, problem, text, shouldFlag }) => {
         return(
         	<div>

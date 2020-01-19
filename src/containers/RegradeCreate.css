@@ -116,3 +116,9 @@
 .problem-separator {
     background-color: black;
 }
+
+.next-btn.bad-choice {
+    background-color: lightgray;
+    color: darkgray;
+    cursor: not-allowed;
+}

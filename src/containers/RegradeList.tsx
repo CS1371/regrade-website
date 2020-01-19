@@ -43,7 +43,7 @@ class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
         });
     }
 
-    logoutPrompt() {
+    private logoutPrompt = () => {
         if (this.state.loading)
             return [];
         return (
@@ -52,9 +52,9 @@ class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
                 <p>Not you? <a href="./api/login.php?logout=">Logout</a></p>
             </div>
         );
-    }
+    };
 
-    renderCards() {
+    private renderCards = () => {
         const { cards, loading } = this.state;
         if (loading) {
             return ( <h5 className="card-title">Loading...</h5> );
@@ -103,7 +103,7 @@ class RegradeList extends React.Component<RegradeListProps, RegradeListState> {
         return out;
     }
 
-    render() {
+    public render() {
         return (
             <div className="RegradeList">
             <div className="row">

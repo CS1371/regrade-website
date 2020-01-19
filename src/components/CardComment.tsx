@@ -26,6 +26,6 @@ const CardComment: React.FunctionComponent<CardCommentProps> = ({ comments }) =>
             </div>
         </React.Fragment>
     );
-}
+};
 
 export default CardComment;

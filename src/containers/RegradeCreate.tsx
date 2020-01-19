@@ -57,17 +57,6 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                 e.returnValue = false;
             }
         }
-
-        this.onSelectHomework = this.onSelectHomework.bind(this);
-        this.onSelectSubmission = this.onSelectSubmission.bind(this);
-        this.onSelectProblem = this.onSelectProblem.bind(this);
-        this.onSelectTestCase = this.onSelectTestCase.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onTextUpdate = this.onTextUpdate.bind(this);
-        this.handleBackButton = this.handleBackButton.bind(this);
-        this.onSelectSection = this.onSelectSection.bind(this);
-        this.handleNextButton = this.handleNextButton.bind(this);
-
         Promise.all([
             getTAs(),
             getHomeworks(),
@@ -96,42 +85,50 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         });
     };
 
-    onSelectSubmission(subType?: "Original"|"Resubmission") {
+    private isInitialValid = (): boolean => {
+        const { section, homework } = this.state;
+        return (section !== undefined && homework !== undefined);
+    }
+
+    private onSelectSubmission = (subType?: "Original"|"Resubmission") => {
         this.setState({
             submissionType: subType
         })
     }
 
-    onSelectSection(ind: number) {
+    private onSelectSection = (ind: number) => {
         const { hasLoaded, sections } = this.state;
         if (hasLoaded.initial && ind >= 0) {
             this.setState({
                 section: sections![ind],
+            }, () => {
+                const { shouldFlag } = this.state;
+                if (this.isInitialValid() && shouldFlag) {
+                    this.setState({ shouldFlag: false });
+                }
             });
         } else {
             this.setState({ section: undefined});
         }
     }
 
-    onSelectHomework(i: number) {
+    private onSelectHomework = (i: number) => {
         const { homeworks } = this.state;
         if (homeworks !== undefined) {
             // Get the homework and then update
             getHomework(i)
-            .then(hw => this.setState({ homework: hw }))
-            .then();
+            .then(hw => this.setState({ homework: hw }, () => {
+                const { shouldFlag } = this.state;
+                if (this.isInitialValid() && shouldFlag) {
+                    this.setState({ shouldFlag: false });
+                }
+            }));
         }
     }
 
-    handleNextButton() {
-        const { section, homework } = this.state;
-        let validData = true;
-        if (section === undefined) {
-            validData = false;
-        } else if (homework === undefined) {
-            validData = false;
-        }
-        if (validData) {
+    private handleNextButton = () => {
+        if (this.isInitialValid()) {
+            const { homework } = this.state;
             this.setState({
                 hasLoaded: {
                     initial: true,
@@ -145,7 +142,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         }
     }
 
-    onSelectProblem(problemName: string) {
+    private onSelectProblem = (problemName: string) => {
         // if we already have it, remove it; otherwise, add it and default to all
         let { regradeData } = this.state;
         const { homework } = this.state;
@@ -167,7 +164,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         this.setState({ regradeData });
     }
 
-    onSelectTestCase(problemName: string, testCase: string|number, enable: boolean) {
+    private onSelectTestCase = (problemName: string, testCase: string|number, enable: boolean) => {
         const { regradeData } = this.state;
         const ind = regradeData.findIndex(p => p.problemName === problemName);
         if (testCase === "all") {
@@ -187,13 +184,13 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         this.setState({ regradeData });
     }
 
-    onTextUpdate(newValue: string, problemName: string) {
+    private onTextUpdate = (newValue: string, problemName: string) => {
         const { regradeData } = this.state;
         regradeData[regradeData.findIndex(p => p.problemName === problemName)].description = newValue;
         this.setState({ regradeData });
     }
 
-    handleBackButton() {
+    private handleBackButton = () => {
         this.setState({
             hasLoaded: {
                 initial: true,
@@ -202,7 +199,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         });
     }
 
-    isValidSubmission(): boolean {
+    private isValidSubmission = (): boolean => {
         const { regradeData, submissionType } = this.state;
         if (submissionType === undefined) {
             return false;
@@ -216,7 +213,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         return true;
     }
 
-    handleSubmit() {
+    private handleSubmit = () => {
         const { regradeData } = this.state;
         if (this.isValidSubmission()) {
             const { section, homework, submissionType } = this.state;
@@ -249,7 +246,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         }
     }
 
-    render() {
+    public render() {
         const { hasLoaded } = this.state;
         if (hasLoaded.homework) {
             const { homework, submissionType, regradeData, shouldFlag, submissionState } = this.state;
@@ -380,7 +377,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     </div>
                     <button
                         type="button"
-                        className="next-btn"
+                        className={`next-btn ${shouldFlag ? 'bad-choice' : ''}`}
                         onClick={this.handleNextButton}
                     >
                         Next
