@@ -84,6 +84,7 @@
     background-color: lightblue;
     color: black;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .submit-btn:disabled {
