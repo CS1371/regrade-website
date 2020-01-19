@@ -23,13 +23,13 @@ function getHomeworks() {
     }
     */
     // Everyone will have an original (i.e., no dangling resubs!)
-    $files = glob('rubrics/hw??Rubric.json');
+    $files = glob('../rubrics/hw??Rubric.json');
     $out = array();
     foreach ($files as $pName) {
         // get the number
         $num = (int) substr($pName, 10, 2);
         // look for resub
-        $hasResub = count(glob(sprintf('rubrics/hw%02dRubric_resub.json', $num))) === 1;
+        $hasResub = count(glob(sprintf('../rubrics/hw%02dRubric_resub.json', $num))) === 1;
         $out[] = array(
             "number" => $num,
             "hasResubmission" => $hasResub,
@@ -55,12 +55,12 @@ function getHomework($num) {
     }
     */
     // look for this number
-    $files = glob(sprintf('rubrics/hw%02dRubric*.json', $num));
+    $files = glob(sprintf('../rubrics/hw%02dRubric*.json', $num));
     if (count($files) === 0) {
         return null;
     }
     // read in the file
-    $json = json_decode(file_get_contents(sprintf('rubrics/hw%02dRubric.json', $num)), true);
+    $json = json_decode(file_get_contents(sprintf('../rubrics/hw%02dRubric.json', $num)), true);
     // correctly populate data
     $out = array(
         "number" => $num,
