@@ -27,7 +27,7 @@ function getHomeworks() {
     $out = array();
     foreach ($files as $pName) {
         // get the number
-        $num = (int) substr($pName, 10, 2);
+        $num = (int) substr(basename($pName), 2, 2);
         // look for resub
         $hasResub = count(glob(sprintf('../rubrics/hw%02dRubric_resub.json', $num))) === 1;
         $out[] = array(
