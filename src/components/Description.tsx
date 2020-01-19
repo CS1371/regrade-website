@@ -23,7 +23,7 @@ const Description: React.FunctionComponent<DescriptionProps> = ({ onTextUpdate, 
 				</h3>
 				{
 					shouldFlag
-					? <p className="bad-choice"><em>{`Please type more for your justification (${MIN_TEXT_LEN - text.length}) more character(s) to go!`}</em></p>
+					? <p className="bad-choice"><em>{`Please type more for your justification (${MIN_TEXT_LEN - text.length} more character(s) to go!)`}</em></p>
 					: null
 				}
         		<textarea
