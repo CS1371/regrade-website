@@ -221,7 +221,12 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
         if (this.isValidSubmission()) {
             const { section, homework, submissionType } = this.state;
             const toSubmit: Payload = {
-                problems: regradeData,
+                problems: regradeData.map((r): RegradeData => {
+                    return {
+                        ...r,
+                        testCases: r.testCases.map(t => typeof t === 'string' ? t : t + 1),
+                    };
+                }),
                 section: section!,
                 homeworkNumber: homework!.number,
                 submissionType: submissionType!,
