@@ -4,4 +4,5 @@ export default interface TA {
     canvasId: string;
     trelloId: string;
     section: string;
+    title: string;
 }

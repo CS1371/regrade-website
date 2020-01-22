@@ -73,6 +73,11 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     };
                 });
             sections.sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
+            const heads = resp[0].filter(t => t.title.toLocaleLowerCase() === 'head ta' || t.title.toLocaleLowerCase() === 'course manager');
+            sections.push({
+                name: "I don't have a recitation", 
+                tas: heads,
+            });
             this.setState({
                 tas: resp[0],
                 sections,

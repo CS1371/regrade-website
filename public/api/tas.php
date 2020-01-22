@@ -46,6 +46,11 @@ foreach ($init as $i) {
     } else {
         $ta['canvasId'] = $tmp[0]['id'];
     }
+    if (isset($i['title'])) {
+        $ta['title'] = $i['title'];
+    } else {
+        $ta['title'] = '';
+    }
     if (!isset($i['title']) || $i['title'] !== 'Instructor') {
         $tas[] = $ta;
     }
