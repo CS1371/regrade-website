@@ -13,7 +13,7 @@ interface DescriptionProps {
 
 const Description: React.FunctionComponent<DescriptionProps> = ({ onTextUpdate, problem, text, shouldFlag }) => {
         return(
-        	<div>
+        	<div className="justification-area">
      			<h3 className={`${shouldFlag ? 'bad-choice' : ''}`}>
 					Justification
 				</h3>

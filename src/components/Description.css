@@ -1,7 +1,12 @@
+.justification-area {
+    max-width: 85vw;
+}
+
 .justification-description {
     border: 1px solid black;
     padding: 10px;
     border-radius: 5px;
+    max-width: 100%;
 }
 
 .justification-description.bad-choice {
