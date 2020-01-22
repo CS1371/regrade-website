@@ -1,3 +1,7 @@
 .ta-selector.no-selection {
     color: darkred;
 }
+
+.section-selector {
+    width: 100%;
+}

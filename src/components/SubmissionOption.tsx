@@ -9,6 +9,7 @@ interface SubmissionOptionProps {
 
 const SubmissionOption: React.FunctionComponent<SubmissionOptionProps> = ({ onButtonClick, shouldFlag, value }) => (
     <span className={`submission-option ${shouldFlag ? 'bad-submission' : ''}`}>
+        {shouldFlag ? <p><em>Please select a submission type</em></p> : null}
         <button
             className={value === "Original" ? 'sub-selected' : ''}
             type="button"
@@ -25,7 +26,6 @@ const SubmissionOption: React.FunctionComponent<SubmissionOptionProps> = ({ onBu
         >
             Resubmission
         </button>
-        {shouldFlag ? <p><em>Please select a submission type</em></p> : null}
     </span>
 );
 

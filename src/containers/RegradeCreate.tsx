@@ -301,7 +301,7 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                     >
                         Back
                     </button>
-                    <h1>Regrade for {homework!.name === undefined ? homework!.number : homework!.name!} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
+                    <h1>Regrade for {homework!.name === undefined ? `Homework #${homework!.number}` : homework!.name!} {submissionType === undefined ? '' : '(' + submissionType + ')'}</h1>
                     <div className="problem-selector">
                         <div className="problem-config">
                             {
@@ -368,12 +368,14 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
                         <p className={shouldFlag && section === undefined ? 'bad-choice' : ''}>
                             Select your Section:
                         </p>
-                        <SectionSelect
-                            shouldFlag={shouldFlag && section === undefined}
-                            sections={sections!}
-                            onChoose={this.onSelectSection}
-                            selected={section}
-                        />
+                        <div className="ta-select-container">
+                            <SectionSelect
+                                shouldFlag={shouldFlag && section === undefined}
+                                sections={sections!}
+                                onChoose={this.onSelectSection}
+                                selected={section}
+                            />
+                        </div>
                     </div>
                     <button
                         type="button"

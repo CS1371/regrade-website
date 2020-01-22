@@ -33,6 +33,10 @@
     margin-bottom: 20px;
 }
 
+.ta-select-container {
+    display: inline-block;
+}
+
 .ta-selectors > p:first-child {
     margin-bottom: 0;
 }
