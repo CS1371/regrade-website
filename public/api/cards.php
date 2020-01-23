@@ -31,7 +31,7 @@ function getCards($username, $trelloToken, $trelloKey) {
 
 	// checks to see if valid username used as input 
 	if (empty($username)) {
-        // return nothing if user wasn't authenticated
+		// return nothing if user wasn't authenticated
 		return $output;
 	}
     // add username to output
@@ -119,7 +119,6 @@ function addCard($data, $trelloToken, $trelloKey) {
 		},
 	}
 	*/
-	file_put_contents('data.txt', $data);
 
 	$data = json_decode($data, true);
 	$cardName = 'Homework ' . $data['homeworkNumber'] . ' Regrade';

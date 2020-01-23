@@ -17,9 +17,6 @@ require_once 'constants.php';
  *
  * https://gatech.instructure.com/courses/26266/assignments/:assignmentID/submissions/:studentID
  */
-$out = getLink('kbateh3', '2 Original');
-die($out);
-
 function getLink($student, $assignment) {
     global $canvasToken;
     global $courseID;
