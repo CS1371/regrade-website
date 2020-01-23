@@ -126,7 +126,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	$regradeReason = '';
 	$regradeReasons = array();
 	foreach	($data['problems'] as $problem) {
-		$regradeReasons[] = $problem['name']."\n\nTest Cases: ".implode(", ", $problem['testCases'])."\n\nJustification: ".$problem['description'];
+		$regradeReasons[] = $problem['problemName']."\n\nTest Cases: ".implode(", ", $problem['testCases'])."\n\nJustification: ".$problem['description'];
 	}
 	$regradeReason = implode("\n", $regradeReasons);
 	$taIds = [];
