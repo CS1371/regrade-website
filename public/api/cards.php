@@ -129,25 +129,6 @@ function addCard($data, $trelloToken, $trelloKey) {
 		$regradeReasons[] = $problem['name']."\n\nTest Cases: ".implode(", ", $problem['testCases'])."\n\nJustification: ".$problem['description'];
 	}
 	$regradeReason = implode("\n", $regradeReasons);
-	/* Should not need this, now that we have Trello ID
-	$urlGetMembers = 'https://api.trello.com/1/boards/5bcfba81f88b4e87e676a435/members?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
-	$curl = curl_init();
-	curl_setopt($curl, CURLOPT_URL, $urlGetMembers);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-	$allMembers = curl_exec($curl);
-	$allMembersData = json_decode($allMembers, true);
-	$taID1 = '';
-	$taID2 = '';
-	if (is_array($allMembersData)) {
-		foreach ($allMembersData as $member) {
-			if ($member['fullName'] == $taName1) {
-				$taID1 = $member['id'];
-			} elseif ($member['fullName'] == $taName2) {
-				$taID2 = $member['id'];
-			}
-		}
-	}
-	*/
 	$taIds = [];
 	foreach ($data['section']['tas'] as $ta) {
 		if (isset($ta['trelloId']) && strlen($ta['trelloId']) > 0) {

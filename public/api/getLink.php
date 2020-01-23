@@ -17,6 +17,8 @@ require_once 'constants.php';
  *
  * https://gatech.instructure.com/courses/26266/assignments/:assignmentID/submissions/:studentID
  */
+$out = getLink('kbateh3', '2 Original');
+die($out);
 
 function getLink($student, $assignment) {
     global $canvasToken;
@@ -26,15 +28,25 @@ function getLink($student, $assignment) {
 
     //  Initiate curl
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
     $url_assignments = "https://gatech.instructure.com/api/v1/courses/$courseID/assignments?&per_page=100&access_token=$canvasToken";
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_URL, $url_assignments);
     $assignments = json_decode(curl_exec($ch), true);
+    curl_close($ch);
 
+    $ch = curl_init();
     // Get headers for users
     $lastPage = '';
-    $headerHandler = function ($ch2, $header) use ($lastPage) {
+    // Get first page of users
+    $page = 1;
+    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$canvasToken";
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url_users);
+    curl_setopt($ch, CURLOPT_HEADER, 1);
+    $resp = curl_exec($ch);
+    $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $headers = explode("\r\n", substr($resp, 0, $headerSize));
+    foreach ($headers as $header) {
         $found = strpos($header, "Link:") !== false || strpos($header, "link:") !== false;
         if ($found) {
             $current = strtok($header, ',');
@@ -45,28 +57,23 @@ function getLink($student, $assignment) {
                 {
                     $pos = strpos($current, 'page=');
                     $lastPage = substr($current, $pos + 5, 1);
-                    return;
+                    break 2;
                 }
                 $current = strtok(',');
             }
         }
-    };
-    curl_setopt($ch, CURLOPT_HEADERFUNCTION, $headerHandler);
-
-    // Get first page of users
-    $page = 1;
-    $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$canvasToken";
-    curl_setopt($ch, CURLOPT_URL, $url_users);
-    $users = json_decode(curl_exec($ch), true);
+    }
+    $users = json_decode(substr($resp, $headerSize), true);
+    curl_close($ch);
 
     // Get assignments
 
 // STEP 2: ITERATRE THROUGH STUDENTS LOOKING FOR $STUDENT
 
     // Get student's first initial and last name from gt username
-    $name = strtok($student, "1234567890");
-    $first = substr($name, 0, 1);
-    $last = ucfirst(substr($name, 1));
+    $name = strtolower(strtok($student, "1234567890"));
+    $first = strtolower(substr($name, 0, 1));
+    $last = strtolower(substr($name, 1));
 
     $found = false;
     $studentID = '';
@@ -81,13 +88,16 @@ function getLink($student, $assignment) {
          * /api/v1/users/:user_id/profile
          */
 
-            $curName = $user['name'];
+            $curName = strtolower($user['name']);
             if (strpos($curName, $last) !== false)
             {
+                $ch = curl_init();
                 $id = $user['id'];
                 $profile_url = "https://gatech.instructure.com/api/v1/users/$id/profile?access_token=$canvasToken";
                 curl_setopt($ch, CURLOPT_URL, $profile_url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $profile = json_decode(curl_exec($ch), true);
+                curl_close($ch);
                 $curID = $profile['login_id'];
                 if (strcasecmp($student, $curID) == 0)
                 {
@@ -101,10 +111,13 @@ function getLink($student, $assignment) {
         //Get next page
         if (!$found)
         {
+            $ch = curl_init();
             $page = $page + 1;
             $url_users = "https://gatech.instructure.com/api/v1/courses/$courseID/users?&page=$page&per_page=5000&access_token=$canvasToken";
             curl_setopt($ch, CURLOPT_URL, $url_users);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $users = json_decode(curl_exec($ch), true);
+            curl_close($ch);
         }
     }
 
@@ -136,8 +149,6 @@ function getLink($student, $assignment) {
             }
         }
     }
-
-    curl_close($ch);
 
 // STEP 4: CONSTRUCT LINK
 
