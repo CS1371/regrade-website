@@ -1,4 +1,4 @@
 export default interface TestCase {
-    inputs: string[];
-    outputs: string[];
-};
+  inputs: string[];
+  outputs: string[];
+}

@@ -1,5 +1,5 @@
 export default interface RegradeData {
-    problemName: string;
-    description: string;
-    testCases: (string|number)[];
-};
+  problemName: string;
+  description: string;
+  testCases: (string | number)[];
+}

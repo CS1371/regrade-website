@@ -1,6 +1,6 @@
-import Card from "./Card";
+import Card from './Card';
 
 export default interface CardPayload {
-    username?: string;
-    cards?: Card[];
+  username?: string;
+  cards?: Card[];
 }
