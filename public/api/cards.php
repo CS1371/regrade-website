@@ -31,8 +31,11 @@ function getCards($username, $trelloToken, $trelloKey) {
 
 	// checks to see if valid username used as input 
 	if (empty($username)) {
-		// return nothing if user wasn't authenticated
-		return $output;
+		// return error
+		http_response_code(401);
+		return array(
+			"error" => "You are not logged in to the GT CAS system"
+		);
 	}
     // add username to output
     $output["username"] = $username;
@@ -50,9 +53,11 @@ function getCards($username, $trelloToken, $trelloKey) {
 	$allCards = curl_exec($curl);
 	// Decode JSON into PHP Array 
 	$allCardsData = json_decode($allCards, true);
+	curl_close($curl);
 
-    if (empty($allCards))
-        return [];
+    if (empty($allCards)) {
+		return [];
+	}
 
     $cardsOutput = [];
 	// Find cards with correct Username and store in output Array
@@ -61,10 +66,13 @@ function getCards($username, $trelloToken, $trelloKey) {
 		if (isset($cardData['customFieldItems'][0]['value']['text'])) {
 			// Checks to see if correct Username
 			if ($cardData['customFieldItems'][0]['value']['text'] === $username) {
-                // Get all the actions (activity feed) for that card
+				// Get all the actions (activity feed) for that card
+				$curl = curl_init();
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($curl, CURLOPT_URL, sprintf($actionsUrl, $cardData['id']));
                 $allActions = curl_exec($curl);
-                $allActionsData = json_decode($allActions, true);
+				$allActionsData = json_decode($allActions, true);
+				curl_close($curl);
                 $commentsOutput = [];
                 // Iterating over actions in reverse order (most recent
                 // becomes last) so that we get the last list/status value
@@ -120,6 +128,14 @@ function addCard($data, $trelloToken, $trelloKey) {
 	}
 	*/
 
+	$gtUser = getUsername($isLocalhost);
+	if (empty($gtUser)) {
+		http_response_code(401);
+		return array(
+			"error" => "You aren't logged in!"
+		);
+	}
+
 	$data = json_decode($data, true);
 	$cardName = 'Homework ' . $data['homeworkNumber'] . ' Regrade';
 	$regradeReason = '';
@@ -127,7 +143,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	foreach	($data['problems'] as $problem) {
 		$regradeReasons[] = $problem['problemName']."\n\nTest Cases: ".implode(", ", $problem['testCases'])."\n\nJustification: ".$problem['description'];
 	}
-	$regradeReason = implode("\n", $regradeReasons);
+	$regradeReason = implode("\n", $regradeReasons)."\nStudent: ".$gtUser;
 	$taIds = [];
 	foreach ($data['section']['tas'] as $ta) {
 		if (isset($ta['trelloId']) && strlen($ta['trelloId']) > 0) {
@@ -146,7 +162,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	// add gt Username
 	$urlAddUsername = "https://api.trello.com/1/card/".rawurlencode($newCard['id']).'/customField/5beb7358a3bc5f3324a0561d/item?key='.rawurlencode($trelloKey).'&token='.rawurlencode($trelloToken);
 	$payload = json_encode(array(
-		'value' => array('text' => getUsername($isLocalhost)),
+		'value' => array('text' => $gtUser),
 	));
 
 	$curl = curl_init();
@@ -157,10 +173,11 @@ function addCard($data, $trelloToken, $trelloKey) {
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
 	curl_exec($curl);
+	
 	curl_close($curl);
 
 	$urlAddAttachment = 'https://api.trello.com/1/cards/'.rawurlencode($newCard['id']).'/attachments';
-	$payload = 'url='.getLink(getUsername($isLocalhost), $data['homeworkNumber'].' - '.$data['submissionType']).'&key='.$trelloKey.'&token='.$trelloToken;
+	$payload = 'url='.getLink($gtUser, $data['homeworkNumber'].' - '.$data['submissionType']).'&key='.$trelloKey.'&token='.$trelloToken;
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
