@@ -132,7 +132,7 @@ function addCard($data, $trelloToken, $trelloKey) {
 	if (empty($gtUser)) {
 		http_response_code(401);
 		return array(
-			"error" => "You aren't logged in!"
+			"error" => "You are not logged in to the GT CAS system"
 		);
 	}
 
