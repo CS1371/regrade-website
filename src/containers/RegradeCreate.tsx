@@ -272,7 +272,6 @@ class RegradeCreate extends React.Component<{}, RegradeCreateState> {
       });
     } else {
       this.setState({ shouldFlag: true });
-      console.log('Failed to submit');
     }
   };
 
